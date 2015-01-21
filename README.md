@@ -3,6 +3,8 @@ A user-friendly version of the composite of multiple signals (CMS) implemented i
 
 ## Hayden will tell you how AWESOME CMS4J is here:
 It rocks...
+https://help.github.com/articles/github-flavored-markdown/
+
 ```
 ##fileformat=VCFv4.1
 ##fileDate=20090805
