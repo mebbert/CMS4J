@@ -1,6 +1,8 @@
 # CMS4J
 A user-friendly version of the composite of multiple signals (CMS) implemented in Java
 
+## Hayden will tell you how AWESOME CMS4J is here:
+
 ### SetOperator (SO)
 SetOperator will perform intersects, unions, and complements on multi- or
 single-sample VCFs while considering sample genotypes. 
