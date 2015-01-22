@@ -5,9 +5,9 @@
 			*****Starting CMS*****
 
 Working Parameters
-Phased Dir:	/Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/CleanData/Phased
-Map Dir:	/Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/CleanData/Map
-Ancestor Dir:	/Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/CleanData/Ancestral
+Phased Dir:	/Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Phased
+Map Dir:	/Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Map
+Ancestor Dir:	/Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Ancestral
 Out Dir:	cms_out
 Target Pop:	CEU
 Cross Pop:	YRI
@@ -17,10 +17,10 @@ Window Size:	0.5Mb
 Parameter Check........ complete
 
 Loading referenced data into memory for chromosome 21
-Importing legend data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/CleanData/Phased/genotypes_chr21_CEU_unknown_legend_10000
-Importing phased data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/CleanData/Phased/genotypes_chr21_CEU_unknown_phased_10000X50
-Importing phased data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/CleanData/Phased/genotypes_chr21_YRI_cache_phased_10000X50
-Importing legend data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/CleanData/Phased/genotypes_chr21_YRI_cache_legend_10000
+Importing legend data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Phased/genotypes_chr21_CEU_unknown_legend_10000
+Importing phased data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Phased/genotypes_chr21_CEU_unknown_phased_10000X50
+Importing phased data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Phased/genotypes_chr21_YRI_cache_phased_10000X50
+Importing legend data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Phased/genotypes_chr21_YRI_cache_legend_10000
 	WARNING: changing SNP id around line 995 to 21:10531033 for computational purposes only
 		*original id . is not valid
 	WARNING: changing SNP id around line 1731 to 21:14375344 for computational purposes only
@@ -51,8 +51,8 @@ Importing legend data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J
 		*original id . is not valid
 	WARNING: changing SNP id around line 9654 to 21:15411073 for computational purposes only
 		*original id . is not valid
-Importing genetic map from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/CleanData/Map/genetic_map_chr21_b37.txt
-Importing Ancestral data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/CleanData/Ancestral/genotypes_chr21_r21_nr_fwd_chimp_consensus_legend+freq
+Importing genetic map from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Map/genetic_map_chr21_b37.txt
+Importing Ancestral data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Ancestral/genotypes_chr21_r21_nr_fwd_chimp_consensus_legend+freq
 
 			*****Starting Stats Analysis*****
 
@@ -82,9 +82,3 @@ Out of 63 SNPs, 34 were successful and 29 SNPs were unsuccessful
 
 Sweep between positions 15500000 to 16000000
 Starting iHS Analysis
-Out of 437 SNPs, 366 were successful and 71 SNPs were unsuccessful
-Starting XPEHH Analysis
-Out of 437 SNPs, 437 were successful and 0 SNPs were unsuccessful
-Starting iHH Analysis
-Out of 437 SNPs, 367 were successful and 70 SNPs were unsuccessful
-CMS is now ending

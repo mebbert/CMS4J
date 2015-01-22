@@ -5,32 +5,107 @@ A user-friendly version of the composite of multiple signals (CMS) implemented i
 It rocks...
 https://help.github.com/articles/github-flavored-markdown/
 
+Output for a functioning program will look like this:
+
 ```
-##fileformat=VCFv4.1
-##fileDate=20090805
-##source=myImputationProgramV3.1
-##reference=file:///seq/references/1000GenomesPilot-NCBI36.fasta
-##contig=<ID=20,length=62435964,assembly=B36,md5=f126cdf8a6e0c7f379d618ff66beb2da,species="Homo sapiens",taxonomy=x>
-##phasing=partial
-##INFO=<ID=NS,Number=1,Type=Integer,Description="Number of Samples With Data">
-##INFO=<ID=DP,Number=1,Type=Integer,Description="Total Depth">
-##INFO=<ID=AF,Number=A,Type=Float,Description="Allele Frequency">
-##INFO=<ID=AA,Number=1,Type=String,Description="Ancestral Allele">
-##INFO=<ID=DB,Number=0,Type=Flag,Description="dbSNP membership, build 129">
-##INFO=<ID=H2,Number=0,Type=Flag,Description="HapMap2 membership">
-##FILTER=<ID=q10,Description="Quality below 10">
-##FILTER=<ID=s50,Description="Less than 50% of samples have data">
-##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
-##FORMAT=<ID=GQ,Number=1,Type=Integer,Description="Genotype Quality">
-##FORMAT=<ID=DP,Number=1,Type=Integer,Description="Read Depth">
-##FORMAT=<ID=HQ,Number=2,Type=Integer,Description="Haplotype Quality">
-#CHROM POS     ID        REF    ALT     QUAL FILTER INFO                              FORMAT      NA00001        NA00002        NA00003
-20     14370   rs6054257 G      A       29   PASS   NS=3;DP=14;AF=0.5;DB;H2           GT:GQ:DP:HQ 0|0:48:1:51,51 1|0:48:8:51,51 1/1:43:5:.,.
-20     17330   .         T      A       3    q10    NS=3;DP=11;AF=0.017               GT:GQ:DP:HQ 0|0:49:3:58,50 0|1:3:5:65,3   0/0:41:3
-20     1110696 rs6040355 A      G,T     67   PASS   NS=2;DP=10;AF=0.333,0.667;AA=T;DB GT:GQ:DP:HQ 1|2:21:6:23,27 2|1:2:0:18,2   2/2:35:4
-20     1230237 .         T      .       47   PASS   NS=3;DP=13;AA=T                   GT:GQ:DP:HQ 0|0:54:7:56,60 0|0:48:4:51,51 0/0:61:2
-20     1234567 microsat1 GTC    G,GTCT  50   PASS   NS=3;DP=9;AA=G                    GT:GQ:DP    0/1:35:4       0/2:17:2       1/1:40:3
+======================================================Round 1======================================================================
+Starting iHS Analysis
+Starting XPEHH Analysis
+XPEHH =	SNP [pos=10873592, a0=G, a1=A, rs_number=rs1395681]	-0.7177079065858938	0.9999999999999987
+
+XPEHH =	SNP [pos=10881456, a0=T, a1=C, rs_number=rs28578587]	-0.8013082086861588	-1.0000000000000013
+
+Starting iHH Analysis
+
+======================================================Round 2======================================================================
+					    Last 5 lines of every stat
+
+Starting iHS Analysis
+
+iHS =	SNP [pos=14781959, a0=A, a1=G, rs_number=rs446549]	-1.0223001972313361	-1.6838548658693318
+
+iHS =	SNP [pos=14785028, a0=G, a1=A, rs_number=rs431133]	0.5864846531018965	1.7157701287434333
+
+iHS =	SNP [pos=14818410, a0=T, a1=C, rs_number=rs2821870]	-0.6195014088871154	-0.832675276273427
+
+iHS =	SNP [pos=14880003, a0=A, a1=C, rs_number=rs13047108]	-0.36601228485709697	-0.2970113795525913
+
+iHS =	SNP [pos=14931069, a0=C, a1=G, rs_number=rs117062102]	0.44781812890226097	1.4227451282360557
+
+iHS =	SNP [pos=14936462, a0=T, a1=C, rs_number=kgp7953532]	-0.36929558509399946	-0.30394952889423865
+
+Starting XPEHH Analysis
+
+XPEHH =	SNP [pos=14818410, a0=T, a1=C, rs_number=rs2821870]	-1.06020528606459	0.3318146025182604
+
+XPEHH =	SNP [pos=14880003, a0=A, a1=C, rs_number=rs13047108]	-0.7222414566778952	1.9208737366915924
+
+XPEHH =	SNP [pos=14882965, a0=G, a1=A, rs_number=rs144165180]	-1.0105401853071685	0.5653330300714032
+
+XPEHH =	SNP [pos=14931069, a0=C, a1=G, rs_number=rs117062102]	-0.7168941729868864	1.946015924267208
+
+XPEHH =	SNP [pos=14936462, a0=T, a1=C, rs_number=kgp7953532]	-1.027941472371616	0.4835145875288617
+
+Starting iHH Analysis
+
+iHH =	SNP [pos=14785028, a0=G, a1=A, rs_number=rs431133]	1327110.938517952	0.36275875689675086
+
+iHH =	SNP [pos=14818410, a0=T, a1=C, rs_number=rs2821870]	844465.1976076569	-0.37077135068839495
+
+iHH =	SNP [pos=14880003, a0=A, a1=C, rs_number=rs13047108]	1355246.1671102513	0.4055189752244159
+
+iHH =	SNP [pos=14931069, a0=C, a1=G, rs_number=rs117062102]	983494.2243573167	-0.1594735637094967
+
+iHH =	SNP [pos=14936462, a0=T, a1=C, rs_number=kgp7953532]	1071699.7875737464	-0.025417814758463306
+
+
+======================================================Round 3======================================================================
+                                            Last 5 lines of every stat
+
+Starting iHS Analysis
+
+iHS =	SNP [pos=15482605, a0=A, a1=G, rs_number=rs1556276]	-1.8037272191521176	-0.7553394058038247
+
+iHS =	SNP [pos=15491560, a0=G, a1=A, rs_number=rs2403729]	-0.9169210590929179	0.023705225279158363
+
+iHS =	SNP [pos=15493361, a0=G, a1=A, rs_number=rs2155971]	-1.534343807158523	-0.5186905074668807
+
+iHS =	SNP [pos=15494781, a0=T, a1=C, rs_number=rs11701216]	-1.4606836789320814	-0.45398129591171676
+
+iHS =	SNP [pos=15494955, a0=C, a1=T, rs_number=rs2032283]	-0.8606144869173765	0.07316962316416369
+
+iHS =	SNP [pos=15495000, a0=G, a1=A, rs_number=rs2032284]	-2.2655568537089543	-1.1610491465351045
+
+
+Starting XPEHH Analysis
+
+XPEHH =	SNP [pos=15493361, a0=G, a1=A, rs_number=rs2155971]	0.3857381544408967	1.6719614701450984
+
+XPEHH =	SNP [pos=15494621, a0=G, a1=A, rs_number=rs2263412]	0.39102015701683474	1.6817246194659956
+
+XPEHH =	SNP [pos=15494781, a0=T, a1=C, rs_number=rs11701216]	0.38966805022895307	1.6792254119631398
+
+XPEHH =	SNP [pos=15494955, a0=C, a1=T, rs_number=rs2032283]	0.38972083611853886	1.6793229803597194
+
+XPEHH =	SNP [pos=15495000, a0=G, a1=A, rs_number=rs2032284]	0.2174002298787614	1.3608089725380261
+
+
+Starting iHH Analysis
+
+iHH =	SNP [pos=15491560, a0=G, a1=A, rs_number=rs2403729]	267644.2342478619	-0.777109149058452
+
+iHH =	SNP [pos=15493361, a0=G, a1=A, rs_number=rs2155971]	578952.2145706662	-0.39462384332500694
+
+iHH =	SNP [pos=15494781, a0=T, a1=C, rs_number=rs11701216]	580826.3380396814	-0.39232122105594325
+
+iHH =	SNP [pos=15494955, a0=C, a1=T, rs_number=rs2032283]	258279.17220160188	-0.7886154349437742
+
+iHH =	SNP [pos=15495000, a0=G, a1=A, rs_number=rs2032284]	1329801.3930938174	0.5278991749070961
+
 ```
+
+You can do a 4th round on a much larger Window size but if these are working and that round runs
+all the way through I would expect it to be correct as well
 
 ### SetOperator (SO)
 SetOperator will perform intersects, unions, and complements on multi- or
