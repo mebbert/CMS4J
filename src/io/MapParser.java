@@ -69,20 +69,21 @@ public class MapParser {
 		int line = 0;
 		int cur_pos = 0;
 		int nxt_pos = Integer.parseInt(nxt_ln[0]);
-		double rate = 0.0;
+		double rate = Double.parseDouble(nxt_ln[1]);
 		do {
 			
 			line++;
 			try {
 				
+				gm.put(cur_pos, nxt_pos, rate);
+				
 				cur_ln = nxt_ln;
 				cur_pos = nxt_pos;
-				rate = Double.parseDouble(cur_ln[1]);
 				
 				nxt_ln = map_scan.nextLine().split("\\s");
 				nxt_pos = Integer.parseInt(nxt_ln[0]);
 				
-				gm.put(cur_pos, nxt_pos - 1, rate); 
+				rate = Double.parseDouble(nxt_ln[1]);
 				
 			} catch (NumberFormatException e) {
 				log.addLine("\tError with line " + line);

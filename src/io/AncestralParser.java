@@ -55,7 +55,7 @@ public class AncestralParser {
 			
 			String[] ln_arr = anc_scan.nextLine().split("\\s+");
 			
-			rsNum rs = new rsNum(ln_arr[0]);
+			rsNum rs = new rsNum(log, ln_arr[0]);
 			int pos = Integer.parseInt(ln_arr[1]);
 			anc_types.add(new SNP(pos, rs.getNum(), ln_arr[2], ln_arr[3], rs.getModifyer()));
 		}

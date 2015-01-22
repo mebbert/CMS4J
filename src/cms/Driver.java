@@ -37,6 +37,7 @@ public class Driver {
 	private File out_file;
 	
 	private List<Window> windows;
+	private List<Window> xp_windows;
 	private Individual[] individuals;
 	private Individual[] xp_individuals;
 	private GeneticMap gm;
@@ -57,6 +58,7 @@ public class Driver {
 		map_dir = null;
 		anc_dir = null;
 		
+		xp_windows = null;
 		windows = null;
 		individuals = null;
 		xp_individuals = null;
@@ -124,33 +126,37 @@ public class Driver {
 			Window w = windows.get(i);
 			log.addLine("\nSweep between positions " + w.getStPos() + " to " + w.getEndPos());
 			
-			Stats stats = new Stats(log, w, individuals, xp_individuals, anc_types, windows, gm);
+			Stats stats = new Stats(log, w, individuals, xp_individuals, anc_types, windows, xp_windows, gm);
 			stats.getStats();
 			
 //			win_stats.add(stats.getStats());
 			
+//			=========FOR TESTING===========
 			if(i == 3)
 				break;
+//			===============================
 		}
 	}
 	
 	private void parseFiles(int chr) throws Exception {
 		log.addLine("\nLoading referenced data into memory for chromosome " + chr);
 		
-		String lg_path = getPath(ph_dir, LEGEND_TYPE, chr);
+		String lg_path = getPhasedPath(ph_dir, LEGEND_TYPE, chr, pop);
 		String ph_tp_path = getPhasedPath(ph_dir, PHASED_TYPE, chr, pop);//for target population
-		String ph_xp_path = getPhasedPath(ph_dir, PHASED_TYPE, chr, x_pop);
+		String lg_xp_path = getPhasedPath(ph_dir, LEGEND_TYPE, chr, x_pop);
+		String ph_xp_path = getPhasedPath(ph_dir, PHASED_TYPE, chr, x_pop);//for cross population
 		String map_path = getPath(map_dir, MAP_TYPE, chr);
 		String anc_path = getPath(anc_dir, LEGEND_TYPE, chr);
 		
-		PhasedParser pp = new PhasedParser(lg_path, ph_tp_path, log);
-		PhasedParser xp_pp = new PhasedParser(lg_path, ph_xp_path, log);
+		PhasedParser pp = new PhasedParser(lg_path, ph_tp_path, chr, log);
+		PhasedParser xp_pp = new PhasedParser(lg_xp_path, ph_xp_path, chr, log);
 		MapParser mp = new MapParser(map_path, log);
 		AncestralParser ap = new AncestralParser(anc_path, log);
 		
 		windows = pp.parseLegend(win_size);
 		individuals = pp.parsePhased(chr);
 		xp_individuals = xp_pp.parsePhased(chr);
+		xp_windows = xp_pp.parseLegend(win_size);
 		gm = mp.parseGeneMap();
 		anc_types = ap.parseAncestralTypes();
 	}
@@ -210,21 +216,21 @@ public class Driver {
 		
 		ph_dir = new File(args[0]);
 		if(!ph_dir.isDirectory()) {
-			String msg = "Error: Phased directory path";
+			String msg = "Error: Phased directory path does not exist";
 			throw new IllegalInputException(log, msg);
 		}
 		log.add(".");
 		
 		map_dir = new File(args[1]);
 		if(!map_dir.isDirectory()) {
-			String msg = "Error: Map directory path";
+			String msg = "Error: Map directory path does not exist";
 			throw new IllegalInputException(log, msg);
 		}
 		log.add(".");
 		
 		anc_dir = new File(args[2]);
 		if(!anc_dir.isDirectory()) {
-			String msg = "Error: Ancestor directory path";
+			String msg = "Error: Ancestor directory path does not exist";
 			throw new IllegalInputException(log, msg);
 		}
 		log.add(".");

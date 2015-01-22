@@ -18,10 +18,11 @@ public class XPEHH extends HaplotypeTests {
 	private GeneticMap gm;
 	
 	private List<Window> all_win;
+	private List<Window> all_xp_win;
 	private List<Double> all_unstd_XPEHH;
 	
 	//XPEHH statistic information
-	private List<SNP> unused_snps;
+	private List<SNP> unused_snps;//make this a hash set and do a check (define this by finding the intersect of tp and xp
 	private List<SNP> all_XPEHH_snps;
 	private List<Double> all_XPEHH;
 	
@@ -32,6 +33,7 @@ public class XPEHH extends HaplotypeTests {
 					Individual[] rp_individuals,
 					Individual[] xp_individuals,
 					List<Window> all_win,
+					List<Window> all_xp_win,
 					GeneticMap gm) {
 		
 		this.log = log;
@@ -42,6 +44,7 @@ public class XPEHH extends HaplotypeTests {
 		this.gm = gm;
 		
 		this.all_win = all_win;
+		this.all_xp_win = all_xp_win;
 		
 		unused_snps = new ArrayList<SNP>();
 		all_XPEHH_snps = new ArrayList<SNP>();
@@ -53,6 +56,10 @@ public class XPEHH extends HaplotypeTests {
 		
 		System.out.println("Starting XPEHH Analysis");
 		log.addLine("Starting XPEHH Analysis");
+		
+		//TODO: This stat call is broken. CMS will run but the data for XPEHH is incorrect
+		//TODO: make and xp_individuals array that corresponds with tp_individual's data
+		//TODO: I may need to throw out both... this means making a new window? NO, define unused snps first then run analysis
 		
 		//Starting XPEHH Analysis
 		Individual[] all_indv = combineIndvArrays(tp_individuals, xp_individuals);

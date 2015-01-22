@@ -16,6 +16,7 @@ public class PhasedParser {
 	private static int TEST_LINES = 10; //for testing the first 10 lines of a file to ensure it is the right format
 	
 	private boolean skip_first_line;
+	private int chr;
 	
 	private String lg_path;
 	private String ph_path;
@@ -33,10 +34,11 @@ public class PhasedParser {
 		log = null;
 	}
 	
-	public PhasedParser(String lg_path, String ph_path, Log log) throws FileParsingException {
+	public PhasedParser(String lg_path, String ph_path, int chr, Log log) throws FileParsingException {
 		
 		this.lg_path = lg_path;
 		this.ph_path = ph_path;
+		this.chr = chr;
 		this.log = log;
 		
 		skip_first_line = false;
@@ -98,7 +100,7 @@ public class PhasedParser {
 				cur_win = new Window(st_pos, end_pos, index);
 			}
 			
-			rsNum rs = new rsNum(line_arr[0]);
+			rsNum rs = new rsNum(log, chr, index, rs_pos, line_arr[0]);
 			cur_win.addSNP(rs_pos, rs.getNum(), line_arr[2], line_arr[3], rs.getModifyer());
 			index++;
 				
@@ -262,20 +264,65 @@ class rsNum {
 	private int num;
 	private String modifyer;
 	
-	public rsNum(String rs) {
+	public rsNum(Log log, String rs) {
+		
 		StringBuilder sb_mod = new StringBuilder();
 		StringBuilder sb_num = new StringBuilder();
 		
+		boolean is_rs_modifyer = true;
 		for(int i = 0; i < rs.length(); i++) {
+			
 			char index = rs.charAt(i);
-			if(Character.isLetter(index))
+			if(!Character.isDigit(index)) {
+				is_rs_modifyer = false;
 				sb_mod.append(index);
-			else if(Character.isDigit(index))
-				sb_num.append(index);		
+			}
+			else if(is_rs_modifyer) {
+				sb_mod.append(index);
+			}
+			else {
+				sb_num.append(index);
+			}
 		}
 		
 		num = Integer.parseInt(sb_num.toString());
 		modifyer = sb_mod.toString();
+		
+	}
+	
+	public rsNum(Log log, int chr, int line_num, int pos, String rs) {
+		
+		StringBuilder sb_mod = new StringBuilder();
+		StringBuilder sb_num = new StringBuilder();
+		
+		boolean is_rs_modifyer = true;
+		for(int i = 0; i < rs.length(); i++) {
+			
+			char index = rs.charAt(i);
+			if(!Character.isDigit(index)) {
+				is_rs_modifyer = false;
+				sb_mod.append(index);
+			}
+			else if(is_rs_modifyer) {
+				sb_mod.append(index);
+			}
+			else {
+				sb_num.append(index);
+			}
+		}
+		
+		try {
+			
+			num = Integer.parseInt(sb_num.toString());
+			modifyer = sb_mod.toString();
+			
+		} catch (NumberFormatException e) {
+			num = pos;
+			modifyer = chr + ":";
+			log.add("\tWARNING: changing SNP id around line " + line_num + " to " + modifyer + num);
+			log.addLine(" for computational purposes only");
+			log.addLine("\t\t*original id " + rs + " is not valid");
+		}
 	}
 	
 	public int getNum() {

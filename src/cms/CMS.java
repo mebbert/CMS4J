@@ -8,6 +8,9 @@ public class CMS {
 	/** Composite of Multiple Scores (CMS) Java implementation GWAS study version 1.0
 	 * @author Hayden Smith
 	 * 
+	 * For memory management make sure to allocate at least 2x the size of your Phased directory
+	 * For optimal speed allocate 4x the size of your Phased directory
+	 * 
 	 * @param args0		Phased Files Directory; unrelated individual dataset (non-trios)
 	 * @param args1		Genetic Map Directory
 	 * @param args2		Ancestral States Directory
@@ -32,6 +35,8 @@ public class CMS {
 					+ " Check log output for troubleshooting.");
 			
 			log.addLine("\n\nCMS Died Prematurely. Error in computation.");
+			
+			e.printStackTrace();
 		}
 		
 		cleanup(log);
