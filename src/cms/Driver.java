@@ -155,8 +155,8 @@ public class Driver {
 		
 		windows = pp.parseLegend(win_size);
 		individuals = pp.parsePhased(chr);
-		xp_individuals = xp_pp.parsePhased(chr);
 		xp_windows = xp_pp.parseLegend(win_size);
+		xp_individuals = xp_pp.parsePhased(chr);
 		gm = mp.parseGeneMap();
 		anc_types = ap.parseAncestralTypes();
 	}

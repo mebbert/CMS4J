@@ -18,7 +18,9 @@ public abstract class HaplotypeTests {
 	protected void setHaplotypeGroups(ExtendedHaplotype anc_eh, 
 				ExtendedHaplotype der_eh, 
 				Individual[] individuals,
-				int snp_index, SNP anc_snp, SNP win_snp) {
+				int snp_index, 
+				SNP anc_snp, 
+				SNP win_snp) {
 		
 		//When win_snps's a0 = ancestral type
 		if(win_snp.getAllele0().equals(anc_snp.getAllele0())

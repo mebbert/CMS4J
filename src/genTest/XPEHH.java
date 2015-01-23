@@ -20,6 +20,7 @@ public class XPEHH extends HaplotypeTests {
 	private List<Window> all_win;
 	private List<Window> all_xp_win;
 	private List<Double> all_unstd_XPEHH;
+	private List<SNP> valid_snps;
 	
 	//XPEHH statistic information
 	private List<SNP> unused_snps;//make this a hash set and do a check (define this by finding the intersect of tp and xp
@@ -46,10 +47,14 @@ public class XPEHH extends HaplotypeTests {
 		this.all_win = all_win;
 		this.all_xp_win = all_xp_win;
 		
+		valid_snps = new ArrayList<SNP>();
 		unused_snps = new ArrayList<SNP>();
 		all_XPEHH_snps = new ArrayList<SNP>();
 		all_unstd_XPEHH = new ArrayList<Double>();
 		all_XPEHH = new ArrayList<Double>();
+		
+//		setupEnvironment();//DONT TOUCH THIS METHOD! I am playing around with things here.
+		
 	}
 
 	public void runStat() {
@@ -59,7 +64,12 @@ public class XPEHH extends HaplotypeTests {
 		
 		//TODO: This stat call is broken. CMS will run but the data for XPEHH is incorrect
 		//TODO: make and xp_individuals array that corresponds with tp_individual's data
+		
+//		unused_snps = findCrossSNPs(all_win, all_xp_win);
+		
 		//TODO: I may need to throw out both... this means making a new window? NO, define unused snps first then run analysis
+		//		find the SNPs that I don't want to use
+		
 		
 		//Starting XPEHH Analysis
 		Individual[] all_indv = combineIndvArrays(tp_individuals, xp_individuals);
@@ -68,6 +78,12 @@ public class XPEHH extends HaplotypeTests {
 		for(int i = 0; i < win_snps.size(); i++) {
 			
 			SNP core_snp = win_snps.get(i);
+			
+//			if(valid_snps.contains(core_snp))
+//				go ahead of this point
+//				otherwise put the SNP in unused SNPs
+//				if valid_snps does contain it, remove it???
+			
 			EHH comb_ehh = getCombinedEHH(all_indv, core_snp);
 			double last_ehh = comb_ehh.getLastEhhValue();
 			
@@ -117,6 +133,7 @@ public class XPEHH extends HaplotypeTests {
 	
 	private EHH getCombinedEHH(Individual[] all_indv, SNP core_snp) {
 		
+		//add only SNPs in the all_indv array that are in valid_snps...
 		ExtendedHaplotype all_eh = setHaplotypeGroup(all_indv);
 		
 		EHH comb_ehh = new EHH(win, all_indv, core_snp, all_eh, all_win);
@@ -135,5 +152,50 @@ public class XPEHH extends HaplotypeTests {
 			tot[j + a.length] = b[j];
 		
 		return tot;
+	}
+	
+	//Goes across the ENTIRE chromosome and creates a list of SNPs that are in BOTH populations
+	//Only want to do this once (not every time I create a new Stat object) consider putting this in a static method
+	private List<SNP> findCrossSNPs(List<Window> all_win, List<Window> all_xp_win) {
+		
+		List<SNP> all_unused = new ArrayList<SNP>();
+		int last_xp_win_index = 0;
+		
+		for(int i = 0; i < all_win.size(); i++) {
+			for(int j = last_xp_win_index; j < all_xp_win.size(); j++) {
+				Window tp_win = all_win.get(i);
+				Window xp_win = all_xp_win.get(j);
+				
+				if(tp_win.getStPos() == xp_win.getStPos()
+						&& tp_win.getEndPos() == xp_win.getEndPos()) {
+					System.out.println("\nTarget Window Pos = " + tp_win.getStPos() + "\t=>\t" + tp_win.getEndPos());
+					System.out.println("Target SNP size = " + tp_win.getSNPs().size());
+					System.out.println("Cross Window Pos = " + xp_win.getStPos() + "\t=>\t" + xp_win.getEndPos());
+					System.out.println("Cross SNP size = " + xp_win.getSNPs().size());
+					
+					List<SNP> win_snps = all_win.get(i).getSNPs();
+					List<SNP> xp_win_snps = all_xp_win.get(i).getSNPs();
+					
+					//TODO: now I can look at all the SNPs within the same window range and compare apples to apples
+				}
+				
+
+				
+			}
+			
+		}
+		
+		return all_unused;
+	}
+	
+	private void setupEnvironment() {
+		
+		valid_snps = findCrossSNPs(all_win, all_xp_win);
+		
+		//TODO: I also need to go through everything and create 3 new Indv[]
+		//		one for ALL Indv
+		//		one for tp Indv
+		//		one for xp Indv
+		
 	}
 }

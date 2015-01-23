@@ -37,7 +37,7 @@ public class Window {
 		else return null;
 	}
 	
-	//returns the index of the SNP according to the phased array
+	//returns the index of the SNP within the Individual array
 	public int getSnpIndex(int pos) {
 		
 		for(int i = 0; i < all_snps.size(); i++) {
