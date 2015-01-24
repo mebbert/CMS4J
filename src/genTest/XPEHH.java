@@ -158,7 +158,17 @@ public class XPEHH extends HaplotypeTests {
 	//Only want to do this once (not every time I create a new Stat object) consider putting this in a static method
 	private List<SNP> findCrossSNPs(List<Window> all_win, List<Window> all_xp_win) {
 		
-		List<SNP> all_unused = new ArrayList<SNP>();
+		List<SNP> all_valid_snps = new ArrayList<SNP>();
+		Individual[] tp_indv_4X = new Individual[tp_individuals.length];
+		Individual[] xp_indv_4X = new Individual[xp_individuals.length];
+		Individual[] all_indv_4X = new Individual[tp_indv_4X.length + xp_indv_4X.length];
+		
+		List<Window> wins_4X = new ArrayList<Window>();
+		wins_4X.add(new Window(0, 0, 0));
+		
+		
+		
+		
 		int last_xp_win_index = 0;
 		
 		for(int i = 0; i < all_win.size(); i++) {
@@ -166,15 +176,56 @@ public class XPEHH extends HaplotypeTests {
 				Window tp_win = all_win.get(i);
 				Window xp_win = all_xp_win.get(j);
 				
-				if(tp_win.getStPos() == xp_win.getStPos()
-						&& tp_win.getEndPos() == xp_win.getEndPos()) {
-					System.out.println("\nTarget Window Pos = " + tp_win.getStPos() + "\t=>\t" + tp_win.getEndPos());
+				int tp_win_st = tp_win.getStPos();
+				int tp_win_end = tp_win.getEndPos();
+				int xp_win_st = xp_win.getStPos();
+				int xp_win_end = xp_win.getEndPos();
+				
+				if(tp_win_st == xp_win_st
+						&& tp_win_end == xp_win_end) {
+					
+					System.out.println("\nTarget Window Pos = " + tp_win_st + "\t=>\t" + tp_win_end);
 					System.out.println("Target SNP size = " + tp_win.getSNPs().size());
-					System.out.println("Cross Window Pos = " + xp_win.getStPos() + "\t=>\t" + xp_win.getEndPos());
+					System.out.println("Cross Window Pos = " + xp_win_st + "\t=>\t" + xp_win_end);
 					System.out.println("Cross SNP size = " + xp_win.getSNPs().size());
 					
 					List<SNP> win_snps = all_win.get(i).getSNPs();
 					List<SNP> xp_win_snps = all_xp_win.get(i).getSNPs();
+					
+					for(int k = 0; i < win_snps.size(); i++) {
+						for(int l = 0; j < xp_win_snps.size(); j++) {
+							if(win_snps.get(k).equals(xp_win_snps.get(l))) {
+								if(!containsWindow(wins_4X, tp_win_st, tp_win_end)) {
+									//make and put the window in the wins_4X
+									Window last_win = wins_4X.get(wins_4X.size() - 1);
+									int last_win_indx = last_win.getStIndex() + last_win.getSnpListSize() - 1;
+									last_win.setEndIndex(last_win_indx);
+									
+									Window new_win = new Window(tp_win_st, tp_win_end, (last_win_indx + 1));
+									wins_4X.add(new_win);
+								}
+								
+								Window cur_win = getCurWindow(wins_4X, tp_win_st, tp_win_end);
+								int cur_win_indx = wins_4X.indexOf(cur_win);
+								
+								
+								SNP tp_snp = win_snps.get(k);
+								SNP xp_snp = xp_win_snps.get(i);
+								
+								int tp_indx = tp_win.getSnpIndex(tp_snp);
+								int xp_indx = xp_win.getSnpIndex(xp_snp);
+								
+								//Now I have indexes within the native Individual[] by which to work on
+								//Add the SNP to each of the Individuals in tp_indv_4X and xp_indv_4X with the alleles 
+								//		gleaned from the respective Individual[]
+								//Add the SNP to the cur_win of wins_4X
+								//Replace the Window at cur_win_indx in wins_4X with cur_win
+								
+								//TODO: check for any bugs... why does it only do it 3 times???
+							}
+						}
+						
+					}
 					
 					//TODO: now I can look at all the SNPs within the same window range and compare apples to apples
 				}
@@ -185,7 +236,28 @@ public class XPEHH extends HaplotypeTests {
 			
 		}
 		
-		return all_unused;
+		return all_valid_snps;
+	}
+	
+	private Window getCurWindow(List<Window> wins, int st, int end) {
+		
+		for(Window w : wins) {
+			if(w.getStPos() == st && w.getEndPos() == end) 
+				return w;
+		}
+		
+		return null;
+	}
+	
+	private boolean containsWindow(List<Window> wins, int st, int end) {
+		
+		
+		for(Window w : wins) {
+			if(w.getStPos() == st && w.getEndPos() == end)
+				return true;
+		}
+		
+		return false;
 	}
 	
 	private void setupEnvironment() {

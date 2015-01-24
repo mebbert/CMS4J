@@ -84,6 +84,10 @@ public class Window {
 	public List<SNP> getSNPs() {
 		return all_snps;
 	}
+	
+	public int getSnpListSize() {
+		return all_snps.size();
+	}
 
 	@Override
 	public int hashCode() {
