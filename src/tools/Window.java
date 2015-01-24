@@ -30,6 +30,10 @@ public class Window {
 		all_snps.add(new SNP(pos, rs_num, a0, a1, rs_modifyer));
 	}
 	
+	public void addSNP(SNP s) {
+		all_snps.add(s);
+	}
+	
 	//returns null if this index isn't within the window's boundaries
 	public SNP getSNP(int index) {
 		if(containsIndex(index))

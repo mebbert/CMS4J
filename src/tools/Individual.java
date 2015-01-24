@@ -86,10 +86,6 @@ public class Individual {
 			return 0;
 	}
 	
-//	public boolean getStrand1Allele(int index) {
-//		return strand1[index];
-//	}
-	
 	public int getStrand2Allele(int index) {
 		
 		boolean a = strand2[index];
@@ -121,6 +117,14 @@ public class Individual {
 			return false;
 		
 		return true;
+	}
+	
+	public int getID() {
+		return id;
+	}
+	
+	public byte getChr() {
+		return chr;
 	}
 	
 	public String toString(int st, int end) throws IndexOutOfBoundsException{

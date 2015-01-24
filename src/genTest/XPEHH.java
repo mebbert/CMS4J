@@ -53,7 +53,7 @@ public class XPEHH extends HaplotypeTests {
 		all_unstd_XPEHH = new ArrayList<Double>();
 		all_XPEHH = new ArrayList<Double>();
 		
-//		setupEnvironment();//DONT TOUCH THIS METHOD! I am playing around with things here.
+		setupEnvironment();//DONT TOUCH THIS METHOD! I am playing around with things here.
 		
 	}
 
@@ -161,7 +161,12 @@ public class XPEHH extends HaplotypeTests {
 		List<SNP> all_valid_snps = new ArrayList<SNP>();
 		Individual[] tp_indv_4X = new Individual[tp_individuals.length];
 		Individual[] xp_indv_4X = new Individual[xp_individuals.length];
-		Individual[] all_indv_4X = new Individual[tp_indv_4X.length + xp_indv_4X.length];
+		for(int i = 0; i < tp_indv_4X.length; i++)
+			tp_indv_4X[i] = new Individual(tp_individuals[i].getID(), tp_individuals[i].getChr());
+		for(int i = 0; i < xp_indv_4X.length; i++)
+			xp_indv_4X[i] = new Individual(xp_individuals[i].getID(), xp_individuals[i].getChr());
+		
+//		Individual[] all_indv_4X = new Individual[tp_indv_4X.length + xp_indv_4X.length];
 		
 		List<Window> wins_4X = new ArrayList<Window>();
 		wins_4X.add(new Window(0, 0, 0));
@@ -184,17 +189,17 @@ public class XPEHH extends HaplotypeTests {
 				if(tp_win_st == xp_win_st
 						&& tp_win_end == xp_win_end) {
 					
-					System.out.println("\nTarget Window Pos = " + tp_win_st + "\t=>\t" + tp_win_end);
-					System.out.println("Target SNP size = " + tp_win.getSNPs().size());
-					System.out.println("Cross Window Pos = " + xp_win_st + "\t=>\t" + xp_win_end);
-					System.out.println("Cross SNP size = " + xp_win.getSNPs().size());
+//					System.out.println("\nTarget Window Pos = " + tp_win_st + "\t=>\t" + tp_win_end);
+//					System.out.println("Target SNP size = " + tp_win.getSNPs().size());
+//					System.out.println("Cross Window Pos = " + xp_win_st + "\t=>\t" + xp_win_end);
+//					System.out.println("Cross SNP size = " + xp_win.getSNPs().size());
 					
 					List<SNP> win_snps = all_win.get(i).getSNPs();
-					List<SNP> xp_win_snps = all_xp_win.get(i).getSNPs();
+					List<SNP> xp_win_snps = all_xp_win.get(j).getSNPs();
 					
-					for(int k = 0; i < win_snps.size(); i++) {
-						for(int l = 0; j < xp_win_snps.size(); j++) {
-							if(win_snps.get(k).equals(xp_win_snps.get(l))) {
+					for(int k = 0; k < win_snps.size(); k++) {
+						for(int l = 0; l < xp_win_snps.size(); l++) {
+							if(win_snps.get(k).getPosition() == xp_win_snps.get(l).getPosition()) {
 								if(!containsWindow(wins_4X, tp_win_st, tp_win_end)) {
 									//make and put the window in the wins_4X
 									Window last_win = wins_4X.get(wins_4X.size() - 1);
@@ -210,22 +215,72 @@ public class XPEHH extends HaplotypeTests {
 								
 								
 								SNP tp_snp = win_snps.get(k);
-								SNP xp_snp = xp_win_snps.get(i);
+								SNP xp_snp = xp_win_snps.get(l);
 								
 								int tp_indx = tp_win.getSnpIndex(tp_snp);
 								int xp_indx = xp_win.getSnpIndex(xp_snp);
+								
+//								System.out.println("tp snp\t" + tp_snp + "\tindex\t" + tp_indx);
+//								System.out.println("xp snp\t" + xp_snp + "\tindex\t" + xp_indx);
+//								System.out.print((xp_indx + 1) + ",");
+								
+								for(int m = 0; m < tp_indv_4X.length; m++) {
+									Integer str_1 = tp_individuals[m].getStrand1Allele(tp_indx);
+									Integer str_2 = tp_individuals[m].getStrand2Allele(tp_indx);
+									
+									tp_indv_4X[m].addAlleleToStrand1(str_1.toString());
+									tp_indv_4X[m].addAlleleToStrand2(str_2.toString());
+								}
+								
+								for(int m = 0; m < xp_indv_4X.length; m++) {
+									//this can be simplified by making a switchAlleles statement and ONE if statement if(xp_str_1 NeedsToSwitch)
+									if(tp_snp.getAllele0().equals(xp_snp.getAllele0())) {
+										Integer str_1 = xp_individuals[m].getStrand1Allele(xp_indx);
+										Integer str_2 = xp_individuals[m].getStrand2Allele(xp_indx);
+										
+										xp_indv_4X[m].addAlleleToStrand1(str_1.toString());
+										xp_indv_4X[m].addAlleleToStrand2(str_2.toString());
+									} else if(tp_snp.getAllele0().equals(xp_snp.getAllele1())) {
+										Integer str_1 = xp_individuals[m].getStrand1Allele(xp_indx);
+										Integer str_2 = xp_individuals[m].getStrand2Allele(xp_indx);
+										
+										if(str_1 == 0)
+											str_1 = 1;
+										else
+											str_1 = 0;
+										
+										if(str_2 == 0)
+											str_2 = 1;
+										else
+											str_2 = 0;
+										
+										xp_indv_4X[m].addAlleleToStrand1(str_1.toString());
+										xp_indv_4X[m].addAlleleToStrand2(str_2.toString());
+										
+									} else {
+										System.out.println("KILL ME!!!");
+										System.exit(0);
+									}
+								}
+								
+								cur_win.addSNP(tp_snp);
+								cur_win.setEndIndex(cur_win.getStIndex() + cur_win.getSnpListSize() - 1);
+								
+								wins_4X.set(cur_win_indx, cur_win);
+								
 								
 								//Now I have indexes within the native Individual[] by which to work on
 								//Add the SNP to each of the Individuals in tp_indv_4X and xp_indv_4X with the alleles 
 								//		gleaned from the respective Individual[]
 								//Add the SNP to the cur_win of wins_4X
+								//		NOTE: the alleles between populations may be switched. Add tp_snp to cur_win and adjust for inconsistency
 								//Replace the Window at cur_win_indx in wins_4X with cur_win
 								
 								//TODO: check for any bugs... why does it only do it 3 times???
 							}
-						}
-						
+						}	
 					}
+//					System.out.println("\n");
 					
 					//TODO: now I can look at all the SNPs within the same window range and compare apples to apples
 				}
@@ -235,6 +290,19 @@ public class XPEHH extends HaplotypeTests {
 			}
 			
 		}
+		
+		
+		
+//		for(int i = 0; i < wins_4X.size(); i++) 
+//			System.out.println(wins_4X.get(i));
+//		
+//		for(int i = 0; i < tp_indv_4X.length; i++) 
+//			System.out.println(tp_indv_4X[i]);
+//		
+//		System.out.println("\t\t\t\t\t*****XP INDIVIDUALS 4X*****");
+//		
+//		for(int i = 0; i < xp_indv_4X.length; i++) 
+//			System.out.println(xp_indv_4X[i]);
 		
 		return all_valid_snps;
 	}
