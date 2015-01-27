@@ -49,7 +49,7 @@ public class Stats {
 		
 //		WindowStats ws = new WindowStats(win.getStPos(), win.getEndPos());
 		
-		System.out.println("\n\nStarting stats run");
+		System.out.println("\n\n\t***Starting stats run***");
 		
 		i.runStat();
 		x.runStat();

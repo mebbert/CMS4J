@@ -66,11 +66,6 @@ public class XPEHH extends HaplotypeTests {
 			
 			SNP core_snp = win_snps.get(i);
 			
-//			if(valid_snps.contains(core_snp))
-//				go ahead of this point
-//				otherwise put the SNP in unused SNPs
-//				if valid_snps does contain it, remove it???
-			
 			EHH comb_ehh = getCombinedEHH(all_indv, core_snp);
 			double last_ehh = comb_ehh.getLastEhhValue();
 			
@@ -120,7 +115,6 @@ public class XPEHH extends HaplotypeTests {
 	
 	private EHH getCombinedEHH(Individual[] all_indv, SNP core_snp) {
 		
-		//add only SNPs in the all_indv array that are in valid_snps...
 		ExtendedHaplotype all_eh = setHaplotypeGroup(all_indv);
 		
 		EHH comb_ehh = new EHH(win, all_indv, core_snp, all_eh, all_win);
