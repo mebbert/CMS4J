@@ -30,9 +30,9 @@ public class XPEHH extends HaplotypeTests {
 	
 	public XPEHH(Log log,
 					Window win,
+					List<Window> all_win,
 					Individual[] tp_individuals,
 					Individual[] xp_individuals,
-					List<Window> all_win,
 					GeneticMap gm) {
 		
 		this.log = log;
@@ -123,17 +123,17 @@ public class XPEHH extends HaplotypeTests {
 		return comb_ehh;
 	}
 	
-	private Individual[] combineIndvArrays(Individual[] a, Individual[] b) {
-		Individual[] tot = new Individual[a.length + b.length];
-		
-		for(int i = 0; i < a.length; i++)
-			tot[i] = a[i];
-		
-		for(int j = 0; j < b.length; j++) 
-			tot[j + a.length] = b[j];
-		
-		return tot;
-	}	
+//	private Individual[] combineIndvArrays(Individual[] a, Individual[] b) {
+//		Individual[] tot = new Individual[a.length + b.length];
+//		
+//		for(int i = 0; i < a.length; i++)
+//			tot[i] = a[i];
+//		
+//		for(int j = 0; j < b.length; j++) 
+//			tot[j + a.length] = b[j];
+//		
+//		return tot;
+//	}	
 	
 	
 }

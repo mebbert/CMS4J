@@ -136,6 +136,18 @@ public abstract class HaplotypeTests {
 		return null;
 	}
 	
+	protected Individual[] combineIndvArrays(Individual[] a, Individual[] b) {
+		Individual[] tot = new Individual[a.length + b.length];
+		
+		for(int i = 0; i < a.length; i++)
+			tot[i] = a[i];
+		
+		for(int j = 0; j < b.length; j++) 
+			tot[j + a.length] = b[j];
+		
+		return tot;
+	}
+	
 	protected List<Double> standardizeData(List<Double> all_unstd_data) {
 		//Standardizes the data by calculating the z-score at every position
 		//	follows this equation: z = (x-mean[x])/std[x]; 

@@ -32,8 +32,8 @@ public class Stats {
 		
 		i = new iHS(log, win, tp_individuals, anc_types, all_win, gm);
 		h = new iHH(log, win, tp_individuals, anc_types, all_win, gm);
-		x = new XPEHH(log, insect_win, tp_insect_indv, xp_insect_indv, insect_windows, gm);
-		d = new DAF();
+		x = new XPEHH(log, insect_win, insect_windows, tp_insect_indv, xp_insect_indv, gm);
+		d = new DAF(log, insect_win, insect_windows, tp_insect_indv, xp_insect_indv, anc_types);
 		f = new Fst();
 	}
 
@@ -54,8 +54,8 @@ public class Stats {
 		i.runStat();
 		x.runStat();
 		h.runStat();
+//		d.runStat();
 		
-		d.runStatDAF();
 		f.runStatFst();
 		
 //		return ws;
