@@ -158,7 +158,7 @@ public class Driver {
 //			win_stats.add(stats.getStats());
 			
 //			=========FOR TESTING===========
-			if(i == 5) //breaks at i = 4 because of how the intersect is calculated...
+			if(i == 2) //breaks at i = 3 on clean_data because of how the intersect is calculated... 
 				break;
 //			===============================
 		}
@@ -189,46 +189,30 @@ public class Driver {
 				int xp_win_end = xp_win.getEndPos();
 				
 				if(tp_win_st == xp_win_st
-						&& tp_win_end == xp_win_end) {
-					
-//					System.out.println("\nTarget Window Pos = " + tp_win_st + "\t=>\t" + tp_win_end);
-//					System.out.println("Target SNP size = " + tp_win.getSNPs().size());
-//					System.out.println("Cross Window Pos = " + xp_win_st + "\t=>\t" + xp_win_end);
-//					System.out.println("Cross SNP size = " + xp_win.getSNPs().size());
-					
-					
-					
+						&& tp_win_end == xp_win_end) {			
 					
 					List<SNP> tp_win_snps = tp_windows.get(i).getSNPs();
 					List<SNP> xp_win_snps = xp_windows.get(j).getSNPs();
 					
-					
-					compareSNPs(tp_win_snps, xp_win_snps, wins_insect, tp_win_st, tp_win_end, tp_win, xp_win, tp_indv_insect, xp_indv_insect);
-
-					
-					
-					
-					
-					
-
-				}
-				
-
-				
-			}
-			
+					compareSNPs(tp_win_snps, 
+								xp_win_snps, 
+								wins_insect, 
+								tp_win_st, 
+								tp_win_end, 
+								tp_win, 
+								xp_win, 
+								tp_indv_insect, 
+								xp_indv_insect);	
+				}	
+			}	
 		}
 		
-		
-		
-		//set the global variables
 		wins_insect.remove(0);//to get rid of the initial window
 		
+		//set the global variables
 		insect_windows = wins_insect;
 		tp_insect_indv = tp_indv_insect;
 		xp_insect_indv = xp_indv_insect;
-		
-		
 	}
 	
 	//continue to pear down this method into smaller chunks
@@ -258,66 +242,68 @@ public class Driver {
 					Window cur_win = getCurWindow(wins_insect, tp_win_st, tp_win_end);
 					int cur_win_indx = wins_insect.indexOf(cur_win);
 					
-					
 					SNP tp_snp = tp_win_snps.get(k);
 					SNP xp_snp = xp_win_snps.get(l);
 					
 					int tp_indx = tp_win.getSnpIndex(tp_snp);
 					int xp_indx = xp_win.getSnpIndex(xp_snp);
 					
-//					System.out.println("tp snp\t" + tp_snp + "\tindex\t" + tp_indx);
-//					System.out.println("xp snp\t" + xp_snp + "\tindex\t" + xp_indx);
-//					System.out.print((xp_indx + 1) + ",");
-					
-					for(int m = 0; m < tp_indv_insect.length; m++) {
-						Integer str_1 = tp_individuals[m].getStrand1Allele(tp_indx);
-						Integer str_2 = tp_individuals[m].getStrand2Allele(tp_indx);
-						
-						tp_indv_insect[m].addAlleleToStrand1(str_1.toString());
-						tp_indv_insect[m].addAlleleToStrand2(str_2.toString());
-					}
-					
-					for(int m = 0; m < xp_indv_insect.length; m++) {
-						//this can be simplified by making a switchAlleles statement and ONE if statement if(xp_str_1 NeedsToSwitch)
-						if(tp_snp.getAllele0().equals(xp_snp.getAllele0())) {
-							Integer str_1 = xp_individuals[m].getStrand1Allele(xp_indx);
-							Integer str_2 = xp_individuals[m].getStrand2Allele(xp_indx);
-							
-							xp_indv_insect[m].addAlleleToStrand1(str_1.toString());
-							xp_indv_insect[m].addAlleleToStrand2(str_2.toString());
-						} else if(tp_snp.getAllele0().equals(xp_snp.getAllele1())) {
-							Integer str_1 = xp_individuals[m].getStrand1Allele(xp_indx);
-							Integer str_2 = xp_individuals[m].getStrand2Allele(xp_indx);
-							
-							if(str_1 == 0)
-								str_1 = 1;
-							else
-								str_1 = 0;
-							
-							if(str_2 == 0)
-								str_2 = 1;
-							else
-								str_2 = 0;
-							
-							xp_indv_insect[m].addAlleleToStrand1(str_1.toString());
-							xp_indv_insect[m].addAlleleToStrand2(str_2.toString());
-							
-						} else {
-							System.out.println("KILL ME!!!");
-							System.exit(0);
-						}
-					}
+					addAllelesToIndividuals(tp_indx, 
+											xp_indx, 
+											tp_snp, 
+											xp_snp, 
+											tp_indv_insect, 
+											xp_indv_insect);
 					
 					cur_win.addSNP(tp_snp);
 					cur_win.setEndIndex(cur_win.getStIndex() + cur_win.getSnpListSize() - 1);
 					
 					wins_insect.set(cur_win_indx, cur_win);
 					
-					
 				}
 			}	
 		}
+	}
+	
+	private void addAllelesToIndividuals(int tp_indx, 
+											int xp_indx, 
+											SNP tp_snp, 
+											SNP xp_snp,
+											Individual[] tp_indv_insect,
+											Individual[] xp_indv_insect) {
 		
+		//Adding alleles to target population's individuals
+		for(int m = 0; m < tp_indv_insect.length; m++) {
+			Integer str_1 = tp_individuals[m].getStrand1Allele(tp_indx);
+			Integer str_2 = tp_individuals[m].getStrand2Allele(tp_indx);
+			
+			tp_indv_insect[m].addAlleleToStrand1(str_1.toString());
+			tp_indv_insect[m].addAlleleToStrand2(str_2.toString());
+		}
+		
+		//Adding alleles to cross population's individuals
+		for(int i = 0; i < xp_indv_insect.length; i++) {
+			
+			Integer str_1 = xp_individuals[i].getStrand1Allele(xp_indx);
+			Integer str_2 = xp_individuals[i].getStrand2Allele(xp_indx);
+			
+			//switch allele types because they are reported on opposite a0 or a1 column
+			if(tp_snp.getAllele0().equals(xp_snp.getAllele1())) {
+				
+				if(str_1 == 0)
+					str_1 = 1;
+				else
+					str_1 = 0;
+				
+				if(str_2 == 0)
+					str_2 = 1;
+				else
+					str_2 = 0;
+			}
+			
+			xp_indv_insect[i].addAlleleToStrand1(str_1.toString());
+			xp_indv_insect[i].addAlleleToStrand2(str_2.toString());
+		}
 	}
 	
 	private Window getCurWindow(List<Window> wins, int st, int end) {
