@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import errors.*;
-
 import tools.GeneticMap;
 import tools.Individual;
 import tools.SNP;
@@ -36,10 +35,20 @@ public class Driver {
 	private File anc_dir;
 	private File out_file;
 	
-	private List<Window> windows;
+	//target population variables
+	private List<Window> tp_windows;
+	private Individual[] tp_individuals;
+	
+	//cross population variables
 	private List<Window> xp_windows;
-	private Individual[] individuals;
 	private Individual[] xp_individuals;
+	
+	//intersection of target and cross populations
+	private List<Window> insect_windows;//for listing the windows in the intersection
+	private Individual[] tp_insect_indv;//for listing the individual alleles in the intersection
+	private Individual[] xp_insect_indv;
+	
+	//universal variables
 	private GeneticMap gm;
 	private List<SNP> anc_types;
 	private List<WindowStats> win_stats;
@@ -59,9 +68,12 @@ public class Driver {
 		anc_dir = null;
 		
 		xp_windows = null;
-		windows = null;
-		individuals = null;
+		tp_windows = null;
+		insect_windows = null;
+		tp_individuals = null;
 		xp_individuals = null;
+		tp_insect_indv = null;
+		xp_insect_indv = null;
 		gm = null;
 		anc_types = null;
 		
@@ -99,6 +111,8 @@ public class Driver {
 		for(int i = chr_st; i <= chr_end; i++) {
 			parseFiles(i);
 		
+			intersectCrossPopulation();
+			
 			getStats();
 			
 			runAnalysis();	//runs CMS
@@ -122,20 +136,209 @@ public class Driver {
 	private void getStats() {
 		log.addLine("\n\t\t\t*****Starting Stats Analysis*****");
 		
-		for(int i = 0; i < windows.size(); i++) {
-			Window w = windows.get(i);
+		for(int i = 0; i < tp_windows.size(); i++) {
+			Window w = tp_windows.get(i);
+			Window insect_w = insect_windows.get(i);//TODO: what do I do when there aren't enough windows here...
+			
 			log.addLine("\nSweep between positions " + w.getStPos() + " to " + w.getEndPos());
 			
-			Stats stats = new Stats(log, w, individuals, xp_individuals, anc_types, windows, xp_windows, gm);
+			Stats stats = new Stats(log, 
+									w, 
+									insect_w,
+									tp_individuals, 
+									xp_individuals, 
+									tp_insect_indv,
+									xp_insect_indv,
+									anc_types, 
+									tp_windows, 
+									insect_windows, 
+									gm);
 			stats.getStats();
 			
 //			win_stats.add(stats.getStats());
 			
 //			=========FOR TESTING===========
-			if(i == 3)
+			if(i == 5) //breaks at i = 4 because of how the intersect is calculated...
 				break;
 //			===============================
 		}
+	}
+	
+	private void intersectCrossPopulation() {
+		
+		Individual[] tp_indv_insect = new Individual[tp_individuals.length];
+		Individual[] xp_indv_insect = new Individual[xp_individuals.length];
+		
+		for(int i = 0; i < tp_indv_insect.length; i++)
+			tp_indv_insect[i] = new Individual(tp_individuals[i].getID(), tp_individuals[i].getChr());
+		for(int i = 0; i < xp_indv_insect.length; i++)
+			xp_indv_insect[i] = new Individual(xp_individuals[i].getID(), xp_individuals[i].getChr());
+		
+		List<Window> wins_insect = new ArrayList<Window>();
+		wins_insect.add(new Window(0, 0, 0));
+		
+		int last_xp_win_index = 0;
+		for(int i = 0; i < tp_windows.size(); i++) {
+			for(int j = last_xp_win_index; j < xp_windows.size(); j++) {
+				Window tp_win = tp_windows.get(i);
+				Window xp_win = xp_windows.get(j);
+				
+				int tp_win_st = tp_win.getStPos();
+				int tp_win_end = tp_win.getEndPos();
+				int xp_win_st = xp_win.getStPos();
+				int xp_win_end = xp_win.getEndPos();
+				
+				if(tp_win_st == xp_win_st
+						&& tp_win_end == xp_win_end) {
+					
+//					System.out.println("\nTarget Window Pos = " + tp_win_st + "\t=>\t" + tp_win_end);
+//					System.out.println("Target SNP size = " + tp_win.getSNPs().size());
+//					System.out.println("Cross Window Pos = " + xp_win_st + "\t=>\t" + xp_win_end);
+//					System.out.println("Cross SNP size = " + xp_win.getSNPs().size());
+					
+					
+					
+					
+					List<SNP> tp_win_snps = tp_windows.get(i).getSNPs();
+					List<SNP> xp_win_snps = xp_windows.get(j).getSNPs();
+					
+					
+					compareSNPs(tp_win_snps, xp_win_snps, wins_insect, tp_win_st, tp_win_end, tp_win, xp_win, tp_indv_insect, xp_indv_insect);
+
+					
+					
+					
+					
+					
+
+				}
+				
+
+				
+			}
+			
+		}
+		
+		
+		
+		//set the global variables
+		wins_insect.remove(0);//to get rid of the initial window
+		
+		insect_windows = wins_insect;
+		tp_insect_indv = tp_indv_insect;
+		xp_insect_indv = xp_indv_insect;
+		
+		
+	}
+	
+	//continue to pear down this method into smaller chunks
+	private void compareSNPs(List<SNP> tp_win_snps, 
+								List<SNP> xp_win_snps,
+								List<Window> wins_insect,
+								int tp_win_st,
+								int tp_win_end,
+								Window tp_win,
+								Window xp_win,
+								Individual[] tp_indv_insect,
+								Individual[] xp_indv_insect) {
+		
+		for(int k = 0; k < tp_win_snps.size(); k++) {
+			for(int l = 0; l < xp_win_snps.size(); l++) {
+				if(tp_win_snps.get(k).getPosition() == xp_win_snps.get(l).getPosition()) {
+					if(!containsWindow(wins_insect, tp_win_st, tp_win_end)) {
+						//make and put the window in the wins_insect
+						Window last_win = wins_insect.get(wins_insect.size() - 1);
+						int last_win_indx = last_win.getStIndex() + last_win.getSnpListSize() - 1;
+						last_win.setEndIndex(last_win_indx);
+						
+						Window new_win = new Window(tp_win_st, tp_win_end, (last_win_indx + 1));
+						wins_insect.add(new_win);
+					}
+					
+					Window cur_win = getCurWindow(wins_insect, tp_win_st, tp_win_end);
+					int cur_win_indx = wins_insect.indexOf(cur_win);
+					
+					
+					SNP tp_snp = tp_win_snps.get(k);
+					SNP xp_snp = xp_win_snps.get(l);
+					
+					int tp_indx = tp_win.getSnpIndex(tp_snp);
+					int xp_indx = xp_win.getSnpIndex(xp_snp);
+					
+//					System.out.println("tp snp\t" + tp_snp + "\tindex\t" + tp_indx);
+//					System.out.println("xp snp\t" + xp_snp + "\tindex\t" + xp_indx);
+//					System.out.print((xp_indx + 1) + ",");
+					
+					for(int m = 0; m < tp_indv_insect.length; m++) {
+						Integer str_1 = tp_individuals[m].getStrand1Allele(tp_indx);
+						Integer str_2 = tp_individuals[m].getStrand2Allele(tp_indx);
+						
+						tp_indv_insect[m].addAlleleToStrand1(str_1.toString());
+						tp_indv_insect[m].addAlleleToStrand2(str_2.toString());
+					}
+					
+					for(int m = 0; m < xp_indv_insect.length; m++) {
+						//this can be simplified by making a switchAlleles statement and ONE if statement if(xp_str_1 NeedsToSwitch)
+						if(tp_snp.getAllele0().equals(xp_snp.getAllele0())) {
+							Integer str_1 = xp_individuals[m].getStrand1Allele(xp_indx);
+							Integer str_2 = xp_individuals[m].getStrand2Allele(xp_indx);
+							
+							xp_indv_insect[m].addAlleleToStrand1(str_1.toString());
+							xp_indv_insect[m].addAlleleToStrand2(str_2.toString());
+						} else if(tp_snp.getAllele0().equals(xp_snp.getAllele1())) {
+							Integer str_1 = xp_individuals[m].getStrand1Allele(xp_indx);
+							Integer str_2 = xp_individuals[m].getStrand2Allele(xp_indx);
+							
+							if(str_1 == 0)
+								str_1 = 1;
+							else
+								str_1 = 0;
+							
+							if(str_2 == 0)
+								str_2 = 1;
+							else
+								str_2 = 0;
+							
+							xp_indv_insect[m].addAlleleToStrand1(str_1.toString());
+							xp_indv_insect[m].addAlleleToStrand2(str_2.toString());
+							
+						} else {
+							System.out.println("KILL ME!!!");
+							System.exit(0);
+						}
+					}
+					
+					cur_win.addSNP(tp_snp);
+					cur_win.setEndIndex(cur_win.getStIndex() + cur_win.getSnpListSize() - 1);
+					
+					wins_insect.set(cur_win_indx, cur_win);
+					
+					
+				}
+			}	
+		}
+		
+	}
+	
+	private Window getCurWindow(List<Window> wins, int st, int end) {
+		
+		for(Window w : wins) {
+			if(w.getStPos() == st && w.getEndPos() == end) 
+				return w;
+		}
+		
+		return null;
+	}
+	
+	private boolean containsWindow(List<Window> wins, int st, int end) {
+		
+		
+		for(Window w : wins) {
+			if(w.getStPos() == st && w.getEndPos() == end)
+				return true;
+		}
+		
+		return false;
 	}
 	
 	private void parseFiles(int chr) throws Exception {
@@ -153,8 +356,8 @@ public class Driver {
 		MapParser mp = new MapParser(map_path, log);
 		AncestralParser ap = new AncestralParser(anc_path, log);
 		
-		windows = pp.parseLegend(win_size);
-		individuals = pp.parsePhased(chr);
+		tp_windows = pp.parseLegend(win_size);
+		tp_individuals = pp.parsePhased(chr);
 		xp_windows = xp_pp.parseLegend(win_size);
 		xp_individuals = xp_pp.parsePhased(chr);
 		gm = mp.parseGeneMap();
@@ -202,8 +405,8 @@ public class Driver {
 	
 	private void resetDataValues() {
 		
-		windows = new ArrayList<Window>();
-		individuals = new Individual[1];
+		tp_windows = new ArrayList<Window>();
+		tp_individuals = new Individual[1];
 		xp_individuals = new Individual[1];
 		gm = new GeneticMap();
 		anc_types = new ArrayList<SNP>();

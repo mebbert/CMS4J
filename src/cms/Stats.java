@@ -20,16 +20,19 @@ public class Stats {
 	
 	public Stats(Log log, 
 				Window win, 
-				Individual[] individuals, 
+				Window insect_win,
+				Individual[] tp_individuals, 
 				Individual[] xp_individuals,
+				Individual[] tp_insect_indv,
+				Individual[] xp_insect_indv,
 				List<SNP> anc_types, 
 				List<Window> all_win,
-				List<Window> all_xp_win,
+				List<Window> insect_windows,
 				GeneticMap gm) {
 		
-		i = new iHS(log, win, individuals, anc_types, all_win, gm);
-		h = new iHH(log, win, individuals, anc_types, all_win, gm);
-		x = new XPEHH(log, win, individuals, xp_individuals, all_win, all_xp_win, gm);
+		i = new iHS(log, win, tp_individuals, anc_types, all_win, gm);
+		h = new iHH(log, win, tp_individuals, anc_types, all_win, gm);
+		x = new XPEHH(log, insect_win, tp_insect_indv, xp_insect_indv, insect_windows, gm);
 		d = new DAF();
 		f = new Fst();
 	}
