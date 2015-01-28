@@ -23,8 +23,7 @@ public abstract class HaplotypeTests {
 				SNP win_snp) {
 		
 		//When win_snps's a0 = ancestral type
-		if(win_snp.getAllele0().equals(anc_snp.getAllele0())
-				&& win_snp.getAllele1().equals(anc_snp.getAllele1())) {
+		if(win_snp.getAllele0().equals(anc_snp.getAllele0())) {
 			for(int i = 0; i < individuals.length; i++) {
 				
 				//adding the index of the individual with the corresponding strand (1)
@@ -42,9 +41,8 @@ public abstract class HaplotypeTests {
 					der_eh.add(i, 2);
 			}
 		}
-		//When win_snps's a0 = derived type
-		else if(win_snp.getAllele0().equals(anc_snp.getAllele1())
-				&& win_snp.getAllele1().equals(anc_snp.getAllele0())) {
+		//When win_snps's a1 = ancestral type
+		else if(win_snp.getAllele1().equals(anc_snp.getAllele0())) {
 			for(int i = 0; i < individuals.length; i++) {
 				
 				int st1_allele = individuals[i].getStrand1Allele(snp_index);

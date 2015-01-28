@@ -93,8 +93,7 @@ public class DAF extends HaplotypeTests {
 		int count = 0;
 		
 		//When core_snps's a1 = derived type
-		if(core_snp.getAllele0().equals(anc_snp.getAllele0())
-				&& core_snp.getAllele1().equals(anc_snp.getAllele1())) {
+		if(core_snp.getAllele0().equals(anc_snp.getAllele0())) {
 			for(int i = 0; i < indv.length; i++) {
 				
 				//adding the index of the individual with the corresponding strand (1)
@@ -109,8 +108,7 @@ public class DAF extends HaplotypeTests {
 			}
 		}
 		//When core_snps's a0 = derived type
-		else if(core_snp.getAllele0().equals(anc_snp.getAllele1())
-				&& core_snp.getAllele1().equals(anc_snp.getAllele0())) {
+		else if(core_snp.getAllele1().equals(anc_snp.getAllele0())) {
 			for(int i = 0; i < indv.length; i++) {
 				
 				int st1_allele = indv[i].getStrand1Allele(snp_index);
