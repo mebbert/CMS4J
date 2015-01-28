@@ -50,7 +50,7 @@ public class CMS {
 	private static String[] setupArgs(String[] args, Log log) 
 				throws IllegalInputException{
 		
-		if(args.length != 8) {
+		if(args.length != 9) {
 			String msg = "Error: Parameter length incorrect";
 			throw new IllegalInputException(log, msg);
 		}

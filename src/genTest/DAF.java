@@ -10,40 +10,50 @@ import tools.Window;
 
 public class DAF extends HaplotypeTests {
 	
-	private Window win;
+	private Window tp_win;
 	private Individual[] tp_indv;
-	private Individual[] xp_indv;
 	
-	private List<Window> all_win;
+	private List<Window> xoin_wins;
+	private Individual[] xp_ino_indv;//previously intersected with op
+	private Individual[] op_inx_indv;//previously intersected with xp
+	
 	private List<SNP> anc_types;
 	
 	//ÆDAF statistic information
 	private List<SNP> unused_snps;
+	private List<SNP> all_DAF_snps;
+	private List<Double> all_DAF;
 	
 	private Log log;
 	
 	public DAF(Log log, 
-				Window win, 
-				List<Window> all_win, //I might want this to be the non-selected (intersected) window because then I can just find the index of a particular snp making life easy
+				Window tp_win, 
 				Individual[] tp_indv,
-				Individual[] xp_indv, //this might be the 2 non-selected populations that are intersected with each other (if that's the case I'll have to start over)
+				List<Window> xoin_wins, //I might want this to be the non-selected (intersected) window because then I can just find the index of a particular snp making life easy
+				Individual[] xp_ino_indv, //this might be the 2 non-selected populations that are intersected with each other (if that's the case I'll have to start over)
+				Individual[] op_inx_indv,
 				List<SNP> anc_types){
 		
 		this.log = log;
 		
-		this.win = win;
-		this.all_win = all_win;
+		this.tp_win = tp_win;
 		this.tp_indv = tp_indv;
-		this.xp_indv = xp_indv;
+		
+		this.xoin_wins = xoin_wins;
+		this.xp_ino_indv = xp_ino_indv;
+		this.xp_ino_indv = op_inx_indv;
+		
 		this.anc_types = anc_types;
 		
 		unused_snps = new ArrayList<SNP>();
+		all_DAF_snps = new ArrayList<SNP>();
+		all_DAF = new ArrayList<Double>();
 	}
 	
 	public void runStat() {
 		
-		int st_index = win.getStIndex();
-		List<SNP> win_snps = win.getSNPs();
+		int st_index = tp_win.getStIndex();
+		List<SNP> win_snps = tp_win.getSNPs();
 		for(int i = 0; i < win_snps.size(); i++) {
 			
 			SNP core_snp = win_snps.get(i);
@@ -53,12 +63,12 @@ public class DAF extends HaplotypeTests {
 				
 //				Individual[] all_indv = combineIndvArrays(tp_indv, xp_indv);
 				int tp_instance_der = getInstanceOfDerivedAllele(tp_indv, core_snp, anc_snp, (st_index + i));
-				int xp_instance_der = getInstanceOfDerivedAllele(xp_indv, core_snp, anc_snp, (st_index + i));
+				int xp_instance_der = getInstanceOfDerivedAllele(xp_ino_indv, core_snp, anc_snp, (st_index + i));
 				
 				int tot_instance_der = xp_instance_der + xp_instance_der;
 				
 				double xp_freq_der = (double) tp_instance_der / (double) tp_indv.length;
-				double tot_freq_der = (double) tot_instance_der / ((double) tp_indv.length + (double) xp_indv.length);
+				double tot_freq_der = (double) tot_instance_der / ((double) tp_indv.length + (double) xp_ino_indv.length);
 				
 				double delta_daf = xp_freq_der - tot_freq_der;
 				//TODO: save delta_daf

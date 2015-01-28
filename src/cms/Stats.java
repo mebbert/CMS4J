@@ -19,21 +19,22 @@ public class Stats {
 	private Fst f;
 	
 	public Stats(Log log, 
-				Window win, 
-				Window insect_win,
-				Individual[] tp_individuals, 
-				Individual[] xp_individuals,
-				Individual[] tp_insect_indv,
-				Individual[] xp_insect_indv,
-				List<SNP> anc_types, 
+				Window tp_win, 
 				List<Window> all_win,
-				List<Window> insect_windows,
+				Individual[] tp_indv, 
+				
+				Window txin_win,
+				List<Window> txin_wins,
+				Individual[] tpin_indv,
+				Individual[] xpin_indv,
+				
+				List<SNP> anc_types, 
 				GeneticMap gm) {
 		
-		i = new iHS(log, win, tp_individuals, anc_types, all_win, gm);
-		h = new iHH(log, win, tp_individuals, anc_types, all_win, gm);
-		x = new XPEHH(log, insect_win, insect_windows, tp_insect_indv, xp_insect_indv, gm);
-		d = new DAF(log, insect_win, insect_windows, tp_insect_indv, xp_insect_indv, anc_types);
+		i = new iHS(log, tp_win, tp_indv, anc_types, all_win, gm);
+		h = new iHH(log, tp_win, tp_indv, anc_types, all_win, gm);
+		x = new XPEHH(log, txin_win, txin_wins, tpin_indv, xpin_indv, gm);
+//		d = new DAF(log, tp_win, tp_indv, );
 		f = new Fst();
 	}
 

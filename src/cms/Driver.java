@@ -28,25 +28,36 @@ public class Driver {
 	private int chr_st;
 	private int chr_end;
 	
-	private String pop;
+	private String t_pop;
 	private String x_pop;
+	private String o_pop;
+	
 	private File ph_dir;
 	private File map_dir;
 	private File anc_dir;
 	private File out_file;
 	
-	//target population variables
-	private List<Window> tp_windows;
-	private Individual[] tp_individuals;
+	//target population variables (tp)
+	private List<Window> tp_wins;
+	private Individual[] tp_indv;
 	
-	//cross population variables
-	private List<Window> xp_windows;
-	private Individual[] xp_individuals;
+	//cross population variables (xp)
+	private List<Window> xp_wins;
+	private Individual[] xp_indv;
 	
-	//intersection of target and cross populations
-	private List<Window> insect_windows;//for listing the windows in the intersection
-	private Individual[] tp_insect_indv;//for listing the individual alleles in the intersection
-	private Individual[] xp_insect_indv;
+	//out-group population variable (op)
+	private List<Window> op_wins;
+	private Individual[] op_indv;
+	
+	//intersection of target and cross populations (txin)
+	private List<Window> txin_wins;//for listing the windows in the intersection
+	private Individual[] tp_inx_indv;//for listing the individual alleles in the intersection
+	private Individual[] xp_int_indv;
+	
+	//intersection of cross population and out-group population (xoin)
+	private List<Window> xoin_wins;
+	private Individual[] xp_ino_indv;
+	private Individual[] op_inx_indv;
 	
 	//universal variables
 	private GeneticMap gm;
@@ -61,19 +72,21 @@ public class Driver {
 		chr_st = -1;
 		chr_end = -1;
 		
-		pop = "";
+		t_pop = "";
 		x_pop = "";
+		o_pop = "";
+		
 		ph_dir = null;
 		map_dir = null;
 		anc_dir = null;
 		
-		xp_windows = null;
-		tp_windows = null;
-		insect_windows = null;
-		tp_individuals = null;
-		xp_individuals = null;
-		tp_insect_indv = null;
-		xp_insect_indv = null;
+		xp_wins = null;
+		tp_wins = null;
+		txin_wins = null;
+		tp_indv = null;
+		xp_indv = null;
+		tp_inx_indv = null;
+		xp_int_indv = null;
 		gm = null;
 		anc_types = null;
 		
@@ -111,7 +124,7 @@ public class Driver {
 		for(int i = chr_st; i <= chr_end; i++) {
 			parseFiles(i);
 		
-			intersectCrossPopulation();
+			intersectPopulations();
 			
 			getStats();
 			
@@ -136,22 +149,23 @@ public class Driver {
 	private void getStats() {
 		log.addLine("\n\t\t\t*****Starting Stats Analysis*****");
 		
-		for(int i = 0; i < tp_windows.size(); i++) {
-			Window w = tp_windows.get(i);
-			Window insect_w = insect_windows.get(i);//TODO: what do I do when there aren't enough windows here...
+		for(int i = 0; i < tp_wins.size(); i++) {
+			Window tp_w = tp_wins.get(i);
+			Window txin_w = txin_wins.get(i);//TODO: what do I do when there aren't enough windows here...
 			
-			log.addLine("\nSweep between positions " + w.getStPos() + " to " + w.getEndPos());
+			log.addLine("\nSweep between positions " + tp_w.getStPos() + " to " + tp_w.getEndPos());
 			
 			Stats stats = new Stats(log, 
-									w, 
-									insect_w,
-									tp_individuals, 
-									xp_individuals, 
-									tp_insect_indv,
-									xp_insect_indv,
+									tp_w, 
+									tp_wins, 
+									tp_indv,
+									
+									txin_w,
+									txin_wins,
+									tp_inx_indv,
+									xp_int_indv,
+									
 									anc_types, 
-									tp_windows, 
-									insect_windows, 
 									gm);
 			stats.getStats();
 			
@@ -164,24 +178,24 @@ public class Driver {
 		}
 	}
 	
-	private void intersectCrossPopulation() {
+	private void intersectPopulations() {
 		
-		Individual[] tp_indv_insect = new Individual[tp_individuals.length];
-		Individual[] xp_indv_insect = new Individual[xp_individuals.length];
+		Individual[] tp_indv_insect = new Individual[tp_indv.length];
+		Individual[] xp_indv_insect = new Individual[xp_indv.length];
 		
 		for(int i = 0; i < tp_indv_insect.length; i++)
-			tp_indv_insect[i] = new Individual(tp_individuals[i].getID(), tp_individuals[i].getChr());
+			tp_indv_insect[i] = new Individual(tp_indv[i].getID(), tp_indv[i].getChr());
 		for(int i = 0; i < xp_indv_insect.length; i++)
-			xp_indv_insect[i] = new Individual(xp_individuals[i].getID(), xp_individuals[i].getChr());
+			xp_indv_insect[i] = new Individual(xp_indv[i].getID(), xp_indv[i].getChr());
 		
 		List<Window> wins_insect = new ArrayList<Window>();
 		wins_insect.add(new Window(0, 0, 0));
 		
 		int last_xp_win_index = 0;
-		for(int i = 0; i < tp_windows.size(); i++) {
-			for(int j = last_xp_win_index; j < xp_windows.size(); j++) {
-				Window tp_win = tp_windows.get(i);
-				Window xp_win = xp_windows.get(j);
+		for(int i = 0; i < tp_wins.size(); i++) {
+			for(int j = last_xp_win_index; j < xp_wins.size(); j++) {
+				Window tp_win = tp_wins.get(i);
+				Window xp_win = xp_wins.get(j);
 				
 				int tp_win_st = tp_win.getStPos();
 				int tp_win_end = tp_win.getEndPos();
@@ -191,8 +205,8 @@ public class Driver {
 				if(tp_win_st == xp_win_st
 						&& tp_win_end == xp_win_end) {			
 					
-					List<SNP> tp_win_snps = tp_windows.get(i).getSNPs();
-					List<SNP> xp_win_snps = xp_windows.get(j).getSNPs();
+					List<SNP> tp_win_snps = tp_wins.get(i).getSNPs();
+					List<SNP> xp_win_snps = xp_wins.get(j).getSNPs();
 					
 					compareSNPs(tp_win_snps, 
 								xp_win_snps, 
@@ -210,9 +224,9 @@ public class Driver {
 		wins_insect.remove(0);//to get rid of the initial window
 		
 		//set the global variables
-		insect_windows = wins_insect;
-		tp_insect_indv = tp_indv_insect;
-		xp_insect_indv = xp_indv_insect;
+		txin_wins = wins_insect;
+		tp_inx_indv = tp_indv_insect;
+		xp_int_indv = xp_indv_insect;
 	}
 	
 	//continue to pear down this method into smaller chunks
@@ -274,8 +288,8 @@ public class Driver {
 		
 		//Adding alleles to target population's individuals
 		for(int m = 0; m < tp_indv_insect.length; m++) {
-			Integer str_1 = tp_individuals[m].getStrand1Allele(tp_indx);
-			Integer str_2 = tp_individuals[m].getStrand2Allele(tp_indx);
+			Integer str_1 = tp_indv[m].getStrand1Allele(tp_indx);
+			Integer str_2 = tp_indv[m].getStrand2Allele(tp_indx);
 			
 			tp_indv_insect[m].addAlleleToStrand1(str_1.toString());
 			tp_indv_insect[m].addAlleleToStrand2(str_2.toString());
@@ -284,8 +298,8 @@ public class Driver {
 		//Adding alleles to cross population's individuals
 		for(int i = 0; i < xp_indv_insect.length; i++) {
 			
-			Integer str_1 = xp_individuals[i].getStrand1Allele(xp_indx);
-			Integer str_2 = xp_individuals[i].getStrand2Allele(xp_indx);
+			Integer str_1 = xp_indv[i].getStrand1Allele(xp_indx);
+			Integer str_2 = xp_indv[i].getStrand2Allele(xp_indx);
 			
 			//switch allele types because they are reported on opposite a0 or a1 column
 			if(tp_snp.getAllele0().equals(xp_snp.getAllele1())) {
@@ -330,22 +344,33 @@ public class Driver {
 	private void parseFiles(int chr) throws Exception {
 		log.addLine("\nLoading referenced data into memory for chromosome " + chr);
 		
-		String lg_path = getPhasedPath(ph_dir, LEGEND_TYPE, chr, pop);
-		String ph_tp_path = getPhasedPath(ph_dir, PHASED_TYPE, chr, pop);//for target population
+		String lg_tp_path = getPhasedPath(ph_dir, LEGEND_TYPE, chr, t_pop);
+		String ph_tp_path = getPhasedPath(ph_dir, PHASED_TYPE, chr, t_pop);//for target population
+		
 		String lg_xp_path = getPhasedPath(ph_dir, LEGEND_TYPE, chr, x_pop);
 		String ph_xp_path = getPhasedPath(ph_dir, PHASED_TYPE, chr, x_pop);//for cross population
+		
+		String lg_op_path = getPhasedPath(ph_dir, LEGEND_TYPE, chr, o_pop);
+		String ph_op_path = getPhasedPath(ph_dir, PHASED_TYPE, chr, o_pop);
+		
 		String map_path = getPath(map_dir, MAP_TYPE, chr);
 		String anc_path = getPath(anc_dir, LEGEND_TYPE, chr);
 		
-		PhasedParser pp = new PhasedParser(lg_path, ph_tp_path, chr, log);
+		PhasedParser tp_pp = new PhasedParser(lg_tp_path, ph_tp_path, chr, log);
 		PhasedParser xp_pp = new PhasedParser(lg_xp_path, ph_xp_path, chr, log);
+		PhasedParser op_pp = new PhasedParser(lg_op_path, ph_op_path, chr, log);
 		MapParser mp = new MapParser(map_path, log);
 		AncestralParser ap = new AncestralParser(anc_path, log);
 		
-		tp_windows = pp.parseLegend(win_size);
-		tp_individuals = pp.parsePhased(chr);
-		xp_windows = xp_pp.parseLegend(win_size);
-		xp_individuals = xp_pp.parsePhased(chr);
+		tp_wins = tp_pp.parseLegend(win_size);
+		tp_indv = tp_pp.parsePhased(chr);
+		
+		xp_wins = xp_pp.parseLegend(win_size);
+		xp_indv = xp_pp.parsePhased(chr);
+		
+		op_wins = op_pp.parseLegend(win_size);
+		op_indv = op_pp.parsePhased(chr);
+		
 		gm = mp.parseGeneMap();
 		anc_types = ap.parseAncestralTypes();
 	}
@@ -391,9 +416,9 @@ public class Driver {
 	
 	private void resetDataValues() {
 		
-		tp_windows = new ArrayList<Window>();
-		tp_individuals = new Individual[1];
-		xp_individuals = new Individual[1];
+		tp_wins = new ArrayList<Window>();
+		tp_indv = new Individual[1];
+		xp_indv = new Individual[1];
 		gm = new GeneticMap();
 		anc_types = new ArrayList<SNP>();
 		win_stats = new ArrayList<WindowStats>();
@@ -433,9 +458,9 @@ public class Driver {
 		}
 		log.add(".");
 		
-		pop = args[4];
-		if(!pop.equals("CEU") && !pop.equals("YRI") 
-				&& !pop.equals("JPT") && !pop.equals("CHB")) {
+		t_pop = args[4];
+		if(!t_pop.equals("CEU") && !t_pop.equals("YRI") 
+				&& !t_pop.equals("JPT") && !t_pop.equals("CHB")) {
 			String msg = "Error: Target population declaration not recognized";
 			throw new IllegalInputException(log, msg);
 		}
@@ -447,21 +472,33 @@ public class Driver {
 			String msg = "Error: Cross population declaration not recognized";
 			throw new IllegalInputException(log, msg);
 		}
-		if(x_pop.equals(pop)) {
+		if(x_pop.equals(t_pop)) {
 			String msg = "Error: Cross population declaration cannont be " 
 					+ "the same as target population declaration";
 			throw new IllegalInputException(log, msg);
 		}
-			
 		log.add(".");
 		
-		chr_st = getChrSt(args[6]);
+		o_pop = args[6];
+		if(!o_pop.equals("CEU") && !o_pop.equals("YRI") 
+				&& !o_pop.equals("JPT") && !o_pop.equals("CHB")) {
+			String msg = "Error: Out-group population declaration not recognized";
+			throw new IllegalInputException(log, msg);
+		}
+		if(o_pop.equals(t_pop) || o_pop.equals(x_pop)) {
+			String msg = "Error: Out-group population declaration cannont be " 
+					+ "the same as target population declaration";
+			throw new IllegalInputException(log, msg);
+		}
 		log.add(".");
 		
-		chr_end = getChrEnd(args[6]);
+		chr_st = getChrSt(args[7]);
 		log.add(".");
 		
-		win_size = getWindowSize(args[7]);
+		chr_end = getChrEnd(args[7]);
+		log.add(".");
+		
+		win_size = getWindowSize(args[8]);
 		
 		log.addLine(" complete");
 	}

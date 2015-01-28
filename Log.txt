@@ -5,21 +5,21 @@
 			*****Starting CMS*****
 
 Working Parameters
-Phased Dir:	/Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/cache_test_data/Phased
-Map Dir:	/Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/cache_test_data/Map
-Ancestor Dir:	/Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/cache_test_data/Ancestral
+Phased Dir:	/Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Phased
+Map Dir:	/Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Map
+Ancestor Dir:	/Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Ancestral
 Out Dir:	cms_out
 Target Pop:	CEU
 Cross Pop:	YRI
-Chr Range:	21-21
-Window Size:	0.5Mb
+Chr Range:	JPT
+Window Size:	21-21Mb
 
-Parameter Check........ complete
+Parameter Check......... complete
 
 Loading referenced data into memory for chromosome 21
-Importing legend data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/cache_test_data/Phased/genotypes_chr21_CEU_cache_legend_10000
-Importing phased data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/cache_test_data/Phased/genotypes_chr21_CEU_cache_phased_10000X50
-Importing legend data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/cache_test_data/Phased/genotypes_chr21_YRI_cache_legend_10000
+Importing legend data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Phased/genotypes_chr21_CEU_unknown_legend_10000
+Importing phased data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Phased/genotypes_chr21_CEU_unknown_phased_10000X50
+Importing legend data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Phased/genotypes_chr21_YRI_cache_legend_10000
 	WARNING: changing SNP id around line 995 to 21:10531033 for computational purposes only
 		*original id . is not valid
 	WARNING: changing SNP id around line 1731 to 21:14375344 for computational purposes only
@@ -50,33 +50,65 @@ Importing legend data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J
 		*original id . is not valid
 	WARNING: changing SNP id around line 9654 to 21:15411073 for computational purposes only
 		*original id . is not valid
-Importing phased data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/cache_test_data/Phased/genotypes_chr21_YRI_cache_phased_10000X50
-Importing genetic map from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/cache_test_data/Map/genetic_map_chr21_b37.txt
-Importing Ancestral data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/cache_test_data/Ancestral/genotypes_chr21_Ilya_hapmap2_chimp_consensus_legend+freq
+Importing phased data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Phased/genotypes_chr21_YRI_cache_phased_10000X50
+Importing legend data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Phased/genotypes_chr21_JPT_test_legend_10000
+	WARNING: changing SNP id around line 995 to 21:10531033 for computational purposes only
+		*original id . is not valid
+	WARNING: changing SNP id around line 1731 to 21:14375344 for computational purposes only
+		*original id . is not valid
+	WARNING: changing SNP id around line 3581 to 21:14703500 for computational purposes only
+		*original id . is not valid
+	WARNING: changing SNP id around line 4304 to 21:14775387 for computational purposes only
+		*original id . is not valid
+	WARNING: changing SNP id around line 4323 to 21:14776463 for computational purposes only
+		*original id . is not valid
+	WARNING: changing SNP id around line 4368 to 21:14781183 for computational purposes only
+		*original id . is not valid
+	WARNING: changing SNP id around line 5440 to 21:14882664 for computational purposes only
+		*original id . is not valid
+	WARNING: changing SNP id around line 5456 to 21:14884396 for computational purposes only
+		*original id . is not valid
+	WARNING: changing SNP id around line 5507 to 21:14889042 for computational purposes only
+		*original id . is not valid
+	WARNING: changing SNP id around line 6454 to 21:15212235 for computational purposes only
+		*original id . is not valid
+	WARNING: changing SNP id around line 6532 to 21:15217123 for computational purposes only
+		*original id . is not valid
+	WARNING: changing SNP id around line 7932 to 21:15274000 for computational purposes only
+		*original id . is not valid
+	WARNING: changing SNP id around line 8570 to 21:15316087 for computational purposes only
+		*original id . is not valid
+	WARNING: changing SNP id around line 8571 to 21:15316090 for computational purposes only
+		*original id . is not valid
+	WARNING: changing SNP id around line 9654 to 21:15411073 for computational purposes only
+		*original id . is not valid
+Importing phased data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Phased/genotypes_chr21_JPT_test_phased_10000X50
+Importing genetic map from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Map/genetic_map_chr21_b37.txt
+Importing Ancestral data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Ancestral/genotypes_chr21_r21_nr_fwd_chimp_consensus_legend+freq
 
 			*****Starting Stats Analysis*****
 
-Sweep between positions 9000000 to 9500000
+Sweep between positions 10500000 to 11000000
 Starting iHS Analysis
-Out of 1219 SNPs, 0 were successful and 1219 SNPs were unsuccessful
+Out of 2 SNPs, 0 were successful and 2 SNPs were unsuccessful
+Starting XPEHH Analysis
+Out of 2 SNPs, 2 were successful and 0 SNPs were unsuccessful
+Starting iHH Analysis
+Out of 2 SNPs, 0 were successful and 2 SNPs were unsuccessful
+
+Sweep between positions 14500000 to 15000000
+Starting iHS Analysis
+Out of 14 SNPs, 11 were successful and 3 SNPs were unsuccessful
 Starting XPEHH Analysis
 Out of 14 SNPs, 14 were successful and 0 SNPs were unsuccessful
 Starting iHH Analysis
-Out of 1219 SNPs, 0 were successful and 1219 SNPs were unsuccessful
+Out of 14 SNPs, 11 were successful and 3 SNPs were unsuccessful
 
-Sweep between positions 9500000 to 10000000
+Sweep between positions 15000000 to 15500000
 Starting iHS Analysis
-Out of 7478 SNPs, 0 were successful and 7478 SNPs were unsuccessful
+Out of 63 SNPs, 34 were successful and 29 SNPs were unsuccessful
 Starting XPEHH Analysis
-Out of 188 SNPs, 188 were successful and 0 SNPs were unsuccessful
+Out of 28 SNPs, 28 were successful and 0 SNPs were unsuccessful
 Starting iHH Analysis
-Out of 7478 SNPs, 0 were successful and 7478 SNPs were unsuccessful
-
-Sweep between positions 10000000 to 10500000
-Starting iHS Analysis
-Out of 1303 SNPs, 0 were successful and 1303 SNPs were unsuccessful
-Starting XPEHH Analysis
-Out of 12 SNPs, 12 were successful and 0 SNPs were unsuccessful
-Starting iHH Analysis
-Out of 1303 SNPs, 0 were successful and 1303 SNPs were unsuccessful
+Out of 63 SNPs, 34 were successful and 29 SNPs were unsuccessful
 CMS is now ending
