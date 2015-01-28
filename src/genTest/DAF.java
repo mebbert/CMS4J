@@ -24,9 +24,9 @@ public class DAF extends HaplotypeTests {
 	
 	public DAF(Log log, 
 				Window win, 
-				List<Window> all_win, 
+				List<Window> all_win, //I might want this to be the non-selected (intersected) window because then I can just find the index of a particular snp making life easy
 				Individual[] tp_indv,
-				Individual[] xp_indv,
+				Individual[] xp_indv, //this might be the 2 non-selected populations that are intersected with each other (if that's the case I'll have to start over)
 				List<SNP> anc_types){
 		
 		this.log = log;
