@@ -127,7 +127,7 @@ public abstract class HaplotypeTests {
 	protected SNP getAncestralSNP(SNP s, List<SNP> anc_types) {
 		
 		for(SNP as : anc_types) {
-			if(s.equalTo(as))
+			if(s.getPosition() == as.getPosition())
 				return as;
 		}
 		

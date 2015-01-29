@@ -172,7 +172,7 @@ public class Driver {
 //			win_stats.add(stats.getStats());
 			
 //			=========FOR TESTING===========
-			if(i == 3) //breaks at i = 3 on clean_data because of how the intersect is calculated... 
+			if(i == 2) //breaks at i = 3 on clean_data because of how the intersect is calculated... 
 				break;
 //			===============================
 		}
@@ -244,7 +244,8 @@ public class Driver {
 			for(int l = 0; l < xp_win_snps.size(); l++) {
 				if(tp_win_snps.get(k).getPosition() == xp_win_snps.get(l).getPosition()) {
 					if(!containsWindow(wins_insect, tp_win_st, tp_win_end)) {
-						//make and put the window in the wins_insect
+						
+						//make and put a new window window in wins_insect
 						Window last_win = wins_insect.get(wins_insect.size() - 1);
 						int last_win_indx = last_win.getStIndex() + last_win.getSnpListSize() - 1;
 						last_win.setEndIndex(last_win_indx);

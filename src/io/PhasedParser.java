@@ -100,8 +100,7 @@ public class PhasedParser {
 				cur_win = new Window(st_pos, end_pos, index);
 			}
 			
-			rsNum rs = new rsNum(log, chr, index, rs_pos, line_arr[0]);
-			cur_win.addSNP(rs_pos, rs.getNum(), line_arr[2], line_arr[3], rs.getModifyer());
+			cur_win.addSNP(rs_pos, line_arr[2], line_arr[3], line_arr[0]);
 			index++;
 				
 		} while(st_pos <= rs_pos);
@@ -260,79 +259,79 @@ public class PhasedParser {
 //------------------------------------------------------------------------------
 //---------------------------Package-only class---------------------------------	
 //------------------------------------------------------------------------------
-class rsNum {
-	private int num;
-	private String modifyer;
-	
-	public rsNum(Log log, String rs) {
-		
-		StringBuilder sb_mod = new StringBuilder();
-		StringBuilder sb_num = new StringBuilder();
-		
-		boolean is_rs_modifyer = true;
-		for(int i = 0; i < rs.length(); i++) {
-			
-			char index = rs.charAt(i);
-			if(!Character.isDigit(index)) {
-				is_rs_modifyer = false;
-				sb_mod.append(index);
-			}
-			else if(is_rs_modifyer) {
-				sb_mod.append(index);
-			}
-			else {
-				sb_num.append(index);
-			}
-		}
-		
-		num = Integer.parseInt(sb_num.toString());
-		modifyer = sb_mod.toString();
-		
-	}
-	
-	public rsNum(Log log, int chr, int line_num, int pos, String rs) {
-		
-		StringBuilder sb_mod = new StringBuilder();
-		StringBuilder sb_num = new StringBuilder();
-		
-		boolean is_rs_modifyer = true;
-		for(int i = 0; i < rs.length(); i++) {
-			
-			char index = rs.charAt(i);
-			if(!Character.isDigit(index)) {
-				is_rs_modifyer = false;
-				sb_mod.append(index);
-			}
-			else if(is_rs_modifyer) {
-				sb_mod.append(index);
-			}
-			else {
-				sb_num.append(index);
-			}
-		}
-		
-		try {
-			
-			num = Integer.parseInt(sb_num.toString());
-			modifyer = sb_mod.toString();
-			
-		} catch (NumberFormatException e) {
-			num = pos;
-			modifyer = chr + ":";
-			log.add("\tWARNING: changing SNP id around line " + line_num + " to " + modifyer + num);
-			log.addLine(" for computational purposes only");
-			log.addLine("\t\t*original id " + rs + " is not valid");
-		}
-	}
-	
-	public int getNum() {
-		return num;
-	}
-	
-	public String getModifyer() {
-		return modifyer;
-	}
-}
+//class rsNum {
+//	private int num;
+//	private String modifyer;
+//	
+//	public rsNum(Log log, String rs) {
+//		
+//		StringBuilder sb_mod = new StringBuilder();
+//		StringBuilder sb_num = new StringBuilder();
+//		
+//		boolean is_rs_modifyer = true;
+//		for(int i = 0; i < rs.length(); i++) {
+//			
+//			char index = rs.charAt(i);
+//			if(!Character.isDigit(index)) {
+//				is_rs_modifyer = false;
+//				sb_mod.append(index);
+//			}
+//			else if(is_rs_modifyer) {
+//				sb_mod.append(index);
+//			}
+//			else {
+//				sb_num.append(index);
+//			}
+//		}
+//		
+//		num = Integer.parseInt(sb_num.toString());
+//		modifyer = sb_mod.toString();
+//		
+//	}
+//	
+//	public rsNum(Log log, int chr, int line_num, int pos, String rs) {
+//		
+//		StringBuilder sb_mod = new StringBuilder();
+//		StringBuilder sb_num = new StringBuilder();
+//		
+//		boolean is_rs_modifyer = true;
+//		for(int i = 0; i < rs.length(); i++) {
+//			
+//			char index = rs.charAt(i);
+//			if(!Character.isDigit(index)) {
+//				is_rs_modifyer = false;
+//				sb_mod.append(index);
+//			}
+//			else if(is_rs_modifyer) {
+//				sb_mod.append(index);
+//			}
+//			else {
+//				sb_num.append(index);
+//			}
+//		}
+//		
+//		try {
+//			
+//			num = Integer.parseInt(sb_num.toString());
+//			modifyer = sb_mod.toString();
+//			
+//		} catch (NumberFormatException e) {
+//			num = pos;
+//			modifyer = chr + ":";
+//			log.add("\tWARNING: changing SNP id around line " + line_num + " to " + modifyer + num);
+//			log.addLine(" for computational purposes only");
+//			log.addLine("\t\t*original id " + rs + " is not valid");
+//		}
+//	}
+//	
+//	public int getNum() {
+//		return num;
+//	}
+//	
+//	public String getModifyer() {
+//		return modifyer;
+//	}
+//}
 //------------------------------------------------------------------------------	
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------

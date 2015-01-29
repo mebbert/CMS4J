@@ -26,8 +26,8 @@ public class Window {
 		this.all_snps = new ArrayList<SNP>();
 	}
 	
-	public void addSNP(int pos, int rs_num, String a0, String a1, String rs_modifyer) {
-		all_snps.add(new SNP(pos, rs_num, a0, a1, rs_modifyer));
+	public void addSNP(int pos, String a0, String a1, String snp_id) {
+		all_snps.add(new SNP(pos, a0, a1, snp_id));
 	}
 	
 	public void addSNP(SNP s) {
