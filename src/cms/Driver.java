@@ -242,7 +242,8 @@ public class Driver {
 		
 		for(int k = 0; k < tp_win_snps.size(); k++) {
 			for(int l = 0; l < xp_win_snps.size(); l++) {
-				if(tp_win_snps.get(k).sameAs(xp_win_snps.get(l))) {  
+				if(tp_win_snps.get(k).sameAs(xp_win_snps.get(l))) {  						//new
+//				if(tp_win_snps.get(k).getPosition() == xp_win_snps.get(l).getPosition()) {	//old
 					if(!containsWindow(wins_insect, tp_win_st, tp_win_end)) {
 						
 						//make and put a new window window in wins_insect

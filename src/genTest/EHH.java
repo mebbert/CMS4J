@@ -21,7 +21,7 @@ import tools.ExtendedHaplotype;
 public class EHH {
 	
 	private static double SIGNIFICANT_EHH = 0.05;
-	private static int MAX_DISTANCE = 5000000;
+//	private static int MAX_DISTANCE = 5000000;
 	
 	private double cur_ehh_value;
 	private double last_ehh_value;
@@ -113,10 +113,10 @@ public class EHH {
 			
 			saveEHH(cur_ehh_value, nxt_snp);
 			
-			if(Math.abs(nxt_snp.getPosition() - core_snp.getPosition()) > MAX_DISTANCE) {
-				cur_ehh_value = -1;
-				break;
-			}
+//			if(Math.abs(nxt_snp.getPosition() - core_snp.getPosition()) > MAX_DISTANCE) {
+//				cur_ehh_value = -1;
+//				break;
+//			}
 		}
 		
 	}
@@ -330,9 +330,8 @@ public class EHH {
 		SNP nxt_dwn_snp = new SNP();
 		int nxt_index = dwnstrm_win.getSnpIndex(dwnstrm_snp) - 1;
 		
-		if(dwnstrm_win.containsIndex(nxt_index)) {
+		if(dwnstrm_win.containsIndex(nxt_index))
 			nxt_dwn_snp = dwnstrm_win.getSNP(nxt_index);
-		}
 		else {
 			
 			Window temp_dwnstrm_win = findWindow(nxt_index);

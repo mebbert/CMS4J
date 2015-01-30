@@ -62,9 +62,7 @@ public class XPEHH extends HaplotypeTests {
 		Individual[] all_indv = combineIndvArrays(tp_individuals, xp_individuals);
 		
 		List<SNP> win_snps = win.getSNPs();
-		System.out.println("win_snps size =\t" + win_snps.size());
 		for(int i = 0; i < win_snps.size(); i++) {
-			System.out.println("index =\t" + i);
 			
 			SNP core_snp = win_snps.get(i);
 			
