@@ -5,9 +5,9 @@
 			*****Starting CMS*****
 
 Working Parameters
-Phased Dir:	/Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Phased
-Map Dir:	/Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Map
-Ancestor Dir:	/Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Ancestral
+Phased Dir:	/Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/1000G2Mb_smll/Phased
+Map Dir:	/Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/1000G2Mb_smll/Map
+Ancestor Dir:	/Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/1000G2Mb_smll/Ancestral
 Out Dir:	cms_out
 Target Pop:	CEU
 Cross Pop:	YRI
@@ -17,38 +17,18 @@ Window Size:	21-21Mb
 Parameter Check......... complete
 
 Loading referenced data into memory for chromosome 21
-Importing legend data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Phased/genotypes_chr21_CEU_unknown_legend_10000
-Importing phased data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Phased/genotypes_chr21_CEU_unknown_phased_10000X50
-Importing legend data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Phased/genotypes_chr21_YRI_cache_legend_10000
-Importing phased data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Phased/genotypes_chr21_YRI_cache_phased_10000X50
-Importing legend data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Phased/genotypes_chr21_JPT_test_legend_10000
-Importing phased data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Phased/genotypes_chr21_JPT_test_phased_10000X50
-Importing genetic map from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Map/genetic_map_chr21_b37.txt
-Importing Ancestral data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Ancestral/genotypes_chr21_r21_nr_fwd_chimp_consensus_legend+freq
+Importing legend data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/1000G2Mb_smll/Phased/1000GP_chr21_25m-27m_CEU+YRI+JPT+CHB_legend
+Importing phased data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/1000G2Mb_smll/Phased/genotypes_chr21_CEU_1000G_25m-27m_phased_2MbX50
+Importing legend data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/1000G2Mb_smll/Phased/1000GP_chr21_25m-27m_CEU+YRI+JPT+CHB_legend
+Importing phased data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/1000G2Mb_smll/Phased/genotypes_chr21_YRI_1000G_25m-27m_phased_2MbX50
+Importing legend data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/1000G2Mb_smll/Phased/1000GP_chr21_25m-27m_CEU+YRI+JPT+CHB_legend
+Importing phased data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/1000G2Mb_smll/Phased/genotypes_chr21_JPT+CHB_1000G_25m-27m_phased_2MbX50
+Importing genetic map from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/1000G2Mb_smll/Map/genetic_map_chr21_b37.txt
+Importing Ancestral data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/1000G2Mb_smll/Ancestral/genotypes_chr21_Ilya_hapmap2_chimp_consensus_legend+freq
 
 			*****Starting Stats Analysis*****
 
-Sweep between positions 10500000 to 11000000
+Sweep between positions 25000000 to 25010000
 Starting iHS Analysis
-Out of 2 SNPs, 0 were successful and 2 SNPs were unsuccessful
+Out of 334 SNPs, 0 were successful and 334 SNPs were unsuccessful
 Starting XPEHH Analysis
-Out of 2 SNPs, 2 were successful and 0 SNPs were unsuccessful
-Starting iHH Analysis
-Out of 2 SNPs, 0 were successful and 2 SNPs were unsuccessful
-
-Sweep between positions 14500000 to 15000000
-Starting iHS Analysis
-Out of 14 SNPs, 11 were successful and 3 SNPs were unsuccessful
-Starting XPEHH Analysis
-Out of 14 SNPs, 14 were successful and 0 SNPs were unsuccessful
-Starting iHH Analysis
-Out of 14 SNPs, 11 were successful and 3 SNPs were unsuccessful
-
-Sweep between positions 15000000 to 15500000
-Starting iHS Analysis
-Out of 63 SNPs, 34 were successful and 29 SNPs were unsuccessful
-Starting XPEHH Analysis
-Out of 28 SNPs, 28 were successful and 0 SNPs were unsuccessful
-Starting iHH Analysis
-Out of 63 SNPs, 34 were successful and 29 SNPs were unsuccessful
-CMS is now ending

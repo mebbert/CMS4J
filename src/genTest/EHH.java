@@ -21,6 +21,7 @@ import tools.ExtendedHaplotype;
 public class EHH {
 	
 	private static double SIGNIFICANT_EHH = 0.05;
+	private static int MAX_DISTANCE = 5000000;
 	
 	private double cur_ehh_value;
 	private double last_ehh_value;
@@ -111,7 +112,13 @@ public class EHH {
 			cur_ehh_value = calcEHH(ct_comb_2);
 			
 			saveEHH(cur_ehh_value, nxt_snp);
+			
+			if(Math.abs(nxt_snp.getPosition() - core_snp.getPosition()) > MAX_DISTANCE) {
+				cur_ehh_value = -1;
+				break;
+			}
 		}
+		
 	}
 	
 	public void calcSignificantEhhValues() {
@@ -321,16 +328,14 @@ public class EHH {
 			return null;
 		
 		SNP nxt_dwn_snp = new SNP();
-		int pos = dwnstrm_snp.getPosition();
-		int index = dwnstrm_win.getSnpIndex(pos);
-		index = index - 1;
+		int nxt_index = dwnstrm_win.getSnpIndex(dwnstrm_snp) - 1;
 		
-		if(dwnstrm_win.containsIndex(index)) {
-			nxt_dwn_snp = dwnstrm_win.getSNP(index);
+		if(dwnstrm_win.containsIndex(nxt_index)) {
+			nxt_dwn_snp = dwnstrm_win.getSNP(nxt_index);
 		}
 		else {
 			
-			Window temp_dwnstrm_win = findWindow(index);
+			Window temp_dwnstrm_win = findWindow(nxt_index);
 			
 			if(temp_dwnstrm_win == null) {
 				dwnstrm_win = null;
@@ -338,7 +343,7 @@ public class EHH {
 				return null;
 			}
 			
-			nxt_dwn_snp = temp_dwnstrm_win.getSNP(index);
+			nxt_dwn_snp = temp_dwnstrm_win.getSNP(nxt_index);
 		}
 		
 		return nxt_dwn_snp;
@@ -351,17 +356,13 @@ public class EHH {
 			return null;
 		
 		SNP nxt_up_snp = new SNP();
-		int pos = upstrm_snp.getPosition();
-		int index = upstrm_win.getSnpIndex(pos);
-		index = index + 1;
+		int nxt_index = upstrm_win.getSnpIndex(upstrm_snp) + 1;
 		
-		
-		if(upstrm_win.containsIndex(index)) {
-			nxt_up_snp = upstrm_win.getSNP(index);
-		}
+		if(upstrm_win.containsIndex(nxt_index))
+			nxt_up_snp = upstrm_win.getSNP(nxt_index);
 		else {
 			
-			Window temp_upstrm_win = findWindow(index);
+			Window temp_upstrm_win = findWindow(nxt_index);
 			
 			if(temp_upstrm_win == null) {
 				upstrm_win = null;
@@ -369,7 +370,7 @@ public class EHH {
 				return null;
 			}
 			
-			nxt_up_snp = temp_upstrm_win.getSNP(index);
+			nxt_up_snp = temp_upstrm_win.getSNP(nxt_index);
 		}
 		
 		return nxt_up_snp;
@@ -383,7 +384,5 @@ public class EHH {
 		}
 		
 		return null;
-		
 	}
-	
 }

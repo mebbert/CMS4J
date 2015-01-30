@@ -35,6 +35,20 @@ public class SNP {
 	public int getPosition() {
 		return pos;
 	}
+	
+	public String getSnpID() {
+		return snp_id;
+	}
+	
+	public boolean sameAs(SNP s) {
+		if(s.getPosition() == pos
+				&& s.getAllele0().equals(a0)
+				&& s.getAllele1().equals(a1)) {
+			return true;
+		}
+		
+		return false;
+	}
 
 	@Override
 	public String toString() {

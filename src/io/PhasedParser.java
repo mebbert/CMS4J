@@ -72,7 +72,7 @@ public class PhasedParser {
 		
 		int st_pos = 0;
 		int end_pos = win_size;
-		int rs_pos = 0;
+		int pos = 0;
 		int index = 0;
 		Window cur_win = new Window();
 		
@@ -86,13 +86,13 @@ public class PhasedParser {
 			}
 			
 			String[] line_arr = line.split("\\s+");
-			rs_pos = Integer.parseInt(line_arr[1]);
+			pos = Integer.parseInt(line_arr[1]);//May want to catch this error and fix it with my own error
 			
-			if(rs_pos > (st_pos + win_size)) {
+			if(pos > (st_pos + win_size)) {
 				if(!cur_win.equals(new Window()))
 					all_win.add(cur_win);
 				
-				while (rs_pos > (st_pos + win_size)) {
+				while (pos > (st_pos + win_size)) {
 					st_pos += win_size;
 					end_pos += win_size;
 				}
@@ -100,10 +100,10 @@ public class PhasedParser {
 				cur_win = new Window(st_pos, end_pos, index);
 			}
 			
-			cur_win.addSNP(rs_pos, line_arr[2], line_arr[3], line_arr[0]);
+			cur_win.addSNP(pos, line_arr[2], line_arr[3], line_arr[0]);
 			index++;
 				
-		} while(st_pos <= rs_pos);
+		} while(st_pos <= pos);
 		
 //		for(int i = 0; i < all_win.size(); i++) {
 //			System.out.println(all_win.get(i).toString());
@@ -203,7 +203,7 @@ public class PhasedParser {
 				String line = temp_scan.nextLine();
 				String[] line_arr = line.split("\\s+");
 				
-				if(line_arr.length < 4 || line_arr.length > 7) {
+				if(line_arr.length < 4) {
 					String msg = "Error: Legend file " + lg_path + " has invalid number of columns";
 					throw new FileParsingException(log, msg);
 				}
