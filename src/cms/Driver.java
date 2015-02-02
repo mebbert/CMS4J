@@ -216,7 +216,6 @@ public class Driver {
 		xoin_wins = wins_insect;
 		xp_ino_indv = xp_indv_insect;
 		op_inx_indv = op_indv_insect;
-		
 	}
 	
 	private void intersectTargetWithCrossPopulations() {
@@ -234,7 +233,6 @@ public class Driver {
 		compareWindows(wins_insect, tp_wins, tp_indv, tp_indv_insect, xp_wins, xp_indv, xp_indv_insect);
 
 		//set the global variables
-		//works
 		txin_wins = wins_insect;
 		tp_inx_indv = tp_indv_insect;
 		xp_int_indv = xp_indv_insect;

@@ -59,7 +59,7 @@ public class Stats {
 		i.runStat();
 		x.runStat();
 		h.runStat();
-//		d.runStat();
+		d.runStat();
 		
 		f.runStatFst();
 		

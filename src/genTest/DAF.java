@@ -29,8 +29,8 @@ public class DAF extends HaplotypeTests {
 	public DAF(Log log, 
 				Window tp_win, 
 				Individual[] tp_indv,
-				List<Window> xoin_wins, //I might want this to be the non-selected (intersected) window because then I can just find the index of a particular snp making life easy
-				Individual[] xp_ino_indv, //this might be the 2 non-selected populations that are intersected with each other (if that's the case I'll have to start over)
+				List<Window> xoin_wins,
+				Individual[] xp_ino_indv,
 				Individual[] op_inx_indv,
 				List<SNP> anc_types){
 		
@@ -41,7 +41,7 @@ public class DAF extends HaplotypeTests {
 		
 		this.xoin_wins = xoin_wins;
 		this.xp_ino_indv = xp_ino_indv;
-		this.xp_ino_indv = op_inx_indv;
+		this.op_inx_indv = op_inx_indv;
 		
 		this.anc_types = anc_types;
 		
@@ -52,9 +52,11 @@ public class DAF extends HaplotypeTests {
 	
 	public void runStat() {
 		
+		System.out.println("Starting ÆDAF Analysis");
+		log.addLine("Starting ÆDAF Analysis");
+		
 		Individual[] all_xo_indv = combineIndvArrays(xp_ino_indv, op_inx_indv);
 		
-//		int st_index = tp_win.getStIndex();
 		List<SNP> win_snps = tp_win.getSNPs();
 		for(int i = 0; i < win_snps.size(); i++) {
 			
@@ -86,43 +88,20 @@ public class DAF extends HaplotypeTests {
 					double daf_xo = (double) xo_instance_der / (double) all_xo_indv.length;
 					
 					double delta_daf = daf_xo - daf_tp;
-					System.out.println("ÆDAF =\t" + core_snp + "\t" + daf_tp + "\t" + delta_daf);
+					System.out.println("ÆDAF =\t" + core_snp + "\t" + daf_tp + "\t" + delta_daf + "\n");
+					
+					all_DAF.add(delta_daf);
+					all_DAF_snps.add(core_snp);
 					//TODO: double check this is right
+					//TODO: scores should be between -1 and 1
 					//TODO: save delta_daf
 				}
-				
-				
-				
-				
-				
-				
-				
-				
-//				Individual[] all_indv = combineIndvArrays(tp_indv, xp_indv);
-//				int tp_instance_der = getInstanceOfDerivedAllele(tp_indv, core_snp, anc_snp, (st_index + i));
-//				int xp_instance_der = getInstanceOfDerivedAllele(xp_ino_indv, core_snp, anc_snp, (st_index + i));
-//				
-//				int tot_instance_der = xp_instance_der + xp_instance_der;
-//				
-//				double xp_freq_der = (double) tp_instance_der / (double) tp_indv.length;
-//				double tot_freq_der = (double) tot_instance_der / ((double) tp_indv.length + (double) xp_ino_indv.length);
-//				
-//				double delta_daf = xp_freq_der - tot_freq_der;
-				//TODO: save delta_daf
 			}
 			else
 				unused_snps.add(core_snp);
-			
-			
-			
-			
 		}
 		
-		//find instance of derived allele in the "non-selected" population (d_ns)
-		//find instance of derived allele in the target population (d_s)
-		//ÆDAF = d_ns - d_s
-		//scores should be between -1 and 1
-		
+		//TODO: add the standard print out function with DAF and ÆDAF 
 	}
 	
 	private int getInstanceOfDerivedAllele(Individual[] indv, SNP core_snp, SNP anc_snp, int snp_index) {

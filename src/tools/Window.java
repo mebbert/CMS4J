@@ -34,20 +34,6 @@ public class Window {
 		all_snps.add(s);
 	}
 	
-//	public SNP getSNP(SNP prev_snp, int index) {
-//		
-//		int prev_index = getSnpIndex(prev_snp);
-//		
-//		if((index - prev_index) > 0)
-//			return getSNP(index);
-//		else
-//			return getSNP(prev_index + 1);
-//	}
-	
-	
-	
-	
-	
 	//returns null if this index isn't within the window's boundaries
 	public SNP getSNP(int index) {
 		if(containsIndex(index))
@@ -70,16 +56,6 @@ public class Window {
 	}
 	
 	//returns the index of the SNP within the Individual array
-//	public int getSnpIndex(int pos) {
-//		
-//		for(int i = 0; i < all_snps.size(); i++) {
-//			if(all_snps.get(i).getPosition() == pos)
-//				return st_index + i;
-//		}
-//		
-//		return -1;
-//	}
-	
 	public int getSnpIndex(SNP snp) {
 		
 		for(int i = 0; i < all_snps.size(); i++) {
