@@ -56,6 +56,19 @@ public class Window {
 			return null;
 	}
 	
+	public SNP getSNP(int pos, String a0, String a1) {
+		
+		for(SNP s : all_snps) {
+			if(s.getPosition() == pos) {
+				if(s.getAllele0().equals(a0) && s.getAllele1().equals(a1))
+					return s;
+				if(s.getAllele0().equals(a1) && s.getAllele1().equals(a0))
+					return s;
+			}
+		}
+		return null;
+	}
+	
 	//returns the index of the SNP within the Individual array
 //	public int getSnpIndex(int pos) {
 //		
@@ -77,6 +90,16 @@ public class Window {
 		
 		return -1;
 		
+	}
+	
+	public boolean containsSNP(SNP snp) {
+		
+		for(SNP s : all_snps) {
+			if(s.sameAs(snp))
+				return true;
+		}
+		
+		return false;
 	}
 	
 	public boolean containsIndex(int index) {

@@ -41,9 +41,17 @@ public class SNP {
 	}
 	
 	public boolean sameAs(SNP s) {
+		
+		//checks position and allele values
 		if(s.getPosition() == pos
 				&& s.getAllele0().equals(a0)
 				&& s.getAllele1().equals(a1)) {
+			return true;
+		}
+		//ensures the allele values aren't switched
+		if(s.getPosition() == pos
+				&& s.getAllele0().equals(a1)
+				&& s.getAllele1().equals(a0)) {
 			return true;
 		}
 		

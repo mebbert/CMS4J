@@ -28,13 +28,17 @@ public class Stats {
 				Individual[] tpin_indv,
 				Individual[] xpin_indv,
 				
+				List<Window> xoin_wins,
+				Individual[] xp_ino_indv,
+				Individual[] op_iox_indv,
+				
 				List<SNP> anc_types, 
 				GeneticMap gm) {
 		
 		i = new iHS(log, tp_win, tp_indv, anc_types, all_win, gm);
 		h = new iHH(log, tp_win, tp_indv, anc_types, all_win, gm);
 		x = new XPEHH(log, txin_win, txin_wins, tpin_indv, xpin_indv, gm);
-//		d = new DAF(log, tp_win, tp_indv, );
+		d = new DAF(log, tp_win, tp_indv, xoin_wins, xp_ino_indv, op_iox_indv, anc_types);
 		f = new Fst();
 	}
 

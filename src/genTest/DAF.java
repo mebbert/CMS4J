@@ -52,7 +52,9 @@ public class DAF extends HaplotypeTests {
 	
 	public void runStat() {
 		
-		int st_index = tp_win.getStIndex();
+		Individual[] all_xo_indv = combineIndvArrays(xp_ino_indv, op_inx_indv);
+		
+//		int st_index = tp_win.getStIndex();
 		List<SNP> win_snps = tp_win.getSNPs();
 		for(int i = 0; i < win_snps.size(); i++) {
 			
@@ -61,16 +63,51 @@ public class DAF extends HaplotypeTests {
 			
 			if(checkValidSnpComparison(core_snp, anc_snp)) {
 				
+				Window xo_win = getEquivalentWindow(xoin_wins, tp_win);
+				if(xo_win != null && xo_win.containsSNP(core_snp)) {
+				
+					SNP xo_snp = xo_win.getSNP(core_snp.getPosition(), 
+												core_snp.getAllele0(), 
+												core_snp.getAllele1());
+					
+					int tp_indx = tp_win.getSnpIndex(core_snp);
+					int xo_indx = xo_win.getSnpIndex(xo_snp);
+				
+					int tp_instance_der = getInstanceOfDerivedAllele(tp_indv,
+														core_snp,
+														anc_snp,
+														tp_indx);
+					int xo_instance_der = getInstanceOfDerivedAllele(all_xo_indv,
+														xo_snp,
+														anc_snp,
+														xo_indx);
+					
+					double daf_tp = (double) tp_instance_der / (double) tp_indv.length;
+					double daf_xo = (double) xo_instance_der / (double) all_xo_indv.length;
+					
+					double delta_daf = daf_xo - daf_tp;
+					System.out.println("ÆDAF =\t" + core_snp + "\t" + daf_tp + "\t" + delta_daf);
+					//TODO: double check this is right
+					//TODO: save delta_daf
+				}
+				
+				
+				
+				
+				
+				
+				
+				
 //				Individual[] all_indv = combineIndvArrays(tp_indv, xp_indv);
-				int tp_instance_der = getInstanceOfDerivedAllele(tp_indv, core_snp, anc_snp, (st_index + i));
-				int xp_instance_der = getInstanceOfDerivedAllele(xp_ino_indv, core_snp, anc_snp, (st_index + i));
-				
-				int tot_instance_der = xp_instance_der + xp_instance_der;
-				
-				double xp_freq_der = (double) tp_instance_der / (double) tp_indv.length;
-				double tot_freq_der = (double) tot_instance_der / ((double) tp_indv.length + (double) xp_ino_indv.length);
-				
-				double delta_daf = xp_freq_der - tot_freq_der;
+//				int tp_instance_der = getInstanceOfDerivedAllele(tp_indv, core_snp, anc_snp, (st_index + i));
+//				int xp_instance_der = getInstanceOfDerivedAllele(xp_ino_indv, core_snp, anc_snp, (st_index + i));
+//				
+//				int tot_instance_der = xp_instance_der + xp_instance_der;
+//				
+//				double xp_freq_der = (double) tp_instance_der / (double) tp_indv.length;
+//				double tot_freq_der = (double) tot_instance_der / ((double) tp_indv.length + (double) xp_ino_indv.length);
+//				
+//				double delta_daf = xp_freq_der - tot_freq_der;
 				//TODO: save delta_daf
 			}
 			else
@@ -122,5 +159,16 @@ public class DAF extends HaplotypeTests {
 		}
 	
 		return count;
+	}
+	
+	private Window getEquivalentWindow(List<Window> cross_wins, Window target_win) {
+		
+		for(Window w : cross_wins) {
+			if(w.getStPos() == target_win.getStPos()
+					&& w.getEndPos() == target_win.getEndPos())
+				return w;
+		}
+		
+		return null;
 	}
 }
