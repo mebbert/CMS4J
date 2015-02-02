@@ -84,8 +84,8 @@ public class DAF extends HaplotypeTests {
 														anc_snp,
 														xo_indx);
 					
-					double daf_tp = (double) tp_instance_der / (double) tp_indv.length;
-					double daf_xo = (double) xo_instance_der / (double) all_xo_indv.length;
+					double daf_tp = (double) tp_instance_der / ((double) tp_indv.length*2);
+					double daf_xo = (double) xo_instance_der / ((double) all_xo_indv.length*2);
 					
 					double delta_daf = daf_xo - daf_tp;
 					System.out.println("ÆDAF =\t" + core_snp + "\t" + daf_tp + "\t" + delta_daf + "\n");
