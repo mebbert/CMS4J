@@ -62,8 +62,9 @@ public class CMS {
 		log.addLine("Out Dir:\t" + args[3]);
 		log.addLine("Target Pop:\t" + args[4]);
 		log.addLine("Cross Pop:\t" + args[5]);
-		log.addLine("Chr Range:\t" + args[6]);
-		log.addLine("Window Size:\t" + args[7] + "Mb");
+		log.addLine("Outgroup Pop:\t" + args[6]);
+		log.addLine("Chr Range:\t" + args[7]);
+		log.addLine("Window Size:\t" + args[8] + "Mb");
 		
 //		String[] def_args = createDefaultArgs(log);
 //		String[] args_in = args;

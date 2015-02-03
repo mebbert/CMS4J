@@ -122,18 +122,4 @@ public class XPEHH extends HaplotypeTests {
 		
 		return comb_ehh;
 	}
-	
-//	private Individual[] combineIndvArrays(Individual[] a, Individual[] b) {
-//		Individual[] tot = new Individual[a.length + b.length];
-//		
-//		for(int i = 0; i < a.length; i++)
-//			tot[i] = a[i];
-//		
-//		for(int j = 0; j < b.length; j++) 
-//			tot[j + a.length] = b[j];
-//		
-//		return tot;
-//	}	
-	
-	
 }

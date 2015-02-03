@@ -21,8 +21,9 @@ public class DAF extends HaplotypeTests {
 	
 	//ÆDAF statistic information
 	private List<SNP> unused_snps;
-	private List<SNP> all_DAF_snps;
+	private List<SNP> all_delta_DAF_snps;
 	private List<Double> all_DAF;
+	private List<Double> all_delta_DAF;
 	
 	private Log log;
 	
@@ -46,14 +47,15 @@ public class DAF extends HaplotypeTests {
 		this.anc_types = anc_types;
 		
 		unused_snps = new ArrayList<SNP>();
-		all_DAF_snps = new ArrayList<SNP>();
+		all_delta_DAF_snps = new ArrayList<SNP>();
 		all_DAF = new ArrayList<Double>();
+		all_delta_DAF = new ArrayList<Double>();
 	}
 	
 	public void runStat() {
 		
-		System.out.println("Starting ÆDAF Analysis");
-		log.addLine("Starting ÆDAF Analysis");
+		System.out.println("Starting DAF Analysis");
+		log.addLine("Starting DAF Analysis");
 		
 		Individual[] all_xo_indv = combineIndvArrays(xp_ino_indv, op_inx_indv);
 		
@@ -88,20 +90,26 @@ public class DAF extends HaplotypeTests {
 					double daf_xo = (double) xo_instance_der / ((double) all_xo_indv.length*2);
 					
 					double delta_daf = daf_xo - daf_tp;
-					System.out.println("ÆDAF =\t" + core_snp + "\t" + daf_tp + "\t" + delta_daf + "\n");
 					
-					all_DAF.add(delta_daf);
-					all_DAF_snps.add(core_snp);
-					//TODO: double check this is right
-					//TODO: scores should be between -1 and 1
-					//TODO: save delta_daf
+					all_delta_DAF_snps.add(core_snp);
+					all_DAF.add(daf_tp);
+					all_delta_DAF.add(delta_daf);
 				}
 			}
 			else
 				unused_snps.add(core_snp);
 		}
 		
-		//TODO: add the standard print out function with DAF and ÆDAF 
+		for(int i = 0; i < all_delta_DAF.size(); i++) {
+			System.out.print("DAF =\t");
+			System.out.print(all_delta_DAF_snps.get(i) + "\t");
+			System.out.print(all_DAF.get(i) + "\t");
+			System.out.println(all_delta_DAF.get(i) + "\n");
+		}
+		
+		log.addLine("Out of " + tp_win.getSNPs().size() + " SNPs, " 
+				+ all_delta_DAF.size() + " were successful and " + unused_snps.size() 
+				+ " SNPs were unsuccessful");
 	}
 	
 	private int getInstanceOfDerivedAllele(Individual[] indv, SNP core_snp, SNP anc_snp, int snp_index) {
