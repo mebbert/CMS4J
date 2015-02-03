@@ -25,21 +25,21 @@ public class Stats {
 				
 				Window txin_win,
 				List<Window> txin_wins,
-				Individual[] tpin_indv,
-				Individual[] xpin_indv,
+				Individual[] tp_inx_indv,
+				Individual[] xp_int_indv,
 				
 				List<Window> xoin_wins,
 				Individual[] xp_ino_indv,
-				Individual[] op_iox_indv,
+				Individual[] op_inx_indv,
 				
 				List<SNP> anc_types, 
 				GeneticMap gm) {
 		
 		i = new iHS(log, tp_win, tp_indv, anc_types, all_win, gm);
 		h = new iHH(log, tp_win, tp_indv, anc_types, all_win, gm);
-		x = new XPEHH(log, txin_win, txin_wins, tpin_indv, xpin_indv, gm);
-		d = new DAF(log, tp_win, tp_indv, xoin_wins, xp_ino_indv, op_iox_indv, anc_types);
-		f = new Fst();
+		x = new XPEHH(log, txin_win, txin_wins, tp_inx_indv, xp_int_indv, gm);
+		d = new DAF(log, tp_win, tp_indv, xoin_wins, xp_ino_indv, op_inx_indv, anc_types);
+		f = new Fst(log, txin_win, tp_inx_indv, xp_int_indv, op_inx_indv);
 	}
 
 	/**
@@ -60,8 +60,7 @@ public class Stats {
 		x.runStat();
 		h.runStat();
 		d.runStat();
-		
-		f.runStatFst();
+		f.runStat();
 		
 //		return ws;
 	}
