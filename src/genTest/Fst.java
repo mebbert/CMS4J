@@ -46,13 +46,6 @@ public class Fst {
 	}
 	
 	public void runStat() {
-		//calculate the freq of allele A in each of the 3 populations (CEU, YRI, JPT)
-		//find weighted average of those frequencies by number of individuals (haplotypes???)
-		//figure out sample variance, s^2
-		//plug numbers into Fst eqn
-		
-		//allele = a0, not a1
-		
 		System.out.println("Starting Fst Analysis");
 		log.addLine("Starting Fst Analysis");
 		
@@ -96,11 +89,6 @@ public class Fst {
 			
 			System.out.println("FST =\t" + core_snp + "\t" + fst);
 		}
-		
-		
-		//TODO: answer question, Is there a difference in Fst if you use a0 or a1?
-		//		should I just do the analysis on the derived allele type? probably not b/c then I'm limited by Ancestral data
-		
 	}
 	
 	private double calcSampleVariance(double f1, 
