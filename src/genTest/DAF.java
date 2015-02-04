@@ -104,7 +104,7 @@ public class DAF extends HaplotypeTests {
 			System.out.print("DAF =\t");
 			System.out.print(all_delta_DAF_snps.get(i) + "\t");
 			System.out.print(all_DAF.get(i) + "\t");
-			System.out.println(all_delta_DAF.get(i) + "\n");
+			System.out.println(all_delta_DAF.get(i));
 		}
 		
 		log.addLine("Out of " + tp_win.getSNPs().size() + " SNPs, " 

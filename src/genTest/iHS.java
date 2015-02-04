@@ -103,7 +103,7 @@ public class iHS extends HaplotypeTests {
 			System.out.print("iHS =\t");
 			System.out.print(all_iHS_snp.get(i) + "\t");
 			System.out.print(all_unstd_iHS.get(i) + "\t");
-			System.out.println(all_std_iHS.get(i) + "\n");	
+			System.out.println(all_std_iHS.get(i));	
 		}
 		
 		log.addLine("Out of " + win.getSNPs().size() + " SNPs, " 

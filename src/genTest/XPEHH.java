@@ -127,7 +127,7 @@ public class XPEHH extends HaplotypeTests {
 			System.out.print("XPEHH =\t");
 			System.out.print(all_XPEHH_snps.get(i) + "\t");
 			System.out.print(all_unstd_XPEHH.get(i) + "\t");
-			System.out.println(all_XPEHH.get(i) + "\n");
+			System.out.println(all_XPEHH.get(i));
 		}
 		
 		log.addLine("Out of " + win.getSNPs().size() + " SNPs, " 

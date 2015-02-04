@@ -214,7 +214,9 @@ public class Driver {
 	 */
 	private void intersectPopulations() {
 		
-		intersectTargetWithCrossPopulations();
+//		intersectTargetWithCrossPopulations();
+		
+		intersectCrossWithTargetPopulations();
 		
 		intersectCrossWithOutgroupPopulations();
 	}
@@ -239,24 +241,44 @@ public class Driver {
 		op_inx_indv = op_indv_insect;
 	}
 	
-	private void intersectTargetWithCrossPopulations() {
+//	private void intersectTargetWithCrossPopulations() {
+//		
+//		Individual[] tp_indv_insect = new Individual[tp_indv.length];
+//		Individual[] xp_indv_insect = new Individual[xp_indv.length];
+//		
+//		for(int i = 0; i < tp_indv_insect.length; i++)
+//			tp_indv_insect[i] = new Individual(tp_indv[i].getID(), tp_indv[i].getChr());
+//		for(int i = 0; i < xp_indv_insect.length; i++)
+//			xp_indv_insect[i] = new Individual(xp_indv[i].getID(), xp_indv[i].getChr());
+//		
+//		List<Window> wins_insect = new ArrayList<Window>();
+//		
+//		compareWindows(wins_insect, tp_wins, tp_indv, tp_indv_insect, xp_wins, xp_indv, xp_indv_insect);
+//
+//		//set the global variables
+//		txin_wins = wins_insect;
+//		tp_inx_indv = tp_indv_insect;
+//		xp_int_indv = xp_indv_insect;
+//	}
+	
+	private void intersectCrossWithTargetPopulations() {
 		
-		Individual[] tp_indv_insect = new Individual[tp_indv.length];
 		Individual[] xp_indv_insect = new Individual[xp_indv.length];
+		Individual[] tp_indv_insect = new Individual[tp_indv.length];
 		
-		for(int i = 0; i < tp_indv_insect.length; i++)
-			tp_indv_insect[i] = new Individual(tp_indv[i].getID(), tp_indv[i].getChr());
 		for(int i = 0; i < xp_indv_insect.length; i++)
 			xp_indv_insect[i] = new Individual(xp_indv[i].getID(), xp_indv[i].getChr());
+		for(int i = 0; i < tp_indv_insect.length; i++)
+			tp_indv_insect[i] = new Individual(tp_indv[i].getID(), tp_indv[i].getChr());
 		
 		List<Window> wins_insect = new ArrayList<Window>();
 		
-		compareWindows(wins_insect, tp_wins, tp_indv, tp_indv_insect, xp_wins, xp_indv, xp_indv_insect);
+		compareWindows(wins_insect, xp_wins, xp_indv, xp_indv_insect, tp_wins, tp_indv, tp_indv_insect);
 
 		//set the global variables
 		txin_wins = wins_insect;
-		tp_inx_indv = tp_indv_insect;
 		xp_int_indv = xp_indv_insect;
+		tp_inx_indv = tp_indv_insect;
 	}
 	
 	private void compareWindows(List<Window> wins_insect,
@@ -367,7 +389,7 @@ public class Driver {
 											Individual[] p1_indv_insect,
 											Individual[] p2_indv_insect) {
 		
-		//Adding alleles to target population's individuals
+		//Adding alleles to p1 population's individuals
 		for(int m = 0; m < p1_indv_insect.length; m++) {
 			Integer str_1 = p1_indv[m].getStrand1Allele(p1_indx);
 			Integer str_2 = p1_indv[m].getStrand2Allele(p1_indx);
@@ -376,7 +398,7 @@ public class Driver {
 			p1_indv_insect[m].addAlleleToStrand2(str_2.toString());
 		}
 		
-		//Adding alleles to cross population's individuals
+		//Adding alleles to p2 population's individuals
 		for(int i = 0; i < p2_indv_insect.length; i++) {
 			
 			Integer str_1 = p2_indv[i].getStrand1Allele(p2_indx);
