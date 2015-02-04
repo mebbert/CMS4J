@@ -28,10 +28,12 @@ public class Driver {
 	private int chr_st;
 	private int chr_end;
 	
+	//population declarations
 	private String t_pop;
 	private String x_pop;
 	private String o_pop;
 	
+	//directories and files for accessing and writing data
 	private File ph_dir;
 	private File map_dir;
 	private File anc_dir;
@@ -64,6 +66,7 @@ public class Driver {
 	private List<SNP> anc_types;
 	private List<WindowStats> win_stats;
 	
+	//log for progress and error checking
 	private Log log;
 	
 	public Driver() {
@@ -150,11 +153,21 @@ public class Driver {
 		log.addLine("CMS is now ending");
 	}
 	
+	/*
+	 * Runs the CMS analysis of the 5 population statistics
+	 * Not quite sure what exactly this does yet. Still working on that part
+	 */
 	private void runAnalysis() {
 		Analysis an = new Analysis();
 		an.runCmsAnalysis();
 	}
 	
+	/*
+	 * Loops through all the windows in a given chromosome calculating all the
+	 * populations statistics necessary for CMS calculation. Requires there to 
+	 * be both a target population window and a intersecting window to overlap
+	 * otherwise it skips that particular window and goes to the next.
+	 */
 	private void getStats() {
 		log.addLine("\n\t\t\t*****Starting Stats Analysis*****");
 		
@@ -191,6 +204,14 @@ public class Driver {
 		}
 	}
 	
+	/*
+	 * In order to eliminate the variation that comes from population to population
+	 * the intersection of each population needs to be made. This series of 
+	 * functions gets rid of the SNPs not found in the other populations. It is
+	 * important to note that all populations are intersected with the Cross
+	 * Population (xp) and therefore all relate back to that .legend file setup.
+	 * This is important for statistic calculations, particularly ÆDAF and Fst.
+	 */
 	private void intersectPopulations() {
 		
 		intersectTargetWithCrossPopulations();
@@ -401,6 +422,21 @@ public class Driver {
 		return false;
 	}
 	
+	/*
+	 * Used to parse the .legend .phased and genetic map files for Phased, Map,
+	 * and Ancestral data types. In order for it to work properly the following
+	 * must be in you file system
+	 * 		-Phased directory path passed as argument
+	 * 			-Phased data for 3 different populations (both .legend and .phased)
+	 * 			-Population type (CEU, YRI, JPT, or CHB) must be in the file name
+	 * 			-File type ("phased" or "legend") must be in the file name
+	 * 			-Chromosome ("chr" + [1-22]) must be in the file name
+	 * 		-Ancestral directory path passed as argument
+	 * 			-File type of "legend" must be in the file name
+	 * 			-Chromosome ("chr" + [1-22]) must be in the file name 
+	 * 		-Map directory path passed as argument
+	 * 			-Chromosome ("chr" + [1-22]) must be in the file name
+	 */
 	private void parseFiles(int chr) throws Exception {
 		log.addLine("\nLoading referenced data into memory for chromosome " + chr);
 		
@@ -484,6 +520,11 @@ public class Driver {
 		win_stats = new ArrayList<WindowStats>();
 	}
 	
+	/*
+	 * Runs a check on all the parameters to make sure they are exactly what is
+	 * needed to run CMS4J. Check Log output for specific error report. Once 
+	 * one error is found it breaks out of function and closes CMS.
+	 */
 	private void setArgs(String[] args) throws IllegalInputException {
 		
 		log.add("\nParameter Check");

@@ -17,8 +17,9 @@ public class CMS {
 	 * @param args3		Output Directory Name
 	 * @param args4		Target Population (CEU, YRI, JPT, CHB)
 	 * @param args5		Cross Population (CEU, YRI, JPT, CHB)
-	 * @param args6		Chromosome Declaration (i.e. 1-22)
-	 * @param args7		Window Size in Mb
+	 * @param args6		Outgroup Population (CEU, YRI, JPT, CHB)
+	 * @param args7		Chromosome Declaration (i.e. 1-22)
+	 * @param args8		Window Size in Mb
 	 */
 	public static void main(String[] args) {
 		

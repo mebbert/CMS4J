@@ -10,14 +10,6 @@ import tools.Individual;
 import tools.SNP;
 import tools.Window;
 
-/*
- * The core haplotype is defined as a single SNP
- * Calculate EHH scores between the core SNP and every bi-allelic SNP within 2.5 Mb
- * Integrate EHH socres in relation to Genetic distance (cM)
- * 
- * 
- */
-
 public class iHS extends HaplotypeTests {
 	
 	private Window win;
@@ -37,7 +29,16 @@ public class iHS extends HaplotypeTests {
 	
 	private Log log;
 	
-	
+	/**
+	 * For setting up the environment to run the iHS statistic
+	 * 
+	 * @param log			universal log for progress and error output
+	 * @param win			current Window within the target population (tp)
+	 * @param individuals	all Individuals of the target population
+	 * @param anc_types		all Ancestral types in the form of SNPs; ancestral type is a0
+	 * @param all_win		all Windows in the tested region, usually the chr
+	 * @param gm			Genetic Map for the tested region, usually the chr
+	 */
 	public iHS(Log log, 
 				Window win, 
 				Individual[] individuals, 
@@ -63,6 +64,21 @@ public class iHS extends HaplotypeTests {
 		all_std_iHS = new ArrayList<Double>();
 	}
 	
+	/**
+	 * Runs the iHS statistic using the environment setup by the constructor. The
+	 * below series of evens spans multiple private methods but outlines the 
+	 * logic for calculating iHS. This is done for every SNP in the Window (core_snp)
+	 * 		-Step 1: Create extended haplotypes for all Individuals (2 per Individual)
+	 * 		-Step 2: Separate the pool of haplotypes based upon whether or not they have the Ancestral allele at the core position
+	 * 		-Step 3: Calculated EHH values for both groups until reaching a significantly insignificant EHH value (EHH = 0.05)
+	 * 		-Step 4: Integrate EHH values from core to ends for both Ancestral and Derived groups; weight value based upon Genetic Map
+	 * 		-Step 5: Calculate iHS from previously calculated iHH values
+	 * 		-Step 6: Repeat and save these unstandard iHS values for all SNPs in Window
+	 * 		-Step 7: Standardize the all the iHS values within the Window
+	 * 
+	 * Note that many of these functions are extended from HaplotypeTests and 
+	 * can't be found in this class.
+	 */
 	public void runStat() {
 		
 		System.out.println("Starting iHS Analysis");
@@ -74,11 +90,13 @@ public class iHS extends HaplotypeTests {
 			
 			Double unstd_iHS = getUnstandardizedIHS(win.getSNPs().get(i), (st_index + i));
 			
+			//saving the successful unstandardized iHS 
 			if(unstd_iHS != null)
 				all_unstd_iHS.add(unstd_iHS);
 
 		}
 		
+		//calculating and saving all standardized iHS values
 		all_std_iHS = standardizeData(all_unstd_iHS);
 		
 		for(int i = 0; i < all_std_iHS.size(); i++) {
@@ -93,27 +111,26 @@ public class iHS extends HaplotypeTests {
 				+ " SNPs were unsuccessful");
 	}
 	
-	private Double getUnstandardizedIHS(SNP win_snp, int snp_index) {
+	private Double getUnstandardizedIHS(SNP core_snp, int snp_index) {
 		
 		double unstd_iHS = 0.0;
 		
-		SNP anc_snp = getAncestralSNP(win_snp, anc_types);
+		SNP anc_snp = getAncestralSNP(core_snp, anc_types);
 		
-		//TODO: check if there are any reverse compliment data being thrown out here
-		if(checkValidSnpComparison(win_snp, anc_snp)) {
+		if(checkValidSnpComparison(core_snp, anc_snp)) {
 				
 			//Initial Grouping (according to ancestral or derived type)
-			setHaplotypeGroups(anc_eh, der_eh, individuals, snp_index, anc_snp, win_snp);
+			setHaplotypeGroups(anc_eh, der_eh, individuals, snp_index, anc_snp, core_snp);
 			
 			if(anc_eh.size() <= 1 || der_eh.size() <= 1) {
 				//No variance and thus no EHH pattern can be found
-				unused_snps.add(win_snp);
+				unused_snps.add(core_snp);
 				return null;
 			}
 			
 			//Starting EHH Analysis
-			EHH anc_ehh = new EHH(win, individuals, win_snp, anc_eh, all_win);
-			EHH der_ehh = new EHH(win, individuals, win_snp, der_eh, all_win);
+			EHH anc_ehh = new EHH(win, individuals, core_snp, anc_eh, all_win);
+			EHH der_ehh = new EHH(win, individuals, core_snp, der_eh, all_win);
 			
 			//Running Ancestral Analysis
 			anc_ehh.calcSignificantEhhValues();
@@ -125,24 +142,27 @@ public class iHS extends HaplotypeTests {
 			double[] ehh_values_der = der_ehh.getEhhValues();
 			int[] ehh_pos_der = der_ehh.getEhhPositions();
 			
-			double anc_ihh = integrateEhhValues(ehh_values_anc, ehh_pos_anc, win_snp, gm);
-			double der_ihh = integrateEhhValues(ehh_values_der, ehh_pos_der, win_snp, gm);
+			//find the area under the curve created by the EHH data
+			double anc_ihh = integrateEhhValues(ehh_values_anc, ehh_pos_anc, core_snp, gm);
+			double der_ihh = integrateEhhValues(ehh_values_der, ehh_pos_der, core_snp, gm);
 			
+			//main iHS function; unstandardized
 			unstd_iHS = Math.log(anc_ihh / der_ihh);
 		}
 		else {
 			//No variance and thus no EHH pattern can be found
-			unused_snps.add(win_snp);
+			unused_snps.add(core_snp);
 			return null;
 		}
 		
 		if(Double.isNaN(unstd_iHS) || Double.isInfinite(unstd_iHS)) {
 			//Error in calculating iHS
-			unused_snps.add(win_snp);
+			unused_snps.add(core_snp);
 			return null;
 		}
 		
-		all_iHS_snp.add(win_snp);
+		//saving the successful iHS SNP
+		all_iHS_snp.add(core_snp);
 		return unstd_iHS;
 	}
 	

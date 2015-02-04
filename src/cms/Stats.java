@@ -18,6 +18,24 @@ public class Stats {
 	private DAF d;
 	private Fst f;
 	
+	/**
+	 * By creating a Stats object you setup the environment for all population
+	 * statistics to run. Threading is also setup for stats analysis.
+	 * 
+	 * @param log			universal log for progress and error output
+	 * @param tp_win		current Window within the target population (tp)
+	 * @param all_win		all Windows in the tested region, usually the chr
+	 * @param tp_indv		all Individuals of the target population	
+	 * @param txin_win		current Window for the intersection of target-cross populations
+	 * @param txin_wins		all Windows for the intersection of target-cross populations
+	 * @param tp_inx_indv	all Individuals of the target population after the intersection of target-cross populations
+	 * @param xp_int_indv	all Individuals of the cross population after the intersection of target-cross populations
+	 * @param xoin_wins		all Windows for the intersection of cross-outgroup populations
+	 * @param xp_ino_indv	all Individuals of the cross population after the intersection of cross-outgroup populations
+	 * @param op_inx_indv	all Individuals of the outgroup population after the intersection of cross-outgroup populations
+	 * @param anc_types		all Ancestral types in the form of SNPs; ancestral type is a0
+	 * @param gm			Genetic Map for the tested region, usually the chr
+	 */
 	public Stats(Log log, 
 				Window tp_win, 
 				List<Window> all_win,
@@ -45,9 +63,9 @@ public class Stats {
 	/**
 	 * Runs the major 5 population genetics statistics (iHS, iHH, XPEHH, DAF,
 	 * and Fst) needed for a successful CMS analysis. If one test fails the 
-	 * entire window is thrown out.
+	 * entire window is thrown out. It should be noted that each statistic runs
+	 * on its own thread creating for a parallelized computation.
 	 * 
-	 * @param win		The window (default size 1Mb) by which the statistics are going to be run on
 	 * @return			Returns the stats for the input window wrapped in a WindowStats object
 	 */
 	public void getStats() {

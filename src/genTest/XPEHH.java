@@ -12,6 +12,8 @@ import tools.Window;
 
 public class XPEHH extends HaplotypeTests {
 	
+	private static double SIGNIFICANT_EHH_VALUE = 0.045;
+	
 	private Window win;
 	private Individual[] tp_individuals;//target population (tp) intersected with the cross population
 	private Individual[] xp_individuals;//cross population (xp) intersected with the target population
@@ -22,12 +24,22 @@ public class XPEHH extends HaplotypeTests {
 	private List<SNP> valid_snps;
 	
 	//XPEHH statistic information
-	private List<SNP> unused_snps;//make this a hash set and do a check (define this by finding the intersect of tp and xp
+	private List<SNP> unused_snps;
 	private List<SNP> all_XPEHH_snps;
 	private List<Double> all_XPEHH;
 	
 	private Log log;
 	
+	/**
+	 * For setting up the environment to run the XPEHH statistic
+	 * 
+	 * @param log				universal log for progress and error output
+	 * @param win				current Window for the intersection of target-cross populations
+	 * @param all_win			all Windows for the intersection of target-cross populations
+	 * @param tp_individuals	all Individuals of the target population after the intersection of target-cross populations
+	 * @param xp_individuals	all Individuals of the cross population after the intersection of target-cross populations
+	 * @param gm				Genetic Map for the tested region, usually the chr
+	 */
 	public XPEHH(Log log,
 					Window win,
 					List<Window> all_win,
@@ -52,11 +64,26 @@ public class XPEHH extends HaplotypeTests {
 		
 	}
 
+	/**
+	 * Runs the XPEHH statistic using the environment setup by the constructor. The
+	 * below series of evens spans multiple private methods but outlines the 
+	 * logic for calculating XPEHH. This is done for every SNP in the Window (core_snp)
+	 * 		-Step 1: Combine all the Individuals from both target and cross populations
+	 * 		-Step 2: Calculate EHH values for the combined group of Individuals until you reach an EHH value of ~0.045
+	 * 		-Step 3: Figure out the position boundaries were for the combined EHH analysis 
+	 * 		-Step 4: For both populations calculate EHH values from core_snp to position boundaries
+	 * 		-Step 5: Integrate EHH values from core to ends for both target and cross populations; weight value based upon Genetic Map
+	 * 		-Step 6: Calculate unstandardized XPEHH from previously calculated iHH values
+	 * 		-Step 7: Repeat and save these unstandard XPEHH values for all SNPs in Window
+	 * 		-Step 8: Standardize the all the XPEHH values within the Window
+	 * 
+	 * Note that many of these functions are extended from HaplotypeTests and 
+	 * can't be found in this class.
+	 */
 	public void runStat() {
 		
 		System.out.println("Starting XPEHH Analysis");
 		log.addLine("Starting XPEHH Analysis");
-		
 		
 		//Starting XPEHH Analysis
 		Individual[] all_indv = combineIndvArrays(tp_individuals, xp_individuals);
@@ -66,17 +93,23 @@ public class XPEHH extends HaplotypeTests {
 			
 			SNP core_snp = win_snps.get(i);
 			
+			//calculate EHH scores for the combined populations (tp with xp)
 			EHH comb_ehh = getCombinedEHH(all_indv, core_snp);
 			double last_ehh = comb_ehh.getLastEhhValue();
 			
 			if(last_ehh < 0.05 && last_ehh > 0.0) {
 				
+				//for defining the EHH range to end EHH calculations
 				SNP last_snp = comb_ehh.getLastSNP();
 				
+				//find the area under the curve created by the EHH data
 				double tp_integral = calcUnstandardEhhIntegral(core_snp, last_snp, tp_individuals);
 				double xp_integral = calcUnstandardEhhIntegral(core_snp, last_snp, xp_individuals);
 				
+				//main XPEHH function; unstandardized
 				double unstd_XPEHH = Math.log(tp_integral / xp_integral);
+				
+				//saving both the successful XPEHH SNP and unstandardized XPEHH value
 				all_XPEHH_snps.add(core_snp);
 				all_unstd_XPEHH.add(unstd_XPEHH);
 				
@@ -87,6 +120,7 @@ public class XPEHH extends HaplotypeTests {
 			}	
 		}
 		
+		//calculating and saving all standardized XPEHH values
 		all_XPEHH = standardizeData(all_unstd_XPEHH);
 		
 		for(int i = 0; i < all_XPEHH.size(); i++) {
@@ -118,7 +152,7 @@ public class XPEHH extends HaplotypeTests {
 		ExtendedHaplotype all_eh = setHaplotypeGroup(all_indv);
 		EHH comb_ehh = new EHH(win, all_indv, core_snp, all_eh, all_win);
 		
-		comb_ehh.calcSignificantEhhValues(0.045);
+		comb_ehh.calcSignificantEhhValues(SIGNIFICANT_EHH_VALUE);
 		
 		return comb_ehh;
 	}
