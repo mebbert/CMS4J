@@ -21,6 +21,7 @@ public class Fst {
 	private Individual[] op_indv;
 	
 	//Fst statistic information
+	private List<SNP> unused_snps;
 	private List<SNP> all_Fst_snps;
 	private List<Double> all_Fst;
 	
@@ -41,11 +42,13 @@ public class Fst {
 		this.xp_indv = xp_int_indv;
 		this.op_indv = op_inx_indv;
 		
+		unused_snps = new ArrayList<SNP>();
 		all_Fst_snps = new ArrayList<SNP>();
 		all_Fst = new ArrayList<Double>();
 	}
 	
 	public void runStat() {
+		
 		System.out.println("Starting Fst Analysis");
 		log.addLine("Starting Fst Analysis");
 		
@@ -86,9 +89,17 @@ public class Fst {
 			
 			all_Fst_snps.add(core_snp);
 			all_Fst.add(fst);
-			
-			System.out.println("FST =\t" + core_snp + "\t" + fst);
 		}
+		
+		for(int i = 0; i < all_Fst.size(); i++) {
+			System.out.print("Fst =\t");
+			System.out.print(all_Fst_snps.get(i) + "\t");
+			System.out.println(all_Fst.get(i));	
+		}
+		
+		log.addLine("Out of " + win.getSNPs().size() + " SNPs, " 
+				+ all_Fst.size() + " were successful and " + unused_snps.size() 
+				+ " SNPs were unsuccessful");
 	}
 	
 	private double calcSampleVariance(double f1, 

@@ -110,15 +110,13 @@ public abstract class HaplotypeTests {
 		return ihh_lft + ihh_rt;
 	}
 	
-	protected boolean checkValidSnpComparison(SNP win_snp, SNP anc_snp) {
+	protected boolean checkValidSnpComparison(SNP core_snp, SNP anc_snp) {
 		
-		if(anc_snp == null || win_snp == null)
+		if(anc_snp == null || core_snp == null)
 			return false;
-		else if(win_snp.getAllele0().equals(anc_snp.getAllele0())
-				&& win_snp.getAllele1().equals(anc_snp.getAllele1()))
+		else if(anc_snp.getAllele0().equals(core_snp.getAllele0()))
 			return true;
-		else if(win_snp.getAllele0().equals(anc_snp.getAllele1())
-				&& win_snp.getAllele1().equals(anc_snp.getAllele0()))
+		else if(anc_snp.getAllele0().equals(core_snp.getAllele1())) 
 			return true;
 		else
 			return false;
