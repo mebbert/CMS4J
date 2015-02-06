@@ -111,6 +111,14 @@ public class iHS extends HaplotypeTests {
 				+ " SNPs were unsuccessful");
 	}
 	
+	public List<SNP> getSNPs() {
+		return all_iHS_snp;
+	}
+	
+	public List<Double> getStats() {
+		return all_std_iHS;
+	}
+	
 	private Double getUnstandardizedIHS(SNP core_snp, int snp_index) {
 		
 		double unstd_iHS = 0.0;

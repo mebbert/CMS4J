@@ -110,6 +110,14 @@ public class iHH extends HaplotypeTests {
 				+ " SNPs were unsuccessful");
 	}
 	
+	public List<SNP> getSNPs() {
+		return all_iHH_snp;
+	}
+	
+	public List<Double> getStats() {
+		return all_std_iHH;
+	}
+	
 	private Double getUnstandardizedIHH(SNP core_snp, int snp_index) {
 		
 		double unstd_iHH = 0.0;

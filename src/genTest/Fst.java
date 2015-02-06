@@ -8,7 +8,7 @@ import tools.Individual;
 import tools.SNP;
 import tools.Window;
 
-public class Fst {
+public class Fst extends HaplotypeTests{
 	
 	static int NUM_OF_POPULATIONS = 3;
 	
@@ -100,6 +100,14 @@ public class Fst {
 		log.addLine("Out of " + win.getSNPs().size() + " SNPs, " 
 				+ all_Fst.size() + " were successful and " + unused_snps.size() 
 				+ " SNPs were unsuccessful");
+	}
+	
+	public List<SNP> getSNPs() {
+		return all_Fst_snps;
+	}
+	
+	public List<Double> getStats() {
+		return all_Fst;
 	}
 	
 	private double calcSampleVariance(double f1, 

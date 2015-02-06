@@ -112,6 +112,14 @@ public class DAF extends HaplotypeTests {
 				+ " SNPs were unsuccessful");
 	}
 	
+	public List<SNP> getSNPs() {
+		return all_delta_DAF_snps;
+	}
+	
+	public List<Double> getStats() {
+		return all_delta_DAF;
+	}
+	
 	private int getInstanceOfDerivedAllele(Individual[] indv, SNP core_snp, SNP anc_snp, int snp_index) {
 		
 		int count = 0;

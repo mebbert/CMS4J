@@ -12,6 +12,8 @@ import genTest.*;
 
 public class Stats {
 	
+	private WindowStats ws;
+	
 	private iHS i;
 	private iHH h;
 	private XPEHH x;
@@ -53,6 +55,8 @@ public class Stats {
 				List<SNP> anc_types, 
 				GeneticMap gm) {
 		
+		ws = new WindowStats(tp_win.getStPos(), tp_win.getEndPos());
+		
 		i = new iHS(log, tp_win, tp_indv, anc_types, all_win, gm);
 		h = new iHH(log, tp_win, tp_indv, anc_types, all_win, gm);
 		x = new XPEHH(log, txin_win, txin_wins, tp_inx_indv, xp_int_indv, gm);
@@ -68,9 +72,7 @@ public class Stats {
 	 * 
 	 * @return			Returns the stats for the input window wrapped in a WindowStats object
 	 */
-	public void getStats() {
-		
-//		WindowStats ws = new WindowStats(win.getStPos(), win.getEndPos());
+	public WindowStats getStats() {
 		
 		System.out.println("\n\n\t***Starting stats run***");
 		
@@ -80,7 +82,13 @@ public class Stats {
 		d.runStat();
 		f.runStat();
 		
-//		return ws;
+		ws.setIHS(i.getStats(), i.getSNPs());
+		ws.setXPEHH(x.getStats(), x.getSNPs());
+		ws.setIHH(h.getStats(), h.getSNPs());
+		ws.setDAF(d.getStats(), d.getSNPs());
+		ws.setFst(f.getStats(), f.getSNPs());
+		
+		return ws;
 	}
 	
 }

@@ -159,7 +159,7 @@ public class Driver {
 	 */
 	private void runAnalysis() {
 		Analysis an = new Analysis();
-		an.runCmsAnalysis();
+		an.runCmsAnalysis(win_stats);
 	}
 	
 	/*
@@ -171,9 +171,9 @@ public class Driver {
 	private void getStats() {
 		log.addLine("\n\t\t\t*****Starting Stats Analysis*****");
 		
-		for(int i = 0; i < tp_wins.size(); i++) {
+		for(int i = 0; i < tp_wins.size() && i < txin_wins.size(); i++) {
 			Window tp_w = tp_wins.get(i);
-			Window txin_w = txin_wins.get(i);//TODO: what do I do when there aren't enough windows here...
+			Window txin_w = txin_wins.get(i);
 			
 			log.addLine("\nSweep between positions " + tp_w.getStPos() + " to " + tp_w.getEndPos());
 			
@@ -193,13 +193,13 @@ public class Driver {
 									
 									anc_types, 
 									gm);
-			stats.getStats();
+//			stats.getStats();
 			
-//			win_stats.add(stats.getStats());
+			win_stats.add(stats.getStats());
 			
 //			=========FOR TESTING===========
-			if(i == 2) //breaks at i = 3 on clean_data because of how the intersect is calculated... 
-				break;
+//			if(i == 2) //breaks at i = 3 on clean_data because of how the intersect is calculated... 
+//				break;
 //			===============================
 		}
 	}

@@ -12,8 +12,8 @@ public abstract class HaplotypeTests {
 	
 	abstract void runStat();
 //	abstract List<SNP> getUnusedSNPs();
-//	abstract List<SNP> getUsedSNPs();
-//	abstract List<Double> getAllStats();
+	abstract List<SNP> getSNPs();
+	abstract List<Double> getStats();
 	
 	protected void setHaplotypeGroups(ExtendedHaplotype anc_eh, 
 				ExtendedHaplotype der_eh, 

@@ -135,6 +135,14 @@ public class XPEHH extends HaplotypeTests {
 				+ " SNPs were unsuccessful");
 	} 
 	
+	public List<SNP> getSNPs() {
+		return all_XPEHH_snps;
+	}
+	
+	public List<Double> getStats() {
+		return all_XPEHH;
+	}
+	
 	private double calcUnstandardEhhIntegral(SNP core_snp, SNP last_snp, Individual[] indv) {
 		
 		ExtendedHaplotype pop_eh = setHaplotypeGroup(indv);
