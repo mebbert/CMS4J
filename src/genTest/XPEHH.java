@@ -21,7 +21,6 @@ public class XPEHH extends HaplotypeTests {
 	
 	private List<Window> all_win;
 	private List<Double> all_unstd_XPEHH;
-	private List<SNP> valid_snps;
 	
 	//XPEHH statistic information
 	private List<SNP> unused_snps;
@@ -56,7 +55,6 @@ public class XPEHH extends HaplotypeTests {
 		
 		this.all_win = all_win;
 		
-		valid_snps = new ArrayList<SNP>();
 		unused_snps = new ArrayList<SNP>();
 		all_XPEHH_snps = new ArrayList<SNP>();
 		all_unstd_XPEHH = new ArrayList<Double>();
