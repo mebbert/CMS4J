@@ -76,19 +76,101 @@ public class Stats {
 		
 		System.out.println("\n\n\t***Starting stats run***");
 		
-		i.runStat();
-		x.runStat();
-		h.runStat();
-		d.runStat();
-		f.runStat();
+//=====================unthreaded block==================
+		
+//		i.runStat();
+//		h.runStat();
+//		x.runStat();
+//		d.runStat();
+//		f.runStat();
+		
+//========================threaded block=================
+		
+		StatsThread i_thrd = new StatsThread(i);
+		StatsThread h_thrd = new StatsThread(h);
+		StatsThread x_thrd = new StatsThread(x);
+		StatsThread d_thrd = new StatsThread(d);
+		StatsThread f_thrd = new StatsThread(f); 
+		
+		synchronize(i_thrd, h_thrd, x_thrd, d_thrd, f_thrd);
+		
+		i = (iHS) i_thrd.getTest();
+		h = (iHH) h_thrd.getTest();
+		x = (XPEHH) x_thrd.getTest();
+		d = (DAF) d_thrd.getTest();
+		f = (Fst) f_thrd.getTest();
+		
+//===================universal block=======================
+		
+		i.printStats();
+		h.printStats();
+		x.printStats();
+		d.printStats();
+		f.printStats();
+		
+		i.logRunStats();
+		h.logRunStats();
+		x.logRunStats();
+		d.logRunStats();
+		f.logRunStats();
 		
 		ws.setIHS(i.getStats(), i.getSNPs());
-		ws.setXPEHH(x.getStats(), x.getSNPs());
 		ws.setIHH(h.getStats(), h.getSNPs());
+		ws.setXPEHH(x.getStats(), x.getSNPs());
 		ws.setDAF(d.getStats(), d.getSNPs());
 		ws.setFst(f.getStats(), f.getSNPs());
 		
 		return ws;
 	}
 	
+	private void synchronize(StatsThread i_thrd, 
+							StatsThread h_thrd, 
+							StatsThread x_thrd, 
+							StatsThread d_thrd, 
+							StatsThread f_thrd) {
+		
+		for(;;) {
+			if(i_thrd.isFinished()
+					&& h_thrd.isFinished()
+					&& x_thrd.isFinished()
+					&& d_thrd.isFinished()
+					&& f_thrd.isFinished())
+				break;
+		}
+	}
 }
+
+class StatsThread extends Thread {
+
+	private Thread thrd;
+	private HaplotypeTests tst;
+	
+	private boolean finished;
+	
+	StatsThread(HaplotypeTests tst) {
+		this.tst = tst;
+		
+		finished = false;
+		
+		thrd = new Thread(this);
+		thrd.start();
+	}
+	
+	@Override
+	public void run() {
+			
+			tst.runStat();
+			finished = true;
+	}
+	
+	public HaplotypeTests getTest() {
+		return tst;
+	}
+	
+	public boolean isFinished() {
+		return finished;
+	}
+	
+}
+
+

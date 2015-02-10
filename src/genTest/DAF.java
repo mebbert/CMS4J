@@ -52,6 +52,7 @@ public class DAF extends HaplotypeTests {
 		all_delta_DAF = new ArrayList<Double>();
 	}
 	
+	@Override
 	public void runStat() {
 		
 		System.out.println("Starting DAF Analysis");
@@ -100,24 +101,38 @@ public class DAF extends HaplotypeTests {
 				unused_snps.add(core_snp);
 		}
 		
+//		printStats();
+//		logRunStats();
+	}
+	
+	@Override
+	public List<SNP> getSNPs() {
+		return all_delta_DAF_snps;
+	}
+	
+	@Override
+	public List<Double> getStats() {
+		return all_delta_DAF;
+	}
+	
+	@Override
+	public void printStats() {
+		
+		System.out.println("\nShowing ÆDAF Data");
 		for(int i = 0; i < all_delta_DAF.size(); i++) {
 			System.out.print("DAF =\t");
 			System.out.print(all_delta_DAF_snps.get(i) + "\t");
 			System.out.print(all_DAF.get(i) + "\t");
 			System.out.println(all_delta_DAF.get(i));
 		}
+	}
+
+	@Override
+	public void logRunStats() {
 		
 		log.addLine("Out of " + tp_win.getSNPs().size() + " SNPs, " 
 				+ all_delta_DAF.size() + " were successful and " + unused_snps.size() 
 				+ " SNPs were unsuccessful");
-	}
-	
-	public List<SNP> getSNPs() {
-		return all_delta_DAF_snps;
-	}
-	
-	public List<Double> getStats() {
-		return all_delta_DAF;
 	}
 	
 	private int getInstanceOfDerivedAllele(Individual[] indv, SNP core_snp, SNP anc_snp, int snp_index) {

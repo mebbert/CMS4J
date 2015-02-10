@@ -8,7 +8,7 @@ import tools.Individual;
 import tools.SNP;
 import tools.Window;
 
-public class Fst extends HaplotypeTests{
+public class Fst extends HaplotypeTests {
 	
 	static int NUM_OF_POPULATIONS = 3;
 	
@@ -47,6 +47,7 @@ public class Fst extends HaplotypeTests{
 		all_Fst = new ArrayList<Double>();
 	}
 	
+	@Override
 	public void runStat() {
 		
 		System.out.println("Starting Fst Analysis");
@@ -91,23 +92,37 @@ public class Fst extends HaplotypeTests{
 			all_Fst.add(fst);
 		}
 		
+//		printStats();
+//		logRunStats();
+	}
+	
+	@Override
+	public List<SNP> getSNPs() {
+		return all_Fst_snps;
+	}
+	
+	@Override
+	public List<Double> getStats() {
+		return all_Fst;
+	}
+	
+	@Override
+	public void printStats() {
+		
+		System.out.println("\nShowing Fst Data");
 		for(int i = 0; i < all_Fst.size(); i++) {
 			System.out.print("Fst =\t");
 			System.out.print(all_Fst_snps.get(i) + "\t");
 			System.out.println(all_Fst.get(i));	
 		}
+	}
+
+	@Override
+	public void logRunStats() {
 		
 		log.addLine("Out of " + win.getSNPs().size() + " SNPs, " 
 				+ all_Fst.size() + " were successful and " + unused_snps.size() 
 				+ " SNPs were unsuccessful");
-	}
-	
-	public List<SNP> getSNPs() {
-		return all_Fst_snps;
-	}
-	
-	public List<Double> getStats() {
-		return all_Fst;
 	}
 	
 	private double calcSampleVariance(double f1, 
@@ -160,5 +175,7 @@ public class Fst extends HaplotypeTests{
 		
 		return instance;
 	}
+
+	
 
 }

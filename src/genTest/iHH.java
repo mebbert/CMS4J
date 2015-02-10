@@ -79,6 +79,7 @@ public class iHH extends HaplotypeTests {
 	 * Note that many of these functions are extended from HaplotypeTests and 
 	 * can't be found in this class.
 	 */
+	@Override
 	public void runStat() {
 		
 		System.out.println("Starting iHH Analysis");
@@ -98,24 +99,38 @@ public class iHH extends HaplotypeTests {
 		//calculating and saving all standardized ÆiHH values
 		all_std_iHH = standardizeData(all_unstd_iHH);
 		
+//		printStats();
+//		logRunStats();
+	}
+	
+	@Override
+	public List<SNP> getSNPs() {
+		return all_iHH_snp;
+	}
+	
+	@Override
+	public List<Double> getStats() {
+		return all_std_iHH;
+	}
+	
+	@Override
+	public void printStats() {
+		
+		System.out.println("\nShowing ÆiHH Data");
 		for(int i = 0; i < all_std_iHH.size(); i++) {
 			System.out.print("iHH =\t");
 			System.out.print(all_iHH_snp.get(i) + "\t");
 			System.out.print(all_unstd_iHH.get(i) + "\t");
 			System.out.println(all_std_iHH.get(i));	
 		}
+	}
+
+	@Override
+	public void logRunStats() {
 		
 		log.addLine("Out of " + win.getSNPs().size() + " SNPs, " 
 				+ all_std_iHH.size() + " were successful and " + unused_snps.size() 
 				+ " SNPs were unsuccessful");
-	}
-	
-	public List<SNP> getSNPs() {
-		return all_iHH_snp;
-	}
-	
-	public List<Double> getStats() {
-		return all_std_iHH;
 	}
 	
 	private Double getUnstandardizedIHH(SNP core_snp, int snp_index) {

@@ -16,10 +16,11 @@ public class Analysis {
 		//for each snp
 		//		for each test
 		//			-find uniform prior probability; prior=1/tot_num_snps in window
-		//			-find the probability that a selected snp will have the score at that position if it is NEUTRAL
-		//			-find the probability that a neutral snp will have the score at that position if it is NEURTAL (as well)
+		//			-find the probability that the snp will have the score at that position if it is SELECTED
+		//			-find the probability that the snp will have the score at that position if it is NEURTAL
 		//			-calculate the posterior probability of that snp (see literature for eqn)
-		//			-do the ¹ function to incorporate all the statis into one CMS statistic
+		//			-do the ¹ function to incorporate all the stats into one CMS statistic
+		//				just multiply the 3 probabilities together, I think
 		
 		
 	}

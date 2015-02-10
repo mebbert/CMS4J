@@ -10,10 +10,12 @@ import tools.SNP;
 
 public abstract class HaplotypeTests {
 	
-	abstract void runStat();
+	public abstract void runStat();
 //	abstract List<SNP> getUnusedSNPs();
-	abstract List<SNP> getSNPs();
-	abstract List<Double> getStats();
+	public abstract List<SNP> getSNPs();
+	public abstract List<Double> getStats();
+	public abstract void printStats();
+	public abstract void logRunStats();
 	
 	protected void setHaplotypeGroups(ExtendedHaplotype anc_eh, 
 				ExtendedHaplotype der_eh, 

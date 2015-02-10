@@ -78,6 +78,7 @@ public class XPEHH extends HaplotypeTests {
 	 * Note that many of these functions are extended from HaplotypeTests and 
 	 * can't be found in this class.
 	 */
+	@Override
 	public void runStat() {
 		
 		System.out.println("Starting XPEHH Analysis");
@@ -121,24 +122,38 @@ public class XPEHH extends HaplotypeTests {
 		//calculating and saving all standardized XPEHH values
 		all_XPEHH = standardizeData(all_unstd_XPEHH);
 		
+//		printStats();
+//		logRunStats();
+	} 
+	
+	@Override
+	public List<SNP> getSNPs() {
+		return all_XPEHH_snps;
+	}
+	
+	@Override
+	public List<Double> getStats() {
+		return all_XPEHH;
+	}
+	
+	@Override
+	public void printStats() {
+		
+		System.out.println("\nShowing XPEHH Data");
 		for(int i = 0; i < all_XPEHH.size(); i++) {
 			System.out.print("XPEHH =\t");
 			System.out.print(all_XPEHH_snps.get(i) + "\t");
 			System.out.print(all_unstd_XPEHH.get(i) + "\t");
 			System.out.println(all_XPEHH.get(i));
 		}
+	}
+
+	@Override
+	public void logRunStats() {
 		
 		log.addLine("Out of " + win.getSNPs().size() + " SNPs, " 
 				+ all_XPEHH.size() + " were successful and " + unused_snps.size() 
 				+ " SNPs were unsuccessful");
-	} 
-	
-	public List<SNP> getSNPs() {
-		return all_XPEHH_snps;
-	}
-	
-	public List<Double> getStats() {
-		return all_XPEHH;
 	}
 	
 	private double calcUnstandardEhhIntegral(SNP core_snp, SNP last_snp, Individual[] indv) {
