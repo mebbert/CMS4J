@@ -21,6 +21,7 @@ public class Driver {
 	
 	private static int MEGABASE_CONVERSION = 1000000;
 	private static String LEGEND_TYPE = "legend";
+	private static String EMF_TYPE = "emf";
 	private static String MAP_TYPE = "map";
 	private static String PHASED_TYPE = "phased";
 	
@@ -471,14 +472,14 @@ public class Driver {
 		String lg_op_path = getPhasedPath(ph_dir, LEGEND_TYPE, chr, o_pop);
 		String ph_op_path = getPhasedPath(ph_dir, PHASED_TYPE, chr, o_pop);
 		
-		String map_path = getPath(map_dir, MAP_TYPE, chr);
-		String anc_path = getPath(anc_dir, LEGEND_TYPE, chr);
+		String map_path = getMapPath(map_dir, chr);
+		String anc_path = getAncestralPath(anc_dir, chr);
 		
 		PhasedParser tp_pp = new PhasedParser(lg_tp_path, ph_tp_path, chr, log);
 		PhasedParser xp_pp = new PhasedParser(lg_xp_path, ph_xp_path, chr, log);
 		PhasedParser op_pp = new PhasedParser(lg_op_path, ph_op_path, chr, log);
 		MapParser mp = new MapParser(map_path, log);
-		AncestralParser ap = new AncestralParser(anc_path, log);
+		AncestralParser ap = new AncestralParser(anc_path, chr, log);
 		
 		tp_wins = tp_pp.parseLegend(win_size);
 		tp_indv = tp_pp.parsePhased(chr);
@@ -490,10 +491,10 @@ public class Driver {
 		op_indv = op_pp.parsePhased(chr);
 		
 		gm = mp.parseGeneMap();
-		anc_types = ap.parseAncestralTypes();
+		anc_types = ap.parseAncestralTypes(out_file);
 	}
 	
-	private String getPath(File dir, String type, int chr) 
+	private String getAncestralPath(File dir, int chr) 
 			throws UnknownFileException {
 		
 		String chr_check = "chr" + chr;
@@ -502,7 +503,29 @@ public class Driver {
 		for(int i = 0; i < all_files.length; i++) {
 			
 			String file_name = all_files[i];
-			if(file_name.contains(type) 
+			if(file_name.contains(LEGEND_TYPE) 
+					&& file_name.contains(chr_check)
+					&& file_name.charAt(0) != '.')
+				return dir.getAbsolutePath() + File.separator + file_name;
+			if(file_name.contains(EMF_TYPE) 
+					&& file_name.contains(chr_check)
+					&& file_name.charAt(0) != '.')
+				return dir.getAbsolutePath() + File.separator + file_name;
+		}
+		
+		throw new UnknownFileException(log, dir);
+	}
+	
+	private String getMapPath(File dir, int chr) 
+			throws UnknownFileException {
+		
+		String chr_check = "chr" + chr;
+		
+		String[] all_files = dir.list();
+		for(int i = 0; i < all_files.length; i++) {
+			
+			String file_name = all_files[i];
+			if(file_name.contains(MAP_TYPE) 
 					&& file_name.contains(chr_check)
 					&& file_name.charAt(0) != '.')
 				return dir.getAbsolutePath() + File.separator + file_name;

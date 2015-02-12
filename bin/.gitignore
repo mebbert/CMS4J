@@ -1,5 +1,2 @@
-/.gitignore
-/genTest
-/cms
-/tools
 /io
+/cms

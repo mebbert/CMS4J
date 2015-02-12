@@ -2,6 +2,7 @@ package io;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -13,15 +14,22 @@ import log.Log;
 public class AncestralParser {
 	
 	private static int TEST_LINES = 10; //for testing the first 10 lines of a file to ensure it is the right format
+	private static String LEGEND_TYPE = "legend";
+	private static String EMF_TYPE = "emf";
+	private static String EMF_SEQ = "SEQ";
+	private static String EMF_DATA = "DATA";
+	private static String EMF_H_SAPIEN = "homo_sapien";
 	
 	private boolean skip_first_line;
+	private int chr;
 	
 	private String anc_path;
 	private Scanner anc_scan;
 	private Log log;
 
-	public AncestralParser(String anc_path, Log log) throws FileParsingException {
+	public AncestralParser(String anc_path, int chr, Log log) throws FileParsingException {
 		
+		this.chr = chr;
 		this.anc_path = anc_path;
 		this.log = log;
 		
@@ -41,8 +49,140 @@ public class AncestralParser {
 	 * 
 	 * @return		Returns a list of SNP objects to be referenced later on when calculating population genetic statistics
 	 */
-	public List<SNP> parseAncestralTypes() throws FileParsingException {
+	public List<SNP> parseAncestralTypes(File out_file) throws FileParsingException {//out file here
 		log.addLine("Importing Ancestral data from " + anc_path);
+		
+		List<SNP> anc_types = new ArrayList<SNP>();
+		
+		if(anc_path.contains(LEGEND_TYPE))
+			anc_types = parseLegendFile();
+//		else if(anc_path.contains(EMF_TYPE))
+//			anc_types = parseEmfFile(out_file);//out file here
+		
+		return anc_types;
+	}
+	
+	private List<SNP> parseEmfFile(File out_file) throws FileParsingException {//out file here
+		
+		List<SNP> anc_types = new ArrayList<SNP>();
+		
+		int num_seq = 0;
+		int st_pos = -1;
+		int end_pos = -1;
+		
+		while(anc_scan.hasNextLine()) {
+			
+			String line = anc_scan.nextLine();
+			String[] ln_arr = line.split("\\s+");
+			if(line.length() >= 1 && ln_arr[0].charAt(0) != '#') {
+				
+				if(ln_arr[0].equals(EMF_SEQ)) {
+					num_seq++;
+					
+					System.out.print("here1\t" + num_seq + "\t");
+					
+					if(ln_arr[1].contains(EMF_H_SAPIEN) && num_seq == 1) {
+						st_pos = Integer.parseInt(ln_arr[3]);
+						end_pos = Integer.parseInt(ln_arr[4]);
+						
+						System.out.print(st_pos + "\t" + end_pos + "\t");
+					}
+				}
+				if(ln_arr[0].equals(EMF_DATA))  {
+					
+					int num_anc_seq = (num_seq - 1) / 2;
+					
+					System.out.print("SEQ=" + num_seq + "\t" + num_anc_seq + "\t");
+					
+					anc_types = collectData(anc_types, anc_scan, st_pos, num_anc_seq);
+					
+					num_seq = 0;
+				}
+					
+			}
+			System.out.println("end");
+		}
+		
+		System.out.println("Starting Print\t" + anc_types.size());
+		try {
+			PrintWriter pw = new PrintWriter(out_file);
+		
+			for(int i = 0; i < anc_types.size(); i++) {
+				pw.write(anc_types.get(i) + "\n");
+			}
+			
+			pw.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Ending Print");
+		
+		return anc_types;
+	}
+	
+	private List<SNP> collectData(List<SNP> anc_types, 
+								Scanner anc_scan, 
+								int st_pos, 
+								int num_anc_seq) {
+		
+		int line_num = 0;
+		String line = anc_scan.nextLine();
+		while(!line.equals("//")) {
+			if(line.charAt(0) != '-') {
+				
+				int cntA = 0;
+				int cntT = 0;
+				int cntG = 0;
+				int cntC = 0;
+				
+				for(int i = 0; i < num_anc_seq; i++) {
+					
+					int seq_indx = 1 + i*2;
+					if(seq_indx > line.length())
+						break;
+					else if(line.charAt(seq_indx) == 'a' || line.charAt(seq_indx) == 'A')
+						cntA++;
+					else if(line.charAt(seq_indx) == 't' || line.charAt(seq_indx) == 'T')
+						cntT++;
+					else if(line.charAt(seq_indx) == 'g' || line.charAt(seq_indx) == 'G')
+						cntG++;
+					else if(line.charAt(seq_indx) == 'c' || line.charAt(seq_indx) == 'C')
+						cntC++;
+				}
+				
+				if(line.charAt(1) != '-') {
+					//TODO: get biggest instance
+					String a0 = getAncestralAllele(cntA, cntT, cntG, cntC, line);
+					int pos = line_num + st_pos;
+					String snp_id = chr + ":" + pos;
+					
+					anc_types.add(new SNP(pos, a0, "-", snp_id));
+				}
+				
+				//increase only when you have a human allele
+				line_num++;
+			}
+			line = anc_scan.nextLine();
+		}
+		
+		return anc_types;
+	}
+	
+	private String getAncestralAllele(int cntA, int cntT, int cntG, int cntC, String line) {
+		
+		if(cntA > cntT && cntA > cntG && cntA > cntC)
+			return "A";
+		if(cntT > cntA && cntT > cntG && cntT > cntC)
+			return "T";
+		if(cntG > cntT && cntG > cntA && cntG > cntC)
+			return "G";
+		if(cntC > cntT && cntC > cntG && cntC > cntA)
+			return "C";
+		
+		return Character.toString(line.charAt(1));
+	}
+	
+	private List<SNP> parseLegendFile() throws FileParsingException {
 		
 		List<SNP> anc_types = new ArrayList<SNP>();
 		
@@ -56,6 +196,13 @@ public class AncestralParser {
 			String[] ln_arr = anc_scan.nextLine().split("\\s+");
 			
 			int pos = Integer.parseInt(ln_arr[1]);
+			
+			//TODO: Possibly get the window that contains pos and do a while loop
+			//			while pos < win.getEndPos()
+			//			keep adding SNP to Window's anc_snps
+			//TODO: I would need to change the "getAncestralSNP() method in HaplotypeTests 
+			//			to reference the window instead of pulling it from the huge list
+			
 			anc_types.add(new SNP(pos, ln_arr[2], ln_arr[3], ln_arr[0]));
 		}
 		
@@ -65,6 +212,7 @@ public class AncestralParser {
 //		}
 		
 		return anc_types;
+		
 	}
 	
 	private void checkLegendFile() throws FileParsingException {
