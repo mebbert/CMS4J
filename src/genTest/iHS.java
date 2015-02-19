@@ -66,7 +66,7 @@ public class iHS extends HaplotypeTests {
 	
 	/**
 	 * Runs the iHS statistic using the environment setup by the constructor. The
-	 * below series of evens spans multiple private methods but outlines the 
+	 * below series of events spans multiple private methods but outlines the 
 	 * logic for calculating iHS. This is done for every SNP in the Window (core_snp)
 	 * 		-Step 1: Create extended haplotypes for all Individuals (2 per Individual)
 	 * 		-Step 2: Separate the pool of haplotypes based upon whether or not they have the Ancestral allele at the core position
@@ -74,7 +74,7 @@ public class iHS extends HaplotypeTests {
 	 * 		-Step 4: Integrate EHH values from core to ends for both Ancestral and Derived groups; weight value based upon Genetic Map
 	 * 		-Step 5: Calculate iHS from previously calculated iHH values
 	 * 		-Step 6: Repeat and save these unstandard iHS values for all SNPs in Window
-	 * 		-Step 7: Standardize the all the iHS values within the Window
+	 * 		-Step 7: Standardize all the iHS values within the Window
 	 * 
 	 * Note that many of these functions are extended from HaplotypeTests and 
 	 * can't be found in this class.
@@ -116,14 +116,28 @@ public class iHS extends HaplotypeTests {
 	
 	@Override
 	public void printStats() {
+//		===============Default Printout===================	
+//		System.out.println("\nShowing iHS Data");
+//		for(int i = 0; i < all_std_iHS.size(); i++) {
+//			System.out.print("iHS =\t");
+//			System.out.print(all_iHS_snp.get(i) + "\t");
+//			System.out.print(all_unstd_iHS.get(i) + "\t");
+//			System.out.println(all_std_iHS.get(i));	
+//		}
 		
-		System.out.println("\nShowing iHS Data");
+//		===============R Printout==========================
+		StringBuilder ihs_sb = new StringBuilder();
+		StringBuilder pos_sb = new StringBuilder();
+		
+		System.out.println("\nShowing R output: iHS");
 		for(int i = 0; i < all_std_iHS.size(); i++) {
-			System.out.print("iHS =\t");
-			System.out.print(all_iHS_snp.get(i) + "\t");
-			System.out.print(all_unstd_iHS.get(i) + "\t");
-			System.out.println(all_std_iHS.get(i));	
+			
+			ihs_sb.append(all_std_iHS.get(i) + ",");
+			pos_sb.append(all_iHS_snp.get(i).getPosition() + ",");
 		}
+		System.out.println("iHS =\t" + ihs_sb.toString());
+		System.out.println("Pos =\t" + pos_sb.toString());
+		
 	}
 
 	@Override

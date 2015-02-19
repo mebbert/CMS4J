@@ -108,13 +108,26 @@ public class Fst extends HaplotypeTests {
 	
 	@Override
 	public void printStats() {
+//		===============Default Printout===================
+//		System.out.println("\nShowing Fst Data");
+//		for(int i = 0; i < all_Fst.size(); i++) {
+//			System.out.print("Fst =\t");
+//			System.out.print(all_Fst_snps.get(i) + "\t");
+//			System.out.println(all_Fst.get(i));	
+//		}
 		
-		System.out.println("\nShowing Fst Data");
+//		===============R Printout==========================
+		StringBuilder fst_sb = new StringBuilder();
+		StringBuilder pos_sb = new StringBuilder();
+		
+		System.out.println("\nShowing R output: Fst");
 		for(int i = 0; i < all_Fst.size(); i++) {
-			System.out.print("Fst =\t");
-			System.out.print(all_Fst_snps.get(i) + "\t");
-			System.out.println(all_Fst.get(i));	
+			
+			fst_sb.append(all_Fst.get(i) + ",");
+			pos_sb.append(all_Fst_snps.get(i).getPosition() + ",");
 		}
+		System.out.println("Fst =\t" + fst_sb.toString());
+		System.out.println("Pos =\t" + pos_sb.toString());
 	}
 
 	@Override

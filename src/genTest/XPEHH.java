@@ -138,14 +138,27 @@ public class XPEHH extends HaplotypeTests {
 	
 	@Override
 	public void printStats() {
+//		===============Default Printout===================
+//		System.out.println("\nShowing XPEHH Data");
+//		for(int i = 0; i < all_XPEHH.size(); i++) {
+//			System.out.print("XPEHH =\t");
+//			System.out.print(all_XPEHH_snps.get(i) + "\t");
+//			System.out.print(all_unstd_XPEHH.get(i) + "\t");
+//			System.out.println(all_XPEHH.get(i));
+//		}
 		
-		System.out.println("\nShowing XPEHH Data");
+//		===============R Printout==========================
+		StringBuilder xpehh_sb = new StringBuilder();
+		StringBuilder pos_sb = new StringBuilder();
+		
+		System.out.println("\nShowing R output: XPEHH");
 		for(int i = 0; i < all_XPEHH.size(); i++) {
-			System.out.print("XPEHH =\t");
-			System.out.print(all_XPEHH_snps.get(i) + "\t");
-			System.out.print(all_unstd_XPEHH.get(i) + "\t");
-			System.out.println(all_XPEHH.get(i));
+			
+			xpehh_sb.append(all_XPEHH.get(i) + ",");
+			pos_sb.append(all_XPEHH_snps.get(i).getPosition() + ",");
 		}
+		System.out.println("XPEHH =\t" + xpehh_sb.toString());
+		System.out.println("Pos =\t" + pos_sb.toString());
 	}
 
 	@Override
