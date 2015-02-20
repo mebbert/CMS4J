@@ -117,27 +117,26 @@ public class iHS extends HaplotypeTests {
 	@Override
 	public void printStats() {
 //		===============Default Printout===================	
-//		System.out.println("\nShowing iHS Data");
-//		for(int i = 0; i < all_std_iHS.size(); i++) {
-//			System.out.print("iHS =\t");
-//			System.out.print(all_iHS_snp.get(i) + "\t");
-//			System.out.print(all_unstd_iHS.get(i) + "\t");
-//			System.out.println(all_std_iHS.get(i));	
-//		}
+		System.out.println("\nShowing iHS Data");
+		for(int i = 0; i < all_std_iHS.size(); i++) {
+			System.out.print("iHS =\t");
+			System.out.print(all_iHS_snp.get(i) + "\t");
+			System.out.print(all_unstd_iHS.get(i) + "\t");
+			System.out.println(all_std_iHS.get(i));	
+		}
 		
 //		===============R Printout==========================
-		StringBuilder ihs_sb = new StringBuilder();
-		StringBuilder pos_sb = new StringBuilder();
-		
-		System.out.println("\nShowing R output: iHS");
-		for(int i = 0; i < all_std_iHS.size(); i++) {
-			
-			ihs_sb.append(all_std_iHS.get(i) + ",");
-			pos_sb.append(all_iHS_snp.get(i).getPosition() + ",");
-		}
-		System.out.println("iHS =\t" + ihs_sb.toString());
-		System.out.println("Pos =\t" + pos_sb.toString());
-		
+//		StringBuilder ihs_sb = new StringBuilder();
+//		StringBuilder pos_sb = new StringBuilder();
+//		
+//		System.out.println("\nShowing R output: iHS");
+//		for(int i = 0; i < all_std_iHS.size(); i++) {
+//			
+//			ihs_sb.append(all_std_iHS.get(i) + ",");
+//			pos_sb.append(all_iHS_snp.get(i).getPosition() + ",");
+//		}
+//		System.out.println("iHS =\t" + ihs_sb.toString());
+//		System.out.println("Pos =\t" + pos_sb.toString());
 	}
 
 	@Override

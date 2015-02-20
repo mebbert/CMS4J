@@ -118,26 +118,26 @@ public class DAF extends HaplotypeTests {
 	@Override
 	public void printStats() {
 //		===============Default Printout===================
-//		System.out.println("\nShowing ÆDAF Data");
-//		for(int i = 0; i < all_delta_DAF.size(); i++) {
-//			System.out.print("DAF =\t");
-//			System.out.print(all_delta_DAF_snps.get(i) + "\t");
-//			System.out.print(all_DAF.get(i) + "\t");
-//			System.out.println(all_delta_DAF.get(i));
-//		}
+		System.out.println("\nShowing ÆDAF Data");
+		for(int i = 0; i < all_delta_DAF.size(); i++) {
+			System.out.print("DAF =\t");
+			System.out.print(all_delta_DAF_snps.get(i) + "\t");
+			System.out.print(all_DAF.get(i) + "\t");
+			System.out.println(all_delta_DAF.get(i));
+		}
 		
 //		===============R Printout==========================
-		StringBuilder daf_sb = new StringBuilder();
-		StringBuilder pos_sb = new StringBuilder();
-		
-		System.out.println("\nShowing R output: DAF");
-		for(int i = 0; i < all_delta_DAF.size(); i++) {
-			
-			daf_sb.append(all_delta_DAF.get(i) + ",");
-			pos_sb.append(all_delta_DAF_snps.get(i).getPosition() + ",");
-		}
-		System.out.println("DAF =\t" + daf_sb.toString());
-		System.out.println("Pos =\t" + pos_sb.toString());
+//		StringBuilder daf_sb = new StringBuilder();
+//		StringBuilder pos_sb = new StringBuilder();
+//		
+//		System.out.println("\nShowing R output: DAF");
+//		for(int i = 0; i < all_delta_DAF.size(); i++) {
+//			
+//			daf_sb.append(all_delta_DAF.get(i) + ",");
+//			pos_sb.append(all_delta_DAF_snps.get(i).getPosition() + ",");
+//		}
+//		System.out.println("DAF =\t" + daf_sb.toString());
+//		System.out.println("Pos =\t" + pos_sb.toString());
 	}
 
 	@Override

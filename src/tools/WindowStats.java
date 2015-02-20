@@ -1,6 +1,8 @@
 package tools;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class WindowStats {
 	
@@ -39,6 +41,43 @@ public class WindowStats {
 	}
 
 
+	public int getTotNumSNPs() {
+		
+		Set<Integer> all_pos = new HashSet<Integer>();
+		
+		for(SNP s : ihs_snps)
+			all_pos.add(s.getPosition());
+		for(SNP s : xpehh_snps)
+			all_pos.add(s.getPosition());
+		for(SNP s : ihh_snps)
+			all_pos.add(s.getPosition());
+		for(SNP s : daf_snps)
+			all_pos.add(s.getPosition());
+		for(SNP s : fst_snps)
+			all_pos.add(s.getPosition());
+		
+		return all_pos.size();
+	}
+	
+	//TODO: test what happens when you try to access a value that is right at the boarder of the end_pos
+	public int getNextPosition(int prev_pos) {
+		
+		int nxt_pos = end_pos;
+		
+		nxt_pos = comparePositions(nxt_pos, prev_pos, ihs_snps);
+		nxt_pos = comparePositions(nxt_pos, prev_pos, xpehh_snps);
+		nxt_pos = comparePositions(nxt_pos, prev_pos, ihh_snps);
+		nxt_pos = comparePositions(nxt_pos, prev_pos, daf_snps);
+		nxt_pos = comparePositions(nxt_pos, prev_pos, fst_snps);
+		
+		if(nxt_pos == prev_pos) {//check this...
+			//at end
+			return -1;
+		}
+		
+		return nxt_pos;
+	}
+	
 	public int getStPos() {
 		return st_pos;
 	}
@@ -110,6 +149,18 @@ public class WindowStats {
 	public void setFst(List<Double> fst_stats, List<SNP> fst_snps) {
 		this.fst_stats = fst_stats;
 		this.fst_snps = fst_snps;
+	}
+	
+	private int comparePositions(int nxt_pos, int prev_pos, List<SNP> snps) {
+		
+		for(int i = 0; i < snps.size(); i++) {
+			SNP s = snps.get(i);
+			if(s.getPosition() > prev_pos && s.getPosition() <= nxt_pos) {
+				return s.getPosition();
+			}
+		}
+		
+		return nxt_pos;
 	}
 
 }

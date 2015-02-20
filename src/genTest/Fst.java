@@ -86,6 +86,7 @@ public class Fst extends HaplotypeTests {
 													xp_size,
 													op_size);
 			
+			//this is Weirs analysis, I need to do Cockerhams...
 			double fst = sample_var / (avg_freq * (1 - avg_freq));
 			
 			all_Fst_snps.add(core_snp);
@@ -109,25 +110,25 @@ public class Fst extends HaplotypeTests {
 	@Override
 	public void printStats() {
 //		===============Default Printout===================
-//		System.out.println("\nShowing Fst Data");
-//		for(int i = 0; i < all_Fst.size(); i++) {
-//			System.out.print("Fst =\t");
-//			System.out.print(all_Fst_snps.get(i) + "\t");
-//			System.out.println(all_Fst.get(i));	
-//		}
+		System.out.println("\nShowing Fst Data");
+		for(int i = 0; i < all_Fst.size(); i++) {
+			System.out.print("Fst =\t");
+			System.out.print(all_Fst_snps.get(i) + "\t");
+			System.out.println(all_Fst.get(i));	
+		}
 		
 //		===============R Printout==========================
-		StringBuilder fst_sb = new StringBuilder();
-		StringBuilder pos_sb = new StringBuilder();
-		
-		System.out.println("\nShowing R output: Fst");
-		for(int i = 0; i < all_Fst.size(); i++) {
-			
-			fst_sb.append(all_Fst.get(i) + ",");
-			pos_sb.append(all_Fst_snps.get(i).getPosition() + ",");
-		}
-		System.out.println("Fst =\t" + fst_sb.toString());
-		System.out.println("Pos =\t" + pos_sb.toString());
+//		StringBuilder fst_sb = new StringBuilder();
+//		StringBuilder pos_sb = new StringBuilder();
+//		
+//		System.out.println("\nShowing R output: Fst");
+//		for(int i = 0; i < all_Fst.size(); i++) {
+//			
+//			fst_sb.append(all_Fst.get(i) + ",");
+//			pos_sb.append(all_Fst_snps.get(i).getPosition() + ",");
+//		}
+//		System.out.println("Fst =\t" + fst_sb.toString());
+//		System.out.println("Pos =\t" + pos_sb.toString());
 	}
 
 	@Override
@@ -148,11 +149,17 @@ public class Fst extends HaplotypeTests {
 		
 		double mean_size = (s1 + s2 + s3) / (double) NUM_OF_POPULATIONS;
 		
-		double val1 = s1 * (Math.pow((f1 - f_avg), 2));//equal to s1*(f1 - f_avg)^2
-		double val2 = s2 * (Math.pow((f2 - f_avg), 2));//equal to s2*(f2 - f_avg)^2
-		double val3 = s3 * (Math.pow((f3 - f_avg), 2));//equal to s3*(f3 - f_avg)^2
+//		double val1 = s1 * (Math.pow((f1 - f_avg), 2));//equal to s1*(f1 - f_avg)^2
+//		double val2 = s2 * (Math.pow((f2 - f_avg), 2));//equal to s2*(f2 - f_avg)^2
+//		double val3 = s3 * (Math.pow((f3 - f_avg), 2));//equal to s3*(f3 - f_avg)^2
+//		
+//		double sample_var = (val1 + val2 + val3) / ((NUM_OF_POPULATIONS - 1) * mean_size);
 		
-		double sample_var = (val1 + val2 + val3) / ((NUM_OF_POPULATIONS - 1) * mean_size);
+		double val1 = (s1 * (Math.pow((f1 - f_avg), 2))) / ((NUM_OF_POPULATIONS - 1) * mean_size);
+		double val2 = (s2 * (Math.pow((f2 - f_avg), 2))) / ((NUM_OF_POPULATIONS - 1) * mean_size);
+		double val3 = (s3 * (Math.pow((f3 - f_avg), 2))) / ((NUM_OF_POPULATIONS - 1) * mean_size);
+		
+		double sample_var = val1 + val2 + val3;
 		
 		return sample_var;
 	}
@@ -166,11 +173,17 @@ public class Fst extends HaplotypeTests {
 		
 		double mean_size = (s1 + s2 + s3) / (double) NUM_OF_POPULATIONS;
 		
-		double val1 = f1 * s1;
-		double val2 = f2 * s2;
-		double val3 = f3 * s3;
+//		double val1 = f1 * s1;
+//		double val2 = f2 * s2;
+//		double val3 = f3 * s3;
+//		
+//		double avg_freq = (val1 + val2 + val3) / (NUM_OF_POPULATIONS * mean_size);
 		
-		double avg_freq = (val1 + val2 + val3) / (NUM_OF_POPULATIONS * mean_size);
+		double val1 = (f1 * s1) / (NUM_OF_POPULATIONS * mean_size);
+		double val2 = (f2 * s2) / (NUM_OF_POPULATIONS * mean_size);
+		double val3 = (f3 * s3) / (NUM_OF_POPULATIONS * mean_size);
+		
+		double avg_freq = val1 + val2 + val3;
 		
 		return avg_freq;
 	}
