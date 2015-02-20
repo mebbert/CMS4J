@@ -10,7 +10,8 @@ import tools.Window;
 
 public class Fst extends HaplotypeTests {
 	
-	static int NUM_OF_POPULATIONS = 3;
+	static int NUM_POPS = 3;
+	static int NUM_ALLELES = 4;
 	
 	//Same for all populations
 	private Window win;
@@ -71,12 +72,20 @@ public class Fst extends HaplotypeTests {
 			int op_instance = getInstanceOfAllele(op_indv, index);
 			double op_freq = (double) op_instance /op_size;
 			
+			double avg_size = (tp_size + xp_size + op_size) / (double) NUM_POPS;
+			
+			double sqrd_coef_var = getSqrdCoefficientOfVariation(tp_size,
+																	xp_size,
+																	op_size,
+																	avg_size);
+			
 			double avg_freq = getAverageFrequencyOfAllele(tp_freq, 
 															xp_freq, 
 															op_freq,
 															tp_size,
 															xp_size,
-															op_size);
+															op_size,
+															avg_size);
 			
 			double sample_var = calcSampleVariance(tp_freq, 
 													xp_freq, 
@@ -84,7 +93,21 @@ public class Fst extends HaplotypeTests {
 													avg_freq,
 													tp_size,
 													xp_size,
-													op_size);
+													op_size,
+													avg_size);
+			
+			double avg_hetero_freq = getAvgHeterozygoteFreq(index,
+															tp_size,
+															xp_size,
+															op_size,
+															avg_size);
+			
+			//TODO: issues...
+//			double fst = calcFst(avg_size,
+//									sqrd_coef_var,
+//									avg_freq,
+//									sample_var,
+//									avg_hetero_freq);
 			
 			//this is Weirs analysis, I need to do Cockerhams...
 			double fst = sample_var / (avg_freq * (1 - avg_freq));
@@ -139,25 +162,62 @@ public class Fst extends HaplotypeTests {
 				+ " SNPs were unsuccessful");
 	}
 	
+	private double calcFst(double avg_size,
+							double sqrd_coef_var,
+							double avg_freq,
+							double sample_var,
+							double avg_hetero_freq) {
+		
+		double numerator = sample_var -
+				(1 / (avg_size - 1)) *
+				((avg_freq*(1 - avg_freq)) - 
+						(sample_var*((NUM_POPS - 1) / NUM_POPS)) - 
+						(avg_hetero_freq / NUM_ALLELES));
+		
+		double denominator = ((1 - (sqrd_coef_var*avg_size / (NUM_POPS*(avg_size - 1)))) *
+						(avg_freq*(avg_freq - 1))) +
+				((1 + (((NUM_POPS - 1)*avg_size*sqrd_coef_var) / (NUM_POPS*(avg_size - 1)))) * 
+						(sample_var / NUM_POPS)) +
+				((sqrd_coef_var / (NUM_POPS*(avg_size - 1))) * (avg_hetero_freq / NUM_ALLELES));
+		
+		return numerator / denominator;
+	}
+	
+	private double getAvgHeterozygoteFreq(int index,
+										double tp_s,
+										double xp_s,
+										double op_s,
+										double s_avg) {
+		
+		int tp_het_inst = getInstanceOfHeterozygosity(tp_indv, index);
+		int xp_het_inst = getInstanceOfHeterozygosity(xp_indv, index);
+		int op_het_inst = getInstanceOfHeterozygosity(op_indv, index);
+		
+		double tp_het_freq = (double) tp_het_inst / tp_s;
+		double xp_het_freq = (double) xp_het_inst / xp_s;
+		double op_het_freq = (double) op_het_inst / op_s;
+		
+		double val1 = (tp_het_freq * tp_s) / (NUM_POPS * s_avg);
+		double val2 = (xp_het_freq * xp_s) / (NUM_POPS * s_avg);
+		double val3 = (op_het_freq * op_s) / (NUM_POPS * s_avg);
+		
+		double avg_het_freq = val1 + val2 + val3;
+		
+		return avg_het_freq;
+	}
+	
 	private double calcSampleVariance(double f1, 
 										double f2, 
 										double f3,
 										double f_avg,
 										double s1,
 										double s2,
-										double s3) {
+										double s3,
+										double s_avg) {
 		
-		double mean_size = (s1 + s2 + s3) / (double) NUM_OF_POPULATIONS;
-		
-//		double val1 = s1 * (Math.pow((f1 - f_avg), 2));//equal to s1*(f1 - f_avg)^2
-//		double val2 = s2 * (Math.pow((f2 - f_avg), 2));//equal to s2*(f2 - f_avg)^2
-//		double val3 = s3 * (Math.pow((f3 - f_avg), 2));//equal to s3*(f3 - f_avg)^2
-//		
-//		double sample_var = (val1 + val2 + val3) / ((NUM_OF_POPULATIONS - 1) * mean_size);
-		
-		double val1 = (s1 * (Math.pow((f1 - f_avg), 2))) / ((NUM_OF_POPULATIONS - 1) * mean_size);
-		double val2 = (s2 * (Math.pow((f2 - f_avg), 2))) / ((NUM_OF_POPULATIONS - 1) * mean_size);
-		double val3 = (s3 * (Math.pow((f3 - f_avg), 2))) / ((NUM_OF_POPULATIONS - 1) * mean_size);
+		double val1 = (s1 * (Math.pow((f1 - f_avg), 2))) / ((NUM_POPS - 1) * s_avg);
+		double val2 = (s2 * (Math.pow((f2 - f_avg), 2))) / ((NUM_POPS - 1) * s_avg);
+		double val3 = (s3 * (Math.pow((f3 - f_avg), 2))) / ((NUM_POPS - 1) * s_avg);
 		
 		double sample_var = val1 + val2 + val3;
 		
@@ -169,23 +229,43 @@ public class Fst extends HaplotypeTests {
 												double f3,
 												double s1,
 												double s2,
-												double s3) {
+												double s3,
+												double s_avg) {
 		
-		double mean_size = (s1 + s2 + s3) / (double) NUM_OF_POPULATIONS;
-		
-//		double val1 = f1 * s1;
-//		double val2 = f2 * s2;
-//		double val3 = f3 * s3;
-//		
-//		double avg_freq = (val1 + val2 + val3) / (NUM_OF_POPULATIONS * mean_size);
-		
-		double val1 = (f1 * s1) / (NUM_OF_POPULATIONS * mean_size);
-		double val2 = (f2 * s2) / (NUM_OF_POPULATIONS * mean_size);
-		double val3 = (f3 * s3) / (NUM_OF_POPULATIONS * mean_size);
+		double val1 = (f1 * s1) / (NUM_POPS * s_avg);
+		double val2 = (f2 * s2) / (NUM_POPS * s_avg);
+		double val3 = (f3 * s3) / (NUM_POPS * s_avg);
 		
 		double avg_freq = val1 + val2 + val3;
 		
 		return avg_freq;
+	}
+	
+	private double getSqrdCoefficientOfVariation(double s1,
+													double s2,
+													double s3,
+													double s_avg) {
+		
+		double dev1 = Math.pow((s1 - s_avg), 2);
+		double dev2 = Math.pow((s2 - s_avg), 2);
+		double dev3 = Math.pow((s3 - s_avg), 2);
+		
+		double s_sd = Math.sqrt((dev1 + dev2 + dev3) / NUM_POPS);
+		
+		double coef_var = s_sd / s_avg;
+		
+		return Math.pow((coef_var), 2);
+	}
+	
+	private int getInstanceOfHeterozygosity(Individual[] indv, int index) {
+		
+		int instance = 0;
+		for(int i = 0; i <indv.length; i++) {
+			if(indv[i].getStrand1Allele(index) != indv[i].getStrand2Allele(index))
+				instance++;
+		}
+		
+		return instance;
 	}
 	
 	//returns the instance of a0 (it doesn't matter which allele because Fst is a measure of freq, not instance)
