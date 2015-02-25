@@ -125,21 +125,8 @@ public class DAF extends HaplotypeTests {
 			System.out.print(all_DAF.get(i) + "\t");
 			System.out.println(all_delta_DAF.get(i));
 		}
-		
-//		===============R Printout==========================
-//		StringBuilder daf_sb = new StringBuilder();
-//		StringBuilder pos_sb = new StringBuilder();
-//		
-//		System.out.println("\nShowing R output: DAF");
-//		for(int i = 0; i < all_delta_DAF.size(); i++) {
-//			
-//			daf_sb.append(all_delta_DAF.get(i) + ",");
-//			pos_sb.append(all_delta_DAF_snps.get(i).getPosition() + ",");
-//		}
-//		System.out.println("DAF =\t" + daf_sb.toString());
-//		System.out.println("Pos =\t" + pos_sb.toString());
 	}
-
+	
 	@Override
 	public void logRunStats() {
 		
@@ -147,6 +134,28 @@ public class DAF extends HaplotypeTests {
 				+ all_delta_DAF.size() + " were successful and " + unused_snps.size() 
 				+ " SNPs were unsuccessful");
 	}
+	
+	public void printRStats() {
+		
+		double mean  = findMean(all_delta_DAF);
+		double st_dev = findStandardDeviation(all_delta_DAF, mean);
+		
+		StringBuilder daf_sb = new StringBuilder();
+		StringBuilder pos_sb = new StringBuilder();
+		
+		System.out.println("\nShowing R output: DAF");
+		System.out.println("\tMean:\t" + mean);
+		System.out.println("\tSt Dev:\t" + st_dev);
+		
+		for(int i = 0; i < all_delta_DAF.size(); i++) {
+			
+			daf_sb.append(all_delta_DAF.get(i) + ",");
+			pos_sb.append(all_delta_DAF_snps.get(i).getPosition() + ",");
+		}
+		System.out.println("DAF =\t" + daf_sb.toString());
+		System.out.println("Pos =\t" + pos_sb.toString());
+	}
+
 	
 	private int getInstanceOfDerivedAllele(Individual[] indv, SNP core_snp, SNP anc_snp, int snp_index) {
 		

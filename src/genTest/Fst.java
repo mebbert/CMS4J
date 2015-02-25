@@ -102,15 +102,15 @@ public class Fst extends HaplotypeTests {
 															op_size,
 															avg_size);
 			
-			//TODO: issues...
-//			double fst = calcFst(avg_size,
-//									sqrd_coef_var,
-//									avg_freq,
-//									sample_var,
-//									avg_hetero_freq);
+			//Weir and Cockerham's Fst 
+			double fst = calcFst(avg_size,
+									sqrd_coef_var,
+									avg_freq,
+									sample_var,
+									avg_hetero_freq);
 			
-			//this is Weirs analysis, I need to do Cockerhams...
-			double fst = sample_var / (avg_freq * (1 - avg_freq));
+			//Wright's Fst
+//			double fst = sample_var / (avg_freq * (1 - avg_freq));
 			
 			all_Fst_snps.add(core_snp);
 			all_Fst.add(fst);
@@ -139,19 +139,6 @@ public class Fst extends HaplotypeTests {
 			System.out.print(all_Fst_snps.get(i) + "\t");
 			System.out.println(all_Fst.get(i));	
 		}
-		
-//		===============R Printout==========================
-//		StringBuilder fst_sb = new StringBuilder();
-//		StringBuilder pos_sb = new StringBuilder();
-//		
-//		System.out.println("\nShowing R output: Fst");
-//		for(int i = 0; i < all_Fst.size(); i++) {
-//			
-//			fst_sb.append(all_Fst.get(i) + ",");
-//			pos_sb.append(all_Fst_snps.get(i).getPosition() + ",");
-//		}
-//		System.out.println("Fst =\t" + fst_sb.toString());
-//		System.out.println("Pos =\t" + pos_sb.toString());
 	}
 
 	@Override
@@ -162,32 +149,60 @@ public class Fst extends HaplotypeTests {
 				+ " SNPs were unsuccessful");
 	}
 	
+	public void printRStats() {
+		
+		double mean  = findMean(all_Fst);
+		double st_dev = findStandardDeviation(all_Fst, mean);
+		
+		StringBuilder fst_sb = new StringBuilder();
+		StringBuilder pos_sb = new StringBuilder();
+		
+		System.out.println("\nShowing R output: Fst");
+		System.out.println("\tMean:\t" + mean);
+		System.out.println("\tSt Dev:\t" + st_dev);
+		
+		for(int i = 0; i < all_Fst.size(); i++) {
+			
+			fst_sb.append(all_Fst.get(i) + ",");
+			pos_sb.append(all_Fst_snps.get(i).getPosition() + ",");
+		}
+		System.out.println("Fst =\t" + fst_sb.toString());
+		System.out.println("Pos =\t" + pos_sb.toString());
+	}
+	
 	private double calcFst(double avg_size,
 							double sqrd_coef_var,
 							double avg_freq,
 							double sample_var,
 							double avg_hetero_freq) {
 		
-		double numerator = sample_var -
-				(1 / (avg_size - 1)) *
-				((avg_freq*(1 - avg_freq)) - 
-						(sample_var*((NUM_POPS - 1) / NUM_POPS)) - 
-						(avg_hetero_freq / NUM_ALLELES));
+		//calculating the numerator to Weir and Cockerham's Fst statistic
+		double n1 = sample_var;
+		double n2 = 1 / (avg_size - 1);
+		double n3 = avg_freq * (1 - avg_freq);
+		double n4 = sample_var * ((NUM_POPS - 1) / NUM_POPS);
+		double n5 = avg_hetero_freq / NUM_ALLELES;
 		
-		double denominator = ((1 - (sqrd_coef_var*avg_size / (NUM_POPS*(avg_size - 1)))) *
-						(avg_freq*(avg_freq - 1))) +
-				((1 + (((NUM_POPS - 1)*avg_size*sqrd_coef_var) / (NUM_POPS*(avg_size - 1)))) * 
-						(sample_var / NUM_POPS)) +
-				((sqrd_coef_var / (NUM_POPS*(avg_size - 1))) * (avg_hetero_freq / NUM_ALLELES));
+		double numerator = n1 - n2*(n3 - n4 - n5);
+		
+		//calculating the denominator to Weir and Cockerham's Fst statistic
+		double d1 = 1 - (avg_size*sqrd_coef_var) / (NUM_POPS*(avg_size - 1));
+		double d2 = avg_freq * (1 - avg_freq);
+		double d3 = 1 + (((NUM_POPS - 1)*avg_size*sqrd_coef_var) / (NUM_POPS*(avg_size - 1)));
+		double d4 = sample_var / NUM_POPS;
+		double d5 = sqrd_coef_var / (NUM_POPS*(avg_size - 1));
+		double d6 = avg_hetero_freq / NUM_ALLELES;
+		
+		double denominator = d1*d2 + d3*d4 + d5*d6;
 		
 		return numerator / denominator;
 	}
 	
 	private double getAvgHeterozygoteFreq(int index,
-										double tp_s,
-										double xp_s,
-										double op_s,
-										double s_avg) {
+											double tp_s,
+											double xp_s,
+											double op_s,
+											double s_avg) {
 		
 		int tp_het_inst = getInstanceOfHeterozygosity(tp_indv, index);
 		int xp_het_inst = getInstanceOfHeterozygosity(xp_indv, index);

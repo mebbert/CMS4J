@@ -156,7 +156,7 @@ public class AncestralParser {
 					int pos = line_num + st_pos;
 					String snp_id = chr + ":" + pos;
 					
-					anc_types.add(new SNP(pos, a0, "-", snp_id));
+					anc_types.add(new SNP(pos, a0, "-", snp_id));//saves data
 				}
 				
 				//increase only when you have a human allele

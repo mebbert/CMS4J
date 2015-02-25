@@ -124,6 +124,12 @@ public class Stats {
 		d.printStats();
 		f.printStats();
 		
+//		i.printRStats();
+//		h.printRStats();
+//		x.printRStats();
+//		d.printRStats();
+//		f.printRStats();
+		
 		i.logRunStats();
 		h.logRunStats();
 		x.logRunStats();

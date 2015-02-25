@@ -124,19 +124,6 @@ public class iHS extends HaplotypeTests {
 			System.out.print(all_unstd_iHS.get(i) + "\t");
 			System.out.println(all_std_iHS.get(i));	
 		}
-		
-//		===============R Printout==========================
-//		StringBuilder ihs_sb = new StringBuilder();
-//		StringBuilder pos_sb = new StringBuilder();
-//		
-//		System.out.println("\nShowing R output: iHS");
-//		for(int i = 0; i < all_std_iHS.size(); i++) {
-//			
-//			ihs_sb.append(all_std_iHS.get(i) + ",");
-//			pos_sb.append(all_iHS_snp.get(i).getPosition() + ",");
-//		}
-//		System.out.println("iHS =\t" + ihs_sb.toString());
-//		System.out.println("Pos =\t" + pos_sb.toString());
 	}
 
 	@Override
@@ -145,6 +132,27 @@ public class iHS extends HaplotypeTests {
 		log.addLine("Out of " + win.getSNPs().size() + " SNPs, " 
 				+ all_std_iHS.size() + " were successful and " + unused_snps.size() 
 				+ " SNPs were unsuccessful");
+	}
+	
+	public void printRStats() {
+		
+		double mean  = findMean(all_std_iHS);
+		double st_dev = findStandardDeviation(all_std_iHS, mean);
+		
+		StringBuilder ihs_sb = new StringBuilder();
+		StringBuilder pos_sb = new StringBuilder();
+		
+		System.out.println("\nShowing R output: iHS");
+		System.out.println("\tMean:\t" + mean);
+		System.out.println("\tSt Dev:\t" + st_dev);
+		
+		for(int i = 0; i < all_std_iHS.size(); i++) {
+			
+			ihs_sb.append(all_std_iHS.get(i) + ",");
+			pos_sb.append(all_iHS_snp.get(i).getPosition() + ",");
+		}
+		System.out.println("iHS =\t" + ihs_sb.toString());
+		System.out.println("Pos =\t" + pos_sb.toString());
 	}
 	
 	private Double getUnstandardizedIHS(SNP core_snp, int snp_index) {

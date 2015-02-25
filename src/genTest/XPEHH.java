@@ -146,19 +146,6 @@ public class XPEHH extends HaplotypeTests {
 			System.out.print(all_unstd_XPEHH.get(i) + "\t");
 			System.out.println(all_XPEHH.get(i));
 		}
-		
-//		===============R Printout==========================
-//		StringBuilder xpehh_sb = new StringBuilder();
-//		StringBuilder pos_sb = new StringBuilder();
-//		
-//		System.out.println("\nShowing R output: XPEHH");
-//		for(int i = 0; i < all_XPEHH.size(); i++) {
-//			
-//			xpehh_sb.append(all_XPEHH.get(i) + ",");
-//			pos_sb.append(all_XPEHH_snps.get(i).getPosition() + ",");
-//		}
-//		System.out.println("XPEHH =\t" + xpehh_sb.toString());
-//		System.out.println("Pos =\t" + pos_sb.toString());
 	}
 
 	@Override
@@ -167,6 +154,27 @@ public class XPEHH extends HaplotypeTests {
 		log.addLine("Out of " + win.getSNPs().size() + " SNPs, " 
 				+ all_XPEHH.size() + " were successful and " + unused_snps.size() 
 				+ " SNPs were unsuccessful");
+	}
+	
+	public void printRStats() {
+		
+		double mean  = findMean(all_XPEHH);
+		double st_dev = findStandardDeviation(all_XPEHH, mean);
+		
+		StringBuilder xpehh_sb = new StringBuilder();
+		StringBuilder pos_sb = new StringBuilder();
+		
+		System.out.println("\nShowing R output: XPEHH");
+		System.out.println("\tMean:\t" + mean);
+		System.out.println("\tSt Dev:\t" + st_dev);
+		
+		for(int i = 0; i < all_XPEHH.size(); i++) {
+			
+			xpehh_sb.append(all_XPEHH.get(i) + ",");
+			pos_sb.append(all_XPEHH_snps.get(i).getPosition() + ",");
+		}
+		System.out.println("XPEHH =\t" + xpehh_sb.toString());
+		System.out.println("Pos =\t" + pos_sb.toString());
 	}
 	
 	private double calcUnstandardEhhIntegral(SNP core_snp, SNP last_snp, Individual[] indv) {

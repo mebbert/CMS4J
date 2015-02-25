@@ -170,7 +170,7 @@ public abstract class HaplotypeTests {
 		return (unstd_data - expect) / stddv;
 	}
 	
-	private double findStandardDeviation(List<Double> all_unstd_data, double mean) {
+	protected double findStandardDeviation(List<Double> all_unstd_data, double mean) {
 		
 		double[] all_deviations = new double[all_unstd_data.size()];
 		
@@ -190,7 +190,7 @@ public abstract class HaplotypeTests {
 		return Math.sqrt(dev_mean);
 	}
 	
-	private double findMean(List<Double> all_unstd_data) {
+	protected double findMean(List<Double> all_unstd_data) {
 		
 		double sum = 0.0;
 		
