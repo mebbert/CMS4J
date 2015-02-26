@@ -12,7 +12,7 @@ import genTest.*;
 
 public class Stats {
 	
-	private static int WAIT_TIME = 50;
+	private static int WAIT_TIME = 500;
 	
 	private WindowStats ws;
 	
