@@ -18,7 +18,7 @@ public class iHS extends HaplotypeTests {
 	private ExtendedHaplotype anc_eh;
 	private ExtendedHaplotype der_eh;
 	
-	private List<SNP> anc_types;
+	private List<Window> anc_types;
 	private List<Double> all_unstd_iHS;
 	private List<Window> all_win;
 	
@@ -42,7 +42,7 @@ public class iHS extends HaplotypeTests {
 	public iHS(Log log, 
 				Window win, 
 				Individual[] individuals, 
-				List<SNP> anc_types, 
+				List<Window> anc_types,
 				List<Window> all_win, 
 				GeneticMap gm){
 		

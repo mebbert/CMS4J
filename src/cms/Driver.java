@@ -64,7 +64,7 @@ public class Driver {
 	
 	//universal variables
 	private GeneticMap gm;
-	private List<SNP> anc_types;
+	private List<Window> anc_types;
 	private List<WindowStats> win_stats;
 	
 	//log for progress and error checking
@@ -215,8 +215,6 @@ public class Driver {
 	 */
 	private void intersectPopulations() {
 		
-//		intersectTargetWithCrossPopulations();
-		
 		intersectCrossWithTargetPopulations();
 		
 		intersectCrossWithOutgroupPopulations();
@@ -241,26 +239,6 @@ public class Driver {
 		xp_ino_indv = xp_indv_insect;
 		op_inx_indv = op_indv_insect;
 	}
-	
-//	private void intersectTargetWithCrossPopulations() {
-//		
-//		Individual[] tp_indv_insect = new Individual[tp_indv.length];
-//		Individual[] xp_indv_insect = new Individual[xp_indv.length];
-//		
-//		for(int i = 0; i < tp_indv_insect.length; i++)
-//			tp_indv_insect[i] = new Individual(tp_indv[i].getID(), tp_indv[i].getChr());
-//		for(int i = 0; i < xp_indv_insect.length; i++)
-//			xp_indv_insect[i] = new Individual(xp_indv[i].getID(), xp_indv[i].getChr());
-//		
-//		List<Window> wins_insect = new ArrayList<Window>();
-//		
-//		compareWindows(wins_insect, tp_wins, tp_indv, tp_indv_insect, xp_wins, xp_indv, xp_indv_insect);
-//
-//		//set the global variables
-//		txin_wins = wins_insect;
-//		tp_inx_indv = tp_indv_insect;
-//		xp_int_indv = xp_indv_insect;
-//	}
 	
 	private void intersectCrossWithTargetPopulations() {
 		
@@ -561,7 +539,7 @@ public class Driver {
 		tp_indv = new Individual[1];
 		xp_indv = new Individual[1];
 		gm = new GeneticMap();
-		anc_types = new ArrayList<SNP>();
+		anc_types = new ArrayList<Window>();
 		win_stats = new ArrayList<WindowStats>();
 	}
 	

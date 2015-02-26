@@ -7,6 +7,7 @@ import tools.ExtendedHaplotype;
 import tools.GeneticMap;
 import tools.Individual;
 import tools.SNP;
+import tools.Window;
 
 public abstract class HaplotypeTests {
 	
@@ -123,12 +124,18 @@ public abstract class HaplotypeTests {
 		else
 			return false;
 	}
-
-	protected SNP getAncestralSNP(SNP s, List<SNP> anc_types) {
+	
+	protected SNP getAncestralSNP(SNP s, List<Window> anc_types) {
 		
-		for(SNP as : anc_types) {
-			if(s.getPosition() == as.getPosition())
-				return as;
+		for(Window w : anc_types) {
+			
+			if(w.getStPos() < s.getPosition() && w.getEndPos() >= s.getPosition()) {
+				List<SNP> win_snps = w.getSNPs();
+				for(SNP anc_snp : win_snps) {
+					if(s.getPosition() == anc_snp.getPosition())
+						return anc_snp;
+				}
+			}
 		}
 		
 		return null;

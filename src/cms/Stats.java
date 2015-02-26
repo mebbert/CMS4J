@@ -54,7 +54,7 @@ public class Stats {
 				Individual[] xp_ino_indv,
 				Individual[] op_inx_indv,
 				
-				List<SNP> anc_types, 
+				List<Window> anc_types,
 				GeneticMap gm) {
 		
 		ws = new WindowStats(tp_win.getStPos(), tp_win.getEndPos());

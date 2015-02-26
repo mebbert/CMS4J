@@ -18,6 +18,17 @@ public class Window {
 		all_snps = null;
 	}
 	
+	public Window(int st_pos, int end_pos) {
+
+		this.st_pos = st_pos;
+		this.end_pos = end_pos;
+	
+		st_index = -1;
+		end_index = -1;
+		
+		all_snps = new ArrayList<SNP>();
+	}
+	
 	public Window (int st_pos, int end_pos, int st_index) {
 		
 		this.st_pos = st_pos;

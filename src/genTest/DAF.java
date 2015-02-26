@@ -17,7 +17,7 @@ public class DAF extends HaplotypeTests {
 	private Individual[] xp_ino_indv;//previously intersected with op
 	private Individual[] op_inx_indv;//previously intersected with xp
 	
-	private List<SNP> anc_types;
+	private List<Window> anc_types;
 	
 	//ÆDAF statistic information
 	private List<SNP> unused_snps;
@@ -33,7 +33,7 @@ public class DAF extends HaplotypeTests {
 				List<Window> xoin_wins,
 				Individual[] xp_ino_indv,
 				Individual[] op_inx_indv,
-				List<SNP> anc_types){
+				List<Window> anc_types){
 		
 		this.log = log;
 		
