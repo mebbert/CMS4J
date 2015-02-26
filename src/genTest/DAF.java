@@ -19,7 +19,7 @@ public class DAF extends HaplotypeTests {
 	
 	private List<Window> anc_types;
 	
-	//ÆDAF statistic information
+	//DAF statistic information
 	private List<SNP> unused_snps;
 	private List<SNP> all_delta_DAF_snps;
 	private List<Double> all_DAF;
