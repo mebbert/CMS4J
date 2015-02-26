@@ -1,11 +1,13 @@
 # CMS4J
 A user-friendly version of the composite of multiple signals (CMS) implemented in Java
 
-## Hayden will tell you how AWESOME CMS4J is here:
-It rocks...
-https://help.github.com/articles/github-flavored-markdown/
+## How to run CMS4J
 
-Output for a functioning program will look like this:
+
+
+
+
+##Output for a functioning program when running (test data/clean data) will look like this:
 
 ```
 ======================================================Round 1======================================================================
@@ -107,14 +109,13 @@ DAF =	SNP [pos=15430004, snp_id=rs13046630, a0=G, a1=A]	0.2	-0.06
 DAF =	SNP [pos=15435740, snp_id=rs117422362, a0=C, a1=T]	0.12	-0.06
 
 Starting Fst Analysis
-FST =	SNP [pos=15420732, snp_id=rs4816917, a0=A, a1=G]	0.4728260869565218
-FST =	SNP [pos=15423382, snp_id=rs34848403, a0=A, a1=G]	0.019736842105263157
-FST =	SNP [pos=15423628, snp_id=rs9983190, a0=G, a1=T]	0.2261072261072262
-FST =	SNP [pos=15423737, snp_id=rs2000701, a0=T, a1=C]	0.9823008849557521
-FST =	SNP [pos=15424368, snp_id=rs2155965, a0=A, a1=T]	0.11538461538461536
-FST =	SNP [pos=15430004, snp_id=rs13046630, a0=G, a1=A]	0.00813008130081299
-FST =	SNP [pos=15435740, snp_id=rs117422362, a0=C, a1=T]	0.06382978723404249
-
+Fst =	SNP [pos=15420732, snp_id=rs4816917, a0=A, a1=G]	0.39329903889676315
+Fst =	SNP [pos=15423382, snp_id=rs34848403, a0=A, a1=G]	0.0036204958173745665
+Fst =	SNP [pos=15423628, snp_id=rs9983190, a0=G, a1=T]	0.1951530612244899
+Fst =	SNP [pos=15423737, snp_id=rs2000701, a0=T, a1=C]	0.7258668872954587
+Fst =	SNP [pos=15424368, snp_id=rs2155965, a0=A, a1=T]	0.09542705971277399
+Fst =	SNP [pos=15430004, snp_id=rs13046630, a0=G, a1=A]	-0.007878286449715029
+Fst =	SNP [pos=15435740, snp_id=rs117422362, a0=C, a1=T]	0.047831632653061174
 ```
 
 You can do a 4th round on a much larger Window size but if these are working and that round runs

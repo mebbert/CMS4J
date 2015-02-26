@@ -11,7 +11,7 @@ import tools.ExtendedHaplotype;
 /*
  * Uses the equation:
  * 
- * 			·(i=1)=>s (eti _combine_ 2)
+ * 			Summation(i=1)=>s (eti _combine_ 2)
  * EHH	=	---------------
  * 				(Ct _combine_ 2)
  * 

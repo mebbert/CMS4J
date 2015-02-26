@@ -211,7 +211,7 @@ public class Driver {
 	 * functions gets rid of the SNPs not found in the other populations. It is
 	 * important to note that all populations are intersected with the Cross
 	 * Population (xp) and therefore all relate back to that .legend file setup.
-	 * This is important for statistic calculations, particularly ÆDAF and Fst.
+	 * This is important for statistic calculations, particularly DAF and Fst.
 	 */
 	private void intersectPopulations() {
 		

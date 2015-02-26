@@ -118,7 +118,7 @@ public class DAF extends HaplotypeTests {
 	@Override
 	public void printStats() {
 //		===============Default Printout===================
-		System.out.println("\nShowing ÆDAF Data");
+		System.out.println("\nShowing DAF Data");
 		for(int i = 0; i < all_delta_DAF.size(); i++) {
 			System.out.print("DAF =\t");
 			System.out.print(all_delta_DAF_snps.get(i) + "\t");

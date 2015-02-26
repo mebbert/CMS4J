@@ -30,7 +30,7 @@ public class iHH extends HaplotypeTests {
 	private Log log;
 	
 	/**
-	 * For setting up the environment to run the ÆiHH statistic
+	 * For setting up the environment to run the iHH statistic
 	 * 
 	 * @param log			universal log for progress and error output		
 	 * @param win			current Window within the target population (tp)
@@ -65,16 +65,16 @@ public class iHH extends HaplotypeTests {
 	}
 
 	/**
-	 * Runs the ÆiHH statistic using the environment setup by the constructor. The
+	 * Runs the iHH statistic using the environment setup by the constructor. The
 	 * below series of evens spans multiple private methods but outlines the 
-	 * logic for calculating ÆiHH. This is done for every SNP in the Window (core_snp)
+	 * logic for calculating iHH. This is done for every SNP in the Window (core_snp)
 	 * 		-Step 1: Create extended haplotypes for all Individuals (2 per Individual)
 	 * 		-Step 2: Separate the pool of haplotypes based upon whether or not they have the Ancestral allele at the core position
 	 * 		-Step 3: Calculated EHH values for both groups until reaching a significantly insignificant EHH value (EHH = 0.05)
 	 * 		-Step 4: Integrate EHH values from core to ends for both Ancestral and Derived groups; weight value based upon Genetic Map
-	 * 		-Step 5: Calculate ÆiHH from previously calculated iHH values
-	 * 		-Step 6: Repeat and save these unstandard ÆiHH values for all SNPs in Window
-	 * 		-Step 7: Standardize the all the ÆiHH values within the Window
+	 * 		-Step 5: Calculate iHH from previously calculated iHH values
+	 * 		-Step 6: Repeat and save these unstandard iHH values for all SNPs in Window
+	 * 		-Step 7: Standardize the all the iHH values within the Window
 	 * 
 	 * Note that many of these functions are extended from HaplotypeTests and 
 	 * can't be found in this class.
@@ -91,12 +91,12 @@ public class iHH extends HaplotypeTests {
 			
 			Double unstd_iHH = getUnstandardizedIHH(win.getSNPs().get(i), (st_index + i));
 			
-			//saving the successful unstandardized ÆiHH
+			//saving the successful unstandardized iHH
 			if(unstd_iHH != null)
 				all_unstd_iHH.add(unstd_iHH);
 		}
 		
-		//calculating and saving all standardized ÆiHH values
+		//calculating and saving all standardized iHH values
 		all_std_iHH = standardizeData(all_unstd_iHH);
 		
 //		printStats();
@@ -116,7 +116,7 @@ public class iHH extends HaplotypeTests {
 	@Override
 	public void printStats() {
 //		===============Default Printout===================
-		System.out.println("\nShowing ÆiHH Data");
+		System.out.println("\nShowing iHH Data");
 		for(int i = 0; i < all_std_iHH.size(); i++) {
 			System.out.print("iHH =\t");
 			System.out.print(all_iHH_snp.get(i) + "\t");
@@ -190,7 +190,7 @@ public class iHH extends HaplotypeTests {
 			double anc_ihh = integrateEhhValues(ehh_values_anc, ehh_pos_anc, core_snp, gm);
 			double der_ihh = integrateEhhValues(ehh_values_der, ehh_pos_der, core_snp, gm);
 			
-			//main ÆiHH function; unstandardized
+			//main iHH function; unstandardized
 			unstd_iHH = Math.abs(anc_ihh - der_ihh);
 		}
 		else {
@@ -205,7 +205,7 @@ public class iHH extends HaplotypeTests {
 			return null;
 		}
 		
-		//saving the successful ÆiHH SNP
+		//saving the successful iHH SNP
 		all_iHH_snp.add(core_snp);
 		return unstd_iHH;
 	}

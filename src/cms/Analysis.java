@@ -27,7 +27,7 @@ public class Analysis {
 	/*
 	 * Notes for me:
 	 * iHS; |iHS| > 2 is significant. To find probability I take the abs(score) of iHS and find nd.cumulativeProbability(score)
-	 * ÆiHH is the same as iHS. Need to find nd.cumulativeProbability(abs(iHH))
+	 * iHH is the same as iHS. Need to find nd.cumulativeProbability(abs(iHH))
 	 * XPEHH is raw, just find nd.cumulativeProbability(XPEHH)
 	 * Fst uses gamma (still figuring out the model parameters). Find gd.cumulativeProbability(fst)
 	 * DAF uses urd. urd.cumulativeProbability(daf)
@@ -43,7 +43,7 @@ public class Analysis {
 		//			-find the probability that the snp will have the score at that position if it is SELECTED (help)
 		//			-find the probability that the snp will have the score at that position if it is NEURTAL (help)
 		//			-calculate the posterior probability of that snp (see literature for eqn)
-		//			-do the ¹ function to incorporate all the stats into one CMS statistic
+		//			-do the pi function to incorporate all the stats into one CMS statistic
 		//				just multiply the 3 probabilities together
 		//			-NOTE: I don't need ALL 5 stats to do the CMS analysis
 		
