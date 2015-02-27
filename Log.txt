@@ -5,9 +5,9 @@
 			*****Starting CMS*****
 
 Working Parameters
-Phased Dir:	/Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Phased
-Map Dir:	/Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Map
-Ancestor Dir:	/Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Ancestral
+Phased Dir:	test_data/clean_data/Phased
+Map Dir:	test_data/clean_data/Map
+Ancestor Dir:	test_data/clean_data/Ancestral
 Out Dir:	cms_out
 Target Pop:	CEU
 Cross Pop:	YRI
