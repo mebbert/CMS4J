@@ -76,7 +76,8 @@ public class Stats {
 	 */
 	public WindowStats getStats() {
 		
-		System.out.println("\n\n\t***Starting stats run***");
+//		System.out.println("\n\n\t***Starting stats run***");
+		
 		
 //=====================unthreaded block==================
 		
@@ -118,11 +119,11 @@ public class Stats {
 		
 //===================universal block=======================
 		
-		i.printStats();
-		h.printStats();
-		x.printStats();
-		d.printStats();
-		f.printStats();
+//		i.printStats();
+//		h.printStats();
+//		x.printStats();
+//		d.printStats();
+//		f.printStats();
 		
 //		i.printRStats();
 //		h.printRStats();

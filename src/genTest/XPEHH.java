@@ -81,7 +81,7 @@ public class XPEHH extends HaplotypeTests {
 	@Override
 	public void runStat() {
 		
-		System.out.println("Starting XPEHH Analysis");
+//		System.out.println("Starting XPEHH Analysis");
 		log.addLine("Starting XPEHH Analysis");
 		
 		//Starting XPEHH Analysis

@@ -82,7 +82,7 @@ public class iHS extends HaplotypeTests {
 	@Override
 	public void runStat() {
 		
-		System.out.println("Starting iHS Analysis");
+//		System.out.println("Starting iHS Analysis");
 		log.addLine("Starting iHS Analysis");
 		
 		//Starting iHS Analysis

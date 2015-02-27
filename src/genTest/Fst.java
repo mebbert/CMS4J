@@ -51,7 +51,7 @@ public class Fst extends HaplotypeTests {
 	@Override
 	public void runStat() {
 		
-		System.out.println("Starting Fst Analysis");
+//		System.out.println("Starting Fst Analysis");
 		log.addLine("Starting Fst Analysis");
 		
 		List<SNP> win_snps = win.getSNPs();

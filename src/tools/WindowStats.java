@@ -162,5 +162,43 @@ public class WindowStats {
 		
 		return nxt_pos;
 	}
+	
+	private Double getScore(List<SNP> snps, List<Double> stats, int pos) {
+		
+		for(int i = 0; i < snps.size(); i++) {
+			if(snps.get(i).getPosition() == pos)
+				return stats.get(i);
+		}
+		
+		return Double.NaN;
+	}
+	
+	@Override
+	public String toString() {
+		
+		StringBuilder sb = new StringBuilder();
+//		sb.append("position\tiHS\tXPEHH\tiHH\tDAF\tFst\n");
+		
+		int cur_pos = getNextPosition(st_pos);
+		while(cur_pos > 0 && cur_pos != end_pos) {
+			
+			Double iHS_score = getScore(ihs_snps, ihs_stats, cur_pos);
+			Double XPEHH_score = getScore(xpehh_snps, xpehh_stats, cur_pos);
+			Double iHH_score = getScore(ihh_snps, ihh_stats, cur_pos);
+			Double DAF_score = getScore(daf_snps, daf_stats, cur_pos);
+			Double Fst_score = getScore(fst_snps, fst_stats, cur_pos);
+			
+			sb.append(cur_pos + "\t");
+			sb.append(iHS_score + "\t");
+			sb.append(XPEHH_score + "\t");
+			sb.append(iHH_score + "\t");
+			sb.append(DAF_score + "\t");
+			sb.append(Fst_score + "\n");
+			
+			cur_pos = getNextPosition(cur_pos);
+		}
+		
+		return sb.toString();
+	}
 
 }

@@ -159,6 +159,11 @@ public class Driver {
 	 * Not quite sure what exactly this does yet. Still working on that part
 	 */
 	private void runAnalysis() {
+		
+		System.out.println("position\tiHS\tXPEHH\tiHH\tDAF\tFst");
+		for(int i = 0; i < win_stats.size(); i++)
+			System.out.print(win_stats.get(i));
+		
 		Analysis an = new Analysis();
 		an.runCmsAnalysis(win_stats);
 	}
@@ -172,6 +177,8 @@ public class Driver {
 	private void getStats() {
 		log.addLine("\n\t\t\t*****Starting Stats Analysis*****");
 		
+		System.out.println("Population Stats Progress:");
+		int progress = 0;
 		for(int i = 0; i < tp_wins.size() && i < txin_wins.size(); i++) {
 			Window tp_w = tp_wins.get(i);
 			Window txin_w = txin_wins.get(i);
@@ -194,15 +201,17 @@ public class Driver {
 									
 									anc_types, 
 									gm);
-//			stats.getStats();
 			
 			win_stats.add(stats.getStats());
 			
-//			=========FOR TESTING===========
-//			if(i == 2) //breaks at i = 3 on clean_data because of how the intersect is calculated... 
-//				break;
-//			===============================
+			double percent = ((double)(win_stats.size()) / tp_wins.size()) * 1000;
+//			int progress_dif = progress - (int) percent;
+//			for(int j = 0; j < progress_dif; j++)
+//				System.out.print("=");
+			progress = (int) percent;
+			System.out.print(progress + "% ");
 		}
+		System.out.println("100%");
 	}
 	
 	/*

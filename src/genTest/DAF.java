@@ -55,7 +55,7 @@ public class DAF extends HaplotypeTests {
 	@Override
 	public void runStat() {
 		
-		System.out.println("Starting DAF Analysis");
+//		System.out.println("Starting DAF Analysis");
 		log.addLine("Starting DAF Analysis");
 		
 		Individual[] all_xo_indv = combineIndvArrays(xp_ino_indv, op_inx_indv);
