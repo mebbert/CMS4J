@@ -81,41 +81,41 @@ public class Stats {
 		
 //=====================unthreaded block==================
 		
-//		i.runStat();
-//		h.runStat();
-//		x.runStat();
-//		d.runStat();
-//		f.runStat();
+		i.runStat();
+		h.runStat();
+		x.runStat();
+		d.runStat();
+		f.runStat();
 		
 //========================threaded block=================
-		try {
-		
-			StatsThread i_thrd = new StatsThread(i);
-			Thread.sleep(WAIT_TIME);
-			
-			StatsThread h_thrd = new StatsThread(h);
-			Thread.sleep(WAIT_TIME);
-			
-			StatsThread x_thrd = new StatsThread(x);
-			Thread.sleep(WAIT_TIME);
-			
-			StatsThread d_thrd = new StatsThread(d);
-			Thread.sleep(WAIT_TIME);
-			
-			StatsThread f_thrd = new StatsThread(f); 
-			Thread.sleep(WAIT_TIME);
-			
-			synchronize(i_thrd, h_thrd, x_thrd, d_thrd, f_thrd);
-			
-			i = (iHS) i_thrd.getTest();
-			h = (iHH) h_thrd.getTest();
-			x = (XPEHH) x_thrd.getTest();
-			d = (DAF) d_thrd.getTest();
-			f = (Fst) f_thrd.getTest();
-		
-		} catch (InterruptedException e) { //TODO: throw new threading error
-			e.printStackTrace();
-		}
+//		try {
+//		
+//			StatsThread i_thrd = new StatsThread(i);
+//			Thread.sleep(WAIT_TIME);
+//			
+//			StatsThread h_thrd = new StatsThread(h);
+//			Thread.sleep(WAIT_TIME);
+//			
+//			StatsThread x_thrd = new StatsThread(x);
+//			Thread.sleep(WAIT_TIME);
+//			
+//			StatsThread d_thrd = new StatsThread(d);
+//			Thread.sleep(WAIT_TIME);
+//			
+//			StatsThread f_thrd = new StatsThread(f); 
+//			Thread.sleep(WAIT_TIME);
+//			
+//			synchronize(i_thrd, h_thrd, x_thrd, d_thrd, f_thrd);
+//			
+//			i = (iHS) i_thrd.getTest();
+//			h = (iHH) h_thrd.getTest();
+//			x = (XPEHH) x_thrd.getTest();
+//			d = (DAF) d_thrd.getTest();
+//			f = (Fst) f_thrd.getTest();
+//		
+//		} catch (InterruptedException e) { //TODO: throw new threading error
+//			e.printStackTrace();
+//		}
 		
 //===================universal block=======================
 		

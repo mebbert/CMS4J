@@ -3,6 +3,30 @@ A user-friendly version of the composite of multiple signals (CMS) implemented i
 
 ## How to run CMS4J
 
+Parameters
+1.Directory name must be "Phased" and contain .legend and .phased data
+	*Can use either absolute or relative path to directory
+	*File names must have "legend" or "phased" in repsective name
+	*See the file system setup of "test_data" for example
+2.Directory name must be "Map" and contain genetic map data
+	*Can use either absolute or relative path to directory
+	*See the file system setup of "test_data" for example
+3.Directory name must be "Ancestral" and contain .legend or .emf data
+	*Can use either absolute or relative path to directory
+	*See the file system setup of "test_data" for example
+4.Target population declaration
+	*This is the model population you want to test
+	*CEU = European
+	*YRI = African
+	*JPT = Asian
+5.Cross population declaration
+	*This should be the most distant model population to your target population. Below are suggestions:
+		*if target = CEU; cross = YRI
+		*if target = YRI; cross = CEU
+		*if target = JPT; cross = YRI
+6.Outgroup population
+	*This is the unused outgroup model population
+
 
 
 
