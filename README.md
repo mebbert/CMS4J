@@ -3,15 +3,23 @@ A user-friendly version of the composite of multiple signals (CMS) implemented i
 
 ## How to run CMS4J
 
+To run the .jar executable run the below command:
+```
+java -jar CMS4J.jar param1 param2 param3... param8
+```
+
 Parameters
-1.Directory name must be "Phased" and contain .legend and .phased data
+1.Directory name 
+	*Name must be "Phased" and contain .legend and .phased data
 	*Can use either absolute or relative path to directory
 	*File names must have "legend" or "phased" in repsective name
 	*See the file system setup of "test_data" for example
-2.Directory name must be "Map" and contain genetic map data
+2.Directory name 
+	*Name must be "Map" and contain genetic map data
 	*Can use either absolute or relative path to directory
 	*See the file system setup of "test_data" for example
-3.Directory name must be "Ancestral" and contain .legend or .emf data
+3.Directory name 
+	*Name must be "Ancestral" and contain .legend or .emf data
 	*Can use either absolute or relative path to directory
 	*See the file system setup of "test_data" for example
 4.Target population declaration
@@ -20,13 +28,25 @@ Parameters
 	*YRI = African
 	*JPT = Asian
 5.Cross population declaration
-	*This should be the most distant model population to your target population. Below are suggestions:
+	*This should be the most distant model population to your target population
+	*Below are suggestions:
 		*if target = CEU; cross = YRI
 		*if target = YRI; cross = CEU
 		*if target = JPT; cross = YRI
-6.Outgroup population
+6.Outgroup population declaration
 	*This is the unused outgroup model population
-
+	*Below are suggestions:
+		*if target = CEU; out = JPT
+		*if target = YRI; out = JPT
+		*if target = JPT; out = CEU
+7.Chromosome range
+	*To declare chromosome range make sure to use the pattern: chrA-chrB
+	*Make sure the range is in numerical order (i.e. 1-22)
+	*For a single chromosome just repeat the number (i.e. 21-21)
+8.Window size
+	*This is the size of the statistical window when calculating basic populations stats
+	*Should be non-negative and in the 1-0.5Mb range
+	*Playing with value allows you to tune you analysis
 
 
 
