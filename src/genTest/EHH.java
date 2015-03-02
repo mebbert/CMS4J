@@ -113,6 +113,11 @@ public class EHH {
 			
 			cur_ehh_value = calcEHH(ct_comb_2);
 			
+			//TESTING
+			if(cur_ehh_value == 1)
+				break;
+			//TESTING
+			
 			saveEHH(cur_ehh_value, nxt_snp);
 			
 			if(core_snp.getPosition() == 9583837) 
