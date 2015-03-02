@@ -115,6 +115,9 @@ public class EHH {
 			
 			saveEHH(cur_ehh_value, nxt_snp);
 			
+			if(core_snp.getPosition() == 9583837) 
+				System.out.println(nxt_snp + "\t" + cur_ehh_value);
+			
 //			if(Math.abs(nxt_snp.getPosition() - core_snp.getPosition()) > MAX_DISTANCE) {
 //				cur_ehh_value = -1;
 //				break;
@@ -280,10 +283,10 @@ public class EHH {
 		if(temp_upstrm_snp != null)
 			upstrm_snp_length = Math.abs(core_snp.getPosition() - temp_upstrm_snp.getPosition());
 		
-		if(core_snp.getPosition() == 9583837) {
-			System.out.println("UP:\t" + upstrm_snp);
-			System.out.println("DOWN:\t" + dwnstrm_snp);
-		}
+//		if(core_snp.getPosition() == 9583837) {
+//			System.out.println("UP:\t" + upstrm_snp);
+//			System.out.println("DOWN:\t" + dwnstrm_snp);
+//		}
 			
 		if(upstrm_snp_length == -1 && dwnstrm_snp_length == -1) {
 			System.out.println("CORE:\t" + core_snp);
