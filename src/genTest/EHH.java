@@ -119,7 +119,7 @@ public class EHH {
 			cur_ehh_value = calcEHH(ct_comb_2);
 			
 			//=====TESTING=====
-			if(cur_ehh_value == 1)//means that the group is size 1 and cannont get any smaller???
+			if(cur_ehh_value == 1 && all_ehh_values.getLast() < ehh_cutoff)//means that the groups are all size 1 and cannot get any smaller???
 				break;
 			//=================
 			
