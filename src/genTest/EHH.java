@@ -66,7 +66,7 @@ public class EHH {
 		group.add(all_haplo);
 	}
 	
-	public void calcEhhToPosition(int end_pos) {
+	public boolean calcEhhToPosition(int end_pos) {
 		
 		//This is the EHH denominator
 		int ct_comb_2 = combineSetBy2(all_haplo);
@@ -79,18 +79,23 @@ public class EHH {
 			
 			SNP nxt_snp = getClosestSNP();
 			
+			if(nxt_snp == null)
+				return false;
+			
 			//incorporates the new SNP into all extended haplotypes (increase length by 1)
 			group = createNewExtHaploGroup(nxt_snp);
 			
 			cur_ehh_value = calcEHH(ct_comb_2);
 			
 			//======TESTING======
-			if(cur_ehh_value == 1)
-				break;
+			if(cur_ehh_value == 1 && isValidPosition(end_pos, last_snp.getPosition())) //means that the groups are all size 1 and cannot get any smaller??
+				return true;
 			//===================
 			
 			saveEHH(cur_ehh_value, nxt_snp);
 		}
+		
+		return true;
 	}
 	
 	/**
@@ -113,14 +118,17 @@ public class EHH {
 			
 			SNP nxt_snp = getClosestSNP();
 			
+			if(nxt_snp == null)
+				return false;
+			
 			//incorporates the new SNP into all extended haplotypes (increase length by 1)
 			group = createNewExtHaploGroup(nxt_snp);
 			
 			cur_ehh_value = calcEHH(ct_comb_2);
 			
 			//=====TESTING=====
-			if(cur_ehh_value == 1 && all_ehh_values.getLast() < ehh_cutoff)//means that the groups are all size 1 and cannot get any smaller???
-				break;
+			if(cur_ehh_value == 1 && all_ehh_values.getLast() < ehh_cutoff) //means that the groups are all size 1 and cannot get any smaller??
+				return true;
 			//=================
 			
 			saveEHH(cur_ehh_value, nxt_snp);

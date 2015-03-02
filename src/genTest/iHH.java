@@ -176,13 +176,21 @@ public class iHH extends HaplotypeTests {
 			EHH anc_ehh = new EHH(win, individuals, core_snp, anc_eh, all_win);
 			EHH der_ehh = new EHH(win, individuals, core_snp, der_eh, all_win);
 			
+			boolean significant = false;
+			
 			//Running Ancestral Analysis
-			anc_ehh.calcSignificantEhhValues();
+			significant = anc_ehh.calcSignificantEhhValues();
+			if(!significant)
+				return null;
+			
 			double[] ehh_values_anc = anc_ehh.getEhhValues();
 			int[] ehh_pos_anc = anc_ehh.getEhhPositions();
 			
 			//Running Derived Analysis
-			der_ehh.calcSignificantEhhValues();
+			significant = der_ehh.calcSignificantEhhValues();
+			if(!significant)
+				return null;
+			
 			double[] ehh_values_der = der_ehh.getEhhValues();
 			int[] ehh_pos_der = der_ehh.getEhhPositions();
 			

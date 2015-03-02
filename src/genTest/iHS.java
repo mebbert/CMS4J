@@ -177,6 +177,7 @@ public class iHS extends HaplotypeTests {
 			EHH der_ehh = new EHH(win, individuals, core_snp, der_eh, all_win);
 			
 			boolean significant = false; 
+			
 			//Running Ancestral Analysis
 			significant = anc_ehh.calcSignificantEhhValues();
 			if(!significant)

@@ -102,16 +102,21 @@ public class XPEHH extends HaplotypeTests {
 				SNP last_snp = comb_ehh.getLastSNP();
 				
 				//find the area under the curve created by the EHH data
-				double tp_integral = calcUnstandardEhhIntegral(core_snp, last_snp, tp_individuals);
-				double xp_integral = calcUnstandardEhhIntegral(core_snp, last_snp, xp_individuals);
+				Double tp_integral = calcUnstandardEhhIntegral(core_snp, last_snp, tp_individuals);
+				Double xp_integral = calcUnstandardEhhIntegral(core_snp, last_snp, xp_individuals);
 				
-				//main XPEHH function; unstandardized
-				double unstd_XPEHH = Math.log(tp_integral / xp_integral);
-				
-				//saving both the successful XPEHH SNP and unstandardized XPEHH value
-				all_XPEHH_snps.add(core_snp);
-				all_unstd_XPEHH.add(unstd_XPEHH);
-				
+				if(tp_integral != null && xp_integral != null) {
+					//main XPEHH function; unstandardized
+					double unstd_XPEHH = Math.log(tp_integral / xp_integral);
+					
+					//saving both the successful XPEHH SNP and unstandardized XPEHH value
+					all_XPEHH_snps.add(core_snp);
+					all_unstd_XPEHH.add(unstd_XPEHH);
+				}
+				else {
+					System.out.println("Insignificant2 " + last_ehh);
+					unused_snps.add(core_snp);
+				}	
 			}
 			else {
 				System.out.println("Insignificant " + last_ehh);
@@ -177,11 +182,13 @@ public class XPEHH extends HaplotypeTests {
 		System.out.println("Pos =\t" + pos_sb.toString());
 	}
 	
-	private double calcUnstandardEhhIntegral(SNP core_snp, SNP last_snp, Individual[] indv) {
+	private Double calcUnstandardEhhIntegral(SNP core_snp, SNP last_snp, Individual[] indv) {
 		
 		ExtendedHaplotype pop_eh = setHaplotypeGroup(indv);
 		EHH pop_ehh = new EHH(win, indv, core_snp, pop_eh, all_win);
-		pop_ehh.calcEhhToPosition(last_snp.getPosition());
+		boolean significant = pop_ehh.calcEhhToPosition(last_snp.getPosition());
+		if(!significant)
+			return null;
 		
 		double[] ehh_vals = pop_ehh.getEhhValues();
 		int[] ehh_pos = pop_ehh.getEhhPositions();

@@ -47,7 +47,7 @@ Starting iHH Analysis
 Starting XPEHH Analysis
 Starting DAF Analysis
 Starting Fst Analysis
-Out of 14 SNPs, 1 were successful and 13 SNPs were unsuccessful
+Out of 14 SNPs, 11 were successful and 3 SNPs were unsuccessful
 Out of 14 SNPs, 11 were successful and 3 SNPs were unsuccessful
 Out of 14 SNPs, 14 were successful and 0 SNPs were unsuccessful
 Out of 14 SNPs, 14 were successful and 0 SNPs were unsuccessful
@@ -59,9 +59,9 @@ Starting iHH Analysis
 Starting XPEHH Analysis
 Starting DAF Analysis
 Starting Fst Analysis
-Out of 63 SNPs, 1 were successful and 62 SNPs were unsuccessful
 Out of 63 SNPs, 34 were successful and 29 SNPs were unsuccessful
-Out of 28 SNPs, 24 were successful and 4 SNPs were unsuccessful
+Out of 63 SNPs, 34 were successful and 29 SNPs were unsuccessful
+Out of 28 SNPs, 28 were successful and 0 SNPs were unsuccessful
 Out of 63 SNPs, 19 were successful and 24 SNPs were unsuccessful
 Out of 28 SNPs, 28 were successful and 0 SNPs were unsuccessful
 CMS is now ending
