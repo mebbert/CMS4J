@@ -104,7 +104,11 @@ public class EHH {
 		all_ehh_positions.add(core_snp.getPosition());
 		
 		//Significance check of EHH value
-		while(cur_ehh_value >= ehh_cutoff) { 
+		while(cur_ehh_value >ehh_cutoff) { 
+			//=====TESTING====
+			if(cur_ehh_value <= ehh_cutoff)
+				break;
+			//================
 			
 			SNP nxt_snp = getClosestSNP();
 			
@@ -114,8 +118,8 @@ public class EHH {
 			cur_ehh_value = calcEHH(ct_comb_2);
 			
 			//TESTING
-			if(cur_ehh_value == 1)
-				break;
+//			if(cur_ehh_value == 1)
+//				break;
 			//TESTING
 			
 			saveEHH(cur_ehh_value, nxt_snp);
