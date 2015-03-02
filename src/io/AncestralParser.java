@@ -75,6 +75,7 @@ public class AncestralParser {
 			
 			String line = anc_scan.nextLine();
 			String[] ln_arr = line.split("\\s+");
+			
 			if(line.length() >= 1 && ln_arr[0].charAt(0) != '#') {
 				
 				if(ln_arr[0].equals(EMF_SEQ)) {
@@ -83,7 +84,6 @@ public class AncestralParser {
 					if(ln_arr[1].contains(EMF_H_SAPIEN) && num_seq == 1) {
 						st_pos = Integer.parseInt(ln_arr[3]);
 						end_pos = Integer.parseInt(ln_arr[4]);
-						
 					}
 				}
 				if(ln_arr[0].equals(EMF_DATA))  {
@@ -100,18 +100,18 @@ public class AncestralParser {
 		
 		//************for printing to a file****************
 		System.out.println("Starting Print\t" + anc_types.size());
-		try {
-			PrintWriter pw = new PrintWriter(out_file);
-		
-			for(int i = 0; i < anc_types.size(); i++) {
-				pw.write(anc_types.get(i) + "\n");
-			}
-			
-			pw.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		System.out.println("Ending Print");
+//		try {
+//			PrintWriter pw = new PrintWriter(out_file);
+//		
+//			for(int i = 0; i < anc_types.size(); i++) {
+//				pw.write(anc_types.get(i) + "\n");
+//			}
+//			
+//			pw.close();
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		}
+//		System.out.println("Ending Print");
 		//****************************************************
 		
 		return anc_types;

@@ -5,22 +5,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.apache.commons.math3.distribution.*;
+//import org.apache.commons.math3.distribution.*;
 
 import tools.SNP;
 import tools.WindowStats;
 
 public class Analysis {
 	
-	private NormalDistribution nd;
-	private GammaDistribution gd;
-	private UniformRealDistribution urd;
+//	private NormalDistribution nd;
+//	private GammaDistribution gd;
+//	private UniformRealDistribution urd;
 	
 	public Analysis() {
 		
-		nd = new NormalDistribution(0, 1); 			//defined
-		gd = new GammaDistribution(1, 1);			//made up; plot(density(qgamma(pnorm(var), shape=.5, rate=5)))
-		urd = new UniformRealDistribution(-1, 1);	//defined
+//		nd = new NormalDistribution(0, 1); 			//defined
+//		gd = new GammaDistribution(1, 1);			//made up; plot(density(qgamma(pnorm(var), shape=.5, rate=5)))
+//		urd = new UniformRealDistribution(-1, 1);	//defined
 		
 	}
 	
@@ -97,15 +97,17 @@ public class Analysis {
 	}
 	
 	private double calculatePosteriorProbability(int indx, 
-													List<Double> scores, 
-													RealDistribution d) {
+													List<Double> scores 
+//													RealDistribution d
+													) {
 		
 		if(indx == -1)
 			return -1;
 		
 		double score = scores.get(indx);
 		
-		return d.cumulativeProbability(score);
+//		return d.cumulativeProbability(score);
+		return -1;
 	}
 	
 	private int getScoreIndex(int pos, List<SNP> snps) {

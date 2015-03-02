@@ -204,7 +204,7 @@ public class Driver {
 			
 			win_stats.add(stats.getStats());
 			
-			double percent = ((double)(win_stats.size()) / tp_wins.size()) * 1000;
+			double percent = ((double)(win_stats.size()) / tp_wins.size()) * 100;
 //			int progress_dif = progress - (int) percent;
 //			for(int j = 0; j < progress_dif; j++)
 //				System.out.print("=");

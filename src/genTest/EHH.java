@@ -281,6 +281,7 @@ public class EHH {
 			upstrm_snp_length = Math.abs(core_snp.getPosition() - temp_upstrm_snp.getPosition());
 		
 		if(upstrm_snp_length == -1 && dwnstrm_snp_length == -1) {
+			System.out.println(core_snp);
 			return null;
 		} else if(upstrm_snp_length == -1) {
 			return incrementDownstream(temp_dwnstrm_snp);
