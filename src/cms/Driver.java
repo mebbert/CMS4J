@@ -634,6 +634,7 @@ public class Driver {
 		win_size = getWindowSize(args[8]);
 		
 		log.addLine(" complete");
+		System.out.println("Paramater Check Complete!");
 	}
 	
 	private int getWindowSize(String in) throws IllegalInputException {
