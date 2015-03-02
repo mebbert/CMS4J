@@ -187,8 +187,8 @@ public class XPEHH extends HaplotypeTests {
 		ExtendedHaplotype pop_eh = setHaplotypeGroup(indv);
 		EHH pop_ehh = new EHH(win, indv, core_snp, pop_eh, all_win);
 		boolean significant = pop_ehh.calcEhhToPosition(last_snp.getPosition());
-		if(!significant)
-			return null;
+//		if(!significant)
+//			return null;
 		
 		double[] ehh_vals = pop_ehh.getEhhValues();
 		int[] ehh_pos = pop_ehh.getEhhPositions();
