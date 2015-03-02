@@ -84,6 +84,11 @@ public class EHH {
 			
 			cur_ehh_value = calcEHH(ct_comb_2);
 			
+			//======TESTING======
+			if(cur_ehh_value == 1)
+				break;
+			//===================
+			
 			saveEHH(cur_ehh_value, nxt_snp);
 		}
 	}
@@ -104,11 +109,7 @@ public class EHH {
 		all_ehh_positions.add(core_snp.getPosition());
 		
 		//Significance check of EHH value
-		while(cur_ehh_value >ehh_cutoff) { 
-			//=====TESTING====
-			if(cur_ehh_value <= ehh_cutoff)
-				break;
-			//================
+		while(cur_ehh_value > ehh_cutoff) { 
 			
 			SNP nxt_snp = getClosestSNP();
 			
@@ -117,10 +118,10 @@ public class EHH {
 			
 			cur_ehh_value = calcEHH(ct_comb_2);
 			
-			//TESTING
-//			if(cur_ehh_value == 1)
-//				break;
-			//TESTING
+			//=====TESTING=====
+			if(cur_ehh_value == 1)//means that the group is size 1 and cannont get any smaller???
+				break;
+			//=================
 			
 			saveEHH(cur_ehh_value, nxt_snp);
 			
