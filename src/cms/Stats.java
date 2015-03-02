@@ -88,8 +88,8 @@ public class Stats {
 		f.runStat();
 		
 //========================threaded block=================
-		try {
-		
+//		try {
+//		
 //			StatsThread i_thrd = new StatsThread(i);
 //			Thread.sleep(WAIT_TIME);
 //			
