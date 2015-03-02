@@ -307,9 +307,9 @@ public class EHH {
 //		}
 			
 		if(upstrm_snp_length == -1 && dwnstrm_snp_length == -1) {
-			System.out.println("CORE:\t" + core_snp);
-			System.out.println("UP:\t" + upstrm_snp);
-			System.out.println("DOWN:\t" + dwnstrm_snp);
+//			System.out.println("CORE:\t" + core_snp);
+//			System.out.println("UP:\t" + upstrm_snp);
+//			System.out.println("DOWN:\t" + dwnstrm_snp);
 			return null;
 		} else if(upstrm_snp_length == -1) {
 			return incrementDownstream(temp_dwnstrm_snp);

@@ -5,9 +5,9 @@
 			*****Starting CMS*****
 
 Working Parameters
-Phased Dir:	test_data/clean_data/Phased
-Map Dir:	test_data/clean_data/Map
-Ancestor Dir:	test_data/clean_data/Ancestral
+Phased Dir:	test_data/clean2_data/Phased
+Map Dir:	test_data/clean2_data/Map
+Ancestor Dir:	test_data/clean2_data/Ancestral
 Out Dir:	cms_out
 Target Pop:	CEU
 Cross Pop:	YRI
@@ -18,14 +18,14 @@ Window Size:	0.5Mb
 Parameter Check......... complete
 
 Loading referenced data into memory for chromosome 21
-Importing legend data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Phased/genotypes_chr21_CEU_unknown_legend_10000
-Importing phased data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Phased/genotypes_chr21_CEU_unknown_phased_10000X50
-Importing legend data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Phased/genotypes_chr21_YRI_cache_legend_10000
-Importing phased data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Phased/genotypes_chr21_YRI_cache_phased_10000X50
-Importing legend data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Phased/genotypes_chr21_JPT_test_legend_10000
-Importing phased data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Phased/genotypes_chr21_JPT_test_phased_10000X50
-Importing genetic map from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Map/genetic_map_chr21_b37.txt
-Importing Ancestral data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Ancestral/genotypes_chr21_r21_nr_fwd_chimp_consensus_legend+freq
+Importing legend data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean2_data/Phased/genotypes_chr21_CEU+YRI+JPT+CHB_unknown_legend_10000
+Importing phased data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean2_data/Phased/genotypes_chr21_CEU_unknown_phased_10000X50
+Importing legend data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean2_data/Phased/genotypes_chr21_CEU+YRI+JPT+CHB_unknown_legend_10000
+Importing phased data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean2_data/Phased/genotypes_chr21_YRI_cache_phased_10000X50
+Importing legend data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean2_data/Phased/genotypes_chr21_CEU+YRI+JPT+CHB_unknown_legend_10000
+Importing phased data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean2_data/Phased/genotypes_chr21_JPT_test_phased_10000X50
+Importing genetic map from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean2_data/Map/genetic_map_chr21_b37.txt
+Importing Ancestral data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean2_data/Ancestral/genotypes_chr21_r21_nr_fwd_chimp_consensus_legend+freq
 
 			*****Starting Stats Analysis*****
 
@@ -61,7 +61,83 @@ Starting DAF Analysis
 Starting Fst Analysis
 Out of 63 SNPs, 34 were successful and 29 SNPs were unsuccessful
 Out of 63 SNPs, 34 were successful and 29 SNPs were unsuccessful
-Out of 28 SNPs, 28 were successful and 0 SNPs were unsuccessful
-Out of 63 SNPs, 19 were successful and 24 SNPs were unsuccessful
-Out of 28 SNPs, 28 were successful and 0 SNPs were unsuccessful
-CMS is now ending
+Out of 63 SNPs, 63 were successful and 0 SNPs were unsuccessful
+Out of 63 SNPs, 39 were successful and 24 SNPs were unsuccessful
+Out of 63 SNPs, 63 were successful and 0 SNPs were unsuccessful
+
+Sweep between positions 15500000 to 16000000
+Starting iHS Analysis
+Starting iHH Analysis
+Starting XPEHH Analysis
+Starting DAF Analysis
+Starting Fst Analysis
+Out of 437 SNPs, 366 were successful and 71 SNPs were unsuccessful
+Out of 437 SNPs, 367 were successful and 70 SNPs were unsuccessful
+Out of 437 SNPs, 437 were successful and 0 SNPs were unsuccessful
+Out of 437 SNPs, 435 were successful and 2 SNPs were unsuccessful
+Out of 437 SNPs, 437 were successful and 0 SNPs were unsuccessful
+
+Sweep between positions 16000000 to 16500000
+Starting iHS Analysis
+Starting iHH Analysis
+Starting XPEHH Analysis
+Starting DAF Analysis
+Starting Fst Analysis
+Out of 380 SNPs, 330 were successful and 49 SNPs were unsuccessful
+Out of 380 SNPs, 332 were successful and 47 SNPs were unsuccessful
+Out of 380 SNPs, 380 were successful and 0 SNPs were unsuccessful
+Out of 380 SNPs, 373 were successful and 7 SNPs were unsuccessful
+Out of 380 SNPs, 380 were successful and 0 SNPs were unsuccessful
+
+Sweep between positions 16500000 to 17000000
+Starting iHS Analysis
+Starting iHH Analysis
+Starting XPEHH Analysis
+Starting DAF Analysis
+Starting Fst Analysis
+Out of 223 SNPs, 213 were successful and 9 SNPs were unsuccessful
+Out of 223 SNPs, 213 were successful and 9 SNPs were unsuccessful
+Out of 223 SNPs, 223 were successful and 0 SNPs were unsuccessful
+Out of 223 SNPs, 222 were successful and 1 SNPs were unsuccessful
+Out of 223 SNPs, 223 were successful and 0 SNPs were unsuccessful
+
+Sweep between positions 17000000 to 17500000
+Starting iHS Analysis
+Starting iHH Analysis
+Starting XPEHH Analysis
+Starting DAF Analysis
+Starting Fst Analysis
+Out of 189 SNPs, 158 were successful and 30 SNPs were unsuccessful
+Out of 189 SNPs, 159 were successful and 29 SNPs were unsuccessful
+Out of 189 SNPs, 189 were successful and 0 SNPs were unsuccessful
+Out of 189 SNPs, 189 were successful and 0 SNPs were unsuccessful
+Out of 189 SNPs, 189 were successful and 0 SNPs were unsuccessful
+
+Sweep between positions 17500000 to 18000000
+Starting iHS Analysis
+Starting iHH Analysis
+Starting XPEHH Analysis
+Starting DAF Analysis
+Starting Fst Analysis
+Out of 352 SNPs, 224 were successful and 123 SNPs were unsuccessful
+Out of 352 SNPs, 226 were successful and 121 SNPs were unsuccessful
+Out of 352 SNPs, 352 were successful and 0 SNPs were unsuccessful
+Out of 352 SNPs, 349 were successful and 3 SNPs were unsuccessful
+Out of 352 SNPs, 352 were successful and 0 SNPs were unsuccessful
+
+Sweep between positions 18000000 to 18500000
+Starting iHS Analysis
+Starting iHH Analysis
+Starting XPEHH Analysis
+Starting DAF Analysis
+Starting Fst Analysis
+Out of 361 SNPs, 249 were successful and 111 SNPs were unsuccessful
+Out of 361 SNPs, 250 were successful and 110 SNPs were unsuccessful
+Out of 361 SNPs, 361 were successful and 0 SNPs were unsuccessful
+Out of 361 SNPs, 357 were successful and 4 SNPs were unsuccessful
+Out of 361 SNPs, 361 were successful and 0 SNPs were unsuccessful
+
+Sweep between positions 18500000 to 19000000
+Starting iHS Analysis
+Starting iHH Analysis
+Starting XPEHH Analysis
