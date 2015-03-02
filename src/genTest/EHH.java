@@ -133,8 +133,8 @@ public class EHH {
 			
 			saveEHH(cur_ehh_value, nxt_snp);
 			
-			if(core_snp.getPosition() == 9583837 || core_snp.getPosition() == 9733220) 
-				System.out.println(nxt_snp + "\t" + cur_ehh_value);
+//			if(core_snp.getPosition() == 9583837 || core_snp.getPosition() == 9733220) 
+//				System.out.println(nxt_snp + "\t" + cur_ehh_value);
 			
 //			if(Math.abs(nxt_snp.getPosition() - core_snp.getPosition()) > MAX_DISTANCE) {
 //				cur_ehh_value = -1;
