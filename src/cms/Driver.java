@@ -618,7 +618,7 @@ public class Driver {
 			String msg = "Error: Out-group population declaration not recognized";
 			throw new IllegalInputException(log, msg);
 		}
-		if(o_pop.equals(t_pop) || o_pop.equals(x_pop)) {
+		if(o_pop.equals(t_pop)) {
 			String msg = "Error: Out-group population declaration cannont be " 
 					+ "the same as target population declaration";
 			throw new IllegalInputException(log, msg);

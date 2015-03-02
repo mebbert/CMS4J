@@ -92,8 +92,10 @@ public class EHH {
 	 * Does not consider the core SNP for EHH analysis and grouping.
 	 * Organizes all Extended Haplotypes until there are insignificant 
 	 * homozygosity levels (EHH <= 0.05)
+	 * 
+	 * @return return true if the analysis generated significant results
 	 */
-	public void calcSignificantEhhValues(double ehh_cutoff) {
+	public boolean calcSignificantEhhValues(double ehh_cutoff) {
 		
 		//This is the EHH denominator
 		int ct_comb_2 = combineSetBy2(all_haplo); 
@@ -119,10 +121,11 @@ public class EHH {
 //			}
 		}
 		
+		return true;
 	}
 	
-	public void calcSignificantEhhValues() {
-		calcSignificantEhhValues(SIGNIFICANT_EHH);
+	public boolean calcSignificantEhhValues() {
+		return calcSignificantEhhValues(SIGNIFICANT_EHH);
 	}
 	
 	public double[] getEhhValues() {
@@ -278,10 +281,7 @@ public class EHH {
 			upstrm_snp_length = Math.abs(core_snp.getPosition() - temp_upstrm_snp.getPosition());
 		
 		if(upstrm_snp_length == -1 && dwnstrm_snp_length == -1) {
-			//TODO: figure out what to do in this case
-			//It might just be as simple as return null;
-			System.out.println("\t\t!!!!EXPLOSION!!!!");
-			System.exit(0);
+			return null;
 		} else if(upstrm_snp_length == -1) {
 			return incrementDownstream(temp_dwnstrm_snp);
 		} else if(dwnstrm_snp_length == -1) {
