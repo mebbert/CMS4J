@@ -280,6 +280,11 @@ public class EHH {
 		if(temp_upstrm_snp != null)
 			upstrm_snp_length = Math.abs(core_snp.getPosition() - temp_upstrm_snp.getPosition());
 		
+		if(core_snp.getPosition() == 9583837) {
+			System.out.println("UP:\t" + upstrm_win);
+			System.out.println("DOWN:\t" + dwnstrm_win);
+		}
+			
 		if(upstrm_snp_length == -1 && dwnstrm_snp_length == -1) {
 			System.out.println("CORE:\t" + core_snp);
 			System.out.println("UP:\t" + upstrm_win);
