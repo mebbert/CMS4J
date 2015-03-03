@@ -12,7 +12,7 @@ import genTest.*;
 
 public class Stats {
 	
-	private static int WAIT_TIME = 500;
+	private static int WAIT_TIME = 50;
 	
 	private WindowStats ws;
 	
@@ -92,18 +92,23 @@ public class Stats {
 		
 			StatsThread i_thrd = new StatsThread(i);
 			Thread.sleep(WAIT_TIME);
+			i_thrd.start();
 			
 			StatsThread h_thrd = new StatsThread(h);
 			Thread.sleep(WAIT_TIME);
+			h_thrd.start();
 			
 			StatsThread x_thrd = new StatsThread(x);
 			Thread.sleep(WAIT_TIME);
+			x_thrd.start();
 			
 			StatsThread d_thrd = new StatsThread(d);
 			Thread.sleep(WAIT_TIME);
+			d_thrd.start();
 			
 			StatsThread f_thrd = new StatsThread(f); 
 			Thread.sleep(WAIT_TIME);
+			f_thrd.start();
 			
 			synchronize(i_thrd, h_thrd, x_thrd, d_thrd, f_thrd);
 			
@@ -178,6 +183,10 @@ class StatsThread extends Thread {
 		finished = false;
 		
 		thrd = new Thread(this);
+//		thrd.start();
+	}
+	
+	public void start() {
 		thrd.start();
 	}
 	
