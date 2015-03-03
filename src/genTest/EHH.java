@@ -79,8 +79,8 @@ public class EHH {
 			
 			SNP nxt_snp = getClosestSNP();
 			
-//			if(nxt_snp == null)
-//				return false;
+			if(nxt_snp == null)
+				return false;
 			
 			//incorporates the new SNP into all extended haplotypes (increase length by 1)
 			group = createNewExtHaploGroup(nxt_snp);
@@ -132,14 +132,6 @@ public class EHH {
 			//=================
 			
 			saveEHH(cur_ehh_value, nxt_snp);
-			
-//			if(core_snp.getPosition() == 9583837 || core_snp.getPosition() == 9733220) 
-//				System.out.println(nxt_snp + "\t" + cur_ehh_value);
-			
-//			if(Math.abs(nxt_snp.getPosition() - core_snp.getPosition()) > MAX_DISTANCE) {
-//				cur_ehh_value = -1;
-//				break;
-//			}
 		}
 		
 		return true;
@@ -300,16 +292,8 @@ public class EHH {
 		int upstrm_snp_length = -1;
 		if(temp_upstrm_snp != null)
 			upstrm_snp_length = Math.abs(core_snp.getPosition() - temp_upstrm_snp.getPosition());
-		
-//		if(core_snp.getPosition() == 9583837) {
-//			System.out.println("UP:\t" + upstrm_snp);
-//			System.out.println("DOWN:\t" + dwnstrm_snp);
-//		}
 			
 		if(upstrm_snp_length == -1 && dwnstrm_snp_length == -1) {
-//			System.out.println("CORE:\t" + core_snp);
-//			System.out.println("UP:\t" + upstrm_snp);
-//			System.out.println("DOWN:\t" + dwnstrm_snp);
 			return null;
 		} else if(upstrm_snp_length == -1) {
 			return incrementDownstream(temp_dwnstrm_snp);

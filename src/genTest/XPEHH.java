@@ -96,7 +96,7 @@ public class XPEHH extends HaplotypeTests {
 			EHH comb_ehh = getCombinedEHH(all_indv, core_snp);
 			double last_ehh = comb_ehh.getLastEhhValue();
 			
-			if(last_ehh < 0.05 && last_ehh > 0.0) {
+			if(last_ehh < SIGNIFICANT_EHH_VALUE && last_ehh > 0.0) {
 				
 				//for defining the EHH range to end EHH calculations
 				SNP last_snp = comb_ehh.getLastSNP();
@@ -114,12 +114,12 @@ public class XPEHH extends HaplotypeTests {
 					all_unstd_XPEHH.add(unstd_XPEHH);
 				}
 				else {
-					System.out.println("Insignificant2 " + last_ehh);
+//					System.out.println("Insignificant2 " + last_ehh);
 					unused_snps.add(core_snp);
 				}	
 			}
 			else {
-				System.out.println("Insignificant " + last_ehh);
+//				System.out.println("Insignificant " + last_ehh);
 				unused_snps.add(core_snp);
 			}	
 		}
@@ -187,8 +187,8 @@ public class XPEHH extends HaplotypeTests {
 		ExtendedHaplotype pop_eh = setHaplotypeGroup(indv);
 		EHH pop_ehh = new EHH(win, indv, core_snp, pop_eh, all_win);
 		boolean significant = pop_ehh.calcEhhToPosition(last_snp.getPosition());
-//		if(!significant)
-//			return null;
+		if(!significant)
+			return null;
 		
 		double[] ehh_vals = pop_ehh.getEhhValues();
 		int[] ehh_pos = pop_ehh.getEhhPositions();
