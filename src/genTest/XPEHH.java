@@ -82,7 +82,7 @@ public class XPEHH extends HaplotypeTests {
 	public void runStat() {
 		
 //		System.out.println("Starting XPEHH Analysis");
-		log.addLine("Starting XPEHH Analysis");
+		log.addLine("Starting XPEHH Analysis on "  + win.getSNPs().size() + " SNPs");
 		
 		//Starting XPEHH Analysis
 		Individual[] all_indv = combineIndvArrays(tp_individuals, xp_individuals);

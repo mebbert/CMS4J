@@ -195,6 +195,8 @@ class StatsThread extends Thread {
 		
 		tst.runStat();	
 		finished = true;
+		
+		thrd.interrupt();
 	}
 	
 	public HaplotypeTests getTest() {

@@ -176,8 +176,8 @@ public class Driver {
 	 */
 	private void getStats() {
 		log.addLine("\n\t\t\t*****Starting Stats Analysis*****");
-		
 		System.out.println("Population Stats Progress:");
+		
 		int progress = 0;
 		for(int i = 0; i < tp_wins.size() && i < txin_wins.size(); i++) {
 			Window tp_w = tp_wins.get(i);
@@ -223,6 +223,8 @@ public class Driver {
 	 * This is important for statistic calculations, particularly DAF and Fst.
 	 */
 	private void intersectPopulations() {
+		
+		System.out.println("Running Intersections");
 		
 		intersectCrossWithTargetPopulations();
 		
@@ -449,6 +451,7 @@ public class Driver {
 	 */
 	private void parseFiles(int chr) throws Exception {
 		log.addLine("\nLoading referenced data into memory for chromosome " + chr);
+		System.out.println("Loading Data");
 		
 		String lg_tp_path = getPhasedPath(ph_dir, LEGEND_TYPE, chr, t_pop);
 		String ph_tp_path = getPhasedPath(ph_dir, PHASED_TYPE, chr, t_pop);//for target population

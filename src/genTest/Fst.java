@@ -52,7 +52,7 @@ public class Fst extends HaplotypeTests {
 	public void runStat() {
 		
 //		System.out.println("Starting Fst Analysis");
-		log.addLine("Starting Fst Analysis");
+		log.addLine("Starting Fst Analysis on "  + win.getSNPs().size() + " SNPs");
 		
 		List<SNP> win_snps = win.getSNPs();
 		for(int i = 0; i < win_snps.size(); i++) {

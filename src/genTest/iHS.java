@@ -83,7 +83,7 @@ public class iHS extends HaplotypeTests {
 	public void runStat() {
 		
 //		System.out.println("Starting iHS Analysis");
-		log.addLine("Starting iHS Analysis");
+		log.addLine("Starting iHS Analysis on " + win.getSNPs().size() + " SNPs");
 		
 		//Starting iHS Analysis
 		int st_index = win.getStIndex();
