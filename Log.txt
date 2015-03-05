@@ -5,9 +5,9 @@
 			*****Starting CMS*****
 
 Working Parameters
-Phased Dir:	test_data/clean_data/Phased
-Map Dir:	test_data/clean_data/Map
-Ancestor Dir:	test_data/clean_data/Ancestral
+Phased Dir:	test_data/clean3_data/Phased
+Map Dir:	test_data/clean3_data/Map
+Ancestor Dir:	test_data/clean3_data/Ancestral
 Out Dir:	cms_out
 Target Pop:	CEU
 Cross Pop:	YRI
@@ -18,14 +18,14 @@ Window Size:	0.5Mb
 Parameter Check......... complete
 
 Loading referenced data into memory for chromosome 21
-Importing legend data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Phased/genotypes_chr21_CEU_unknown_legend_10000
-Importing phased data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Phased/genotypes_chr21_CEU_unknown_phased_10000X50
-Importing legend data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Phased/genotypes_chr21_YRI_cache_legend_10000
-Importing phased data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Phased/genotypes_chr21_YRI_cache_phased_10000X50
-Importing legend data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Phased/genotypes_chr21_JPT_test_legend_10000
-Importing phased data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Phased/genotypes_chr21_JPT_test_phased_10000X50
-Importing genetic map from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Map/genetic_map_chr21_b37.txt
-Importing Ancestral data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean_data/Ancestral/genotypes_chr21_r21_nr_fwd_chimp_consensus_legend+freq
+Importing legend data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean3_data/Phased/genotypes_chr21_CEU_unknown_legend_10000
+Importing phased data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean3_data/Phased/genotypes_chr21_CEU_unknown_phased_10000X50
+Importing legend data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean3_data/Phased/genotypes_chr21_YRI_cache_legend_10000
+Importing phased data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean3_data/Phased/genotypes_chr21_YRI_cache_phased_10000X50
+Importing legend data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean3_data/Phased/genotypes_chr21_JPT_test_legend_10000
+Importing phased data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean3_data/Phased/genotypes_chr21_JPT_test_phased_10000X50
+Importing genetic map from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean3_data/Map/genetic_map_chr21_b37.txt
+Importing Ancestral data from /Users/Hayden/Documents/workspace/JAVA_projects/CMS4J/test_data/clean3_data/Ancestral/genotypes_chr21_r21_nr_fwd_chimp_consensus_legend+freq
 
 			*****Starting Stats Analysis*****
 
@@ -70,7 +70,7 @@ Out of 14 SNPs, 14 were successful and 0 SNPs were unsuccessful
 Out of 14 SNPs, 14 were successful and 0 SNPs were unsuccessful
 
 Sweep between positions 15000000 to 15500000
-Starting iHS Analysis on 63 SNPs
+Starting iHS Analysis on 64 SNPs
 	SNP: SNP [pos=15048473, snp_id=kgp22800804, a0=G, a1=A]
 	SNP: SNP [pos=15078794, snp_id=kgp22730938, a0=C, a1=T]
 	SNP: SNP [pos=15152522, snp_id=kgp22752242, a0=C, a1=G]
@@ -103,8 +103,9 @@ Starting iHS Analysis on 63 SNPs
 	SNP: SNP [pos=15423628, snp_id=rs9983190, a0=G, a1=T]
 	SNP: SNP [pos=15423737, snp_id=rs2000701, a0=T, a1=C]
 	SNP: SNP [pos=15424368, snp_id=rs2155965, a0=A, a1=T]
-	SNP: SNP [pos=15430004, snp_id=rs13046630, a0=G, a1=A]
-	SNP: SNP [pos=15435740, snp_id=rs117422362, a0=C, a1=T]
+	SNP: SNP [pos=15430004, snp_id=21:15430004:G:A, a0=G, a1=A]
+	SNP: SNP [pos=15430004, snp_id=21:15430004:G:CT, a0=G, a1=CT]
+	SNP: SNP [pos=15435740, snp_id=rs117422362, a0=C, a1=A]
 	SNP: SNP [pos=15442979, snp_id=rs12483418, a0=G, a1=A]
 	SNP: SNP [pos=15443575, snp_id=rs28385573, a0=G, a1=A]
 	SNP: SNP [pos=15446512, snp_id=rs9974124, a0=A, a1=G]
@@ -134,13 +135,13 @@ Starting iHS Analysis on 63 SNPs
 	SNP: SNP [pos=15494781, snp_id=rs11701216, a0=T, a1=C]
 	SNP: SNP [pos=15494955, snp_id=rs2032283, a0=C, a1=T]
 	SNP: SNP [pos=15495000, snp_id=rs2032284, a0=G, a1=A]
-Starting iHH Analysis on 63 SNPs
-Starting XPEHH Analysis on 28 SNPs
-Starting DAF Analysis on 63 SNPs
-Starting Fst Analysis on 28 SNPs
-Out of 63 SNPs, 34 were successful and 29 SNPs were unsuccessful
-Out of 63 SNPs, 34 were successful and 29 SNPs were unsuccessful
-Out of 28 SNPs, 28 were successful and 0 SNPs were unsuccessful
-Out of 63 SNPs, 19 were successful and 24 SNPs were unsuccessful
-Out of 28 SNPs, 28 were successful and 0 SNPs were unsuccessful
+Starting iHH Analysis on 64 SNPs
+Starting XPEHH Analysis on 27 SNPs
+Starting DAF Analysis on 64 SNPs
+Starting Fst Analysis on 27 SNPs
+Out of 64 SNPs, 34 were successful and 30 SNPs were unsuccessful
+Out of 64 SNPs, 34 were successful and 30 SNPs were unsuccessful
+Out of 27 SNPs, 27 were successful and 0 SNPs were unsuccessful
+Out of 64 SNPs, 18 were successful and 24 SNPs were unsuccessful
+Out of 27 SNPs, 27 were successful and 0 SNPs were unsuccessful
 CMS is now ending
