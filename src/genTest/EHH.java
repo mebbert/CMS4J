@@ -1,5 +1,6 @@
 package genTest;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -40,6 +41,11 @@ public class EHH {
 	private Window upstrm_win;
 	private Individual[] individuals;
 	private ExtendedHaplotype all_haplo;
+	
+	
+	//=========TESTING==========
+	private List<SNP> test_list = new ArrayList<SNP>();
+	//==========================
 	
 	public EHH(Window core_win, Individual[] individuals, SNP core_snp, 
 			ExtendedHaplotype all_haplo, List<Window> all_win) {
@@ -121,6 +127,19 @@ public class EHH {
 //			System.out.println("here1");
 			SNP nxt_snp = getClosestSNP();
 			System.out.println("\t" + nxt_snp);
+			
+			//=========FOR TESTING==========
+			if(test_list.contains(nxt_snp)) {
+				test_list.add(nxt_snp);
+				if(test_list.size() > 250) {
+					System.out.println("!!EXPLOSION!!!");
+					System.exit(0);
+				}
+			}
+			else
+				test_list = new ArrayList<SNP>();
+			test_list.add(nxt_snp);
+			//=============================
 			
 			
 			if(nxt_snp == null)
