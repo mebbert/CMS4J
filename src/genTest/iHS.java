@@ -89,7 +89,7 @@ public class iHS extends HaplotypeTests {
 		int st_index = win.getStIndex();
 		for(int i = 0; i < win.getSNPs().size(); i++) {
 			
-			log.addLine("\tSNP: " + win.getSNPs().get(i));
+//			log.addLine("\tSNP: " + win.getSNPs().get(i));
 			Double unstd_iHS = getUnstandardizedIHS(win.getSNPs().get(i), (st_index + i));
 			
 			//saving the successful unstandardized iHS 

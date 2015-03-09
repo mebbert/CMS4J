@@ -77,6 +77,24 @@ public class Individual {
 		return valid;
 	}
 	
+	public void addAlleleToStrand1(boolean allele) {
+		
+		if((str1_index + 1) == strand1.length)
+			strand1 = increaseSize(strand1);
+		
+		strand1[str1_index] = allele;
+		str1_index++;
+	}
+	
+	public void addAlleleToStrand2(boolean allele) {
+		
+		if((str2_index + 1) == strand2.length)
+			strand2 = increaseSize(strand2);
+		
+		strand2[str2_index] = allele;
+		str2_index++;
+	}
+	
 	public int getStrand1Allele(int index) {
 		
 		boolean a = strand1[index];
@@ -93,6 +111,14 @@ public class Individual {
 			return 1;
 		else
 			return 0;
+	}
+	
+	public boolean getStrand1Value(int index) {
+		return strand1[index];
+	}
+	
+	public boolean getStrand2Value(int index) {
+		return strand2[index];
 	}
 	
 	private boolean[] increaseSize(boolean[] str) {
@@ -119,8 +145,16 @@ public class Individual {
 		return true;
 	}
 	
+	public int getStrandSize() {
+		return strand1.length;
+	}
+	
 	public int getID() {
 		return id;
+	}
+	
+	public void setID(int id) {
+		this.id = id;
 	}
 	
 	public byte getChr() {

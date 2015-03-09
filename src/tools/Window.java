@@ -99,6 +99,10 @@ public class Window {
 		end_index = index;
 	}
 	
+	public void setStIndex(int index) {
+		st_index = index;
+	}
+	
 	public int getStPos() {
 		return st_pos;
 	}
@@ -117,6 +121,10 @@ public class Window {
 	
 	public List<SNP> getSNPs() {
 		return all_snps;
+	}
+	
+	public void setSNPs(List<SNP> new_snps) {
+		all_snps = new_snps;
 	}
 	
 	public int getSnpListSize() {
