@@ -163,7 +163,7 @@ public class Driver {
 	 */
 	private void runAnalysis() {
 		
-		System.out.println("position\tiHS\tXPEHH\tiHH\tDAF\tFst");
+		System.out.println("snp_id\tposition\tiHS\tXPEHH\tiHH\tDAF\tFst");
 		for(int i = 0; i < win_stats.size(); i++)
 			System.out.print(win_stats.get(i));
 		

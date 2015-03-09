@@ -1,6 +1,8 @@
 package tools;
 
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -39,24 +41,27 @@ public class WindowStats {
 		daf_stats = null;
 		fst_stats = null;
 	}
-
-
+	
+	public List<SNP> getAllSNPs() {
+		
+		List<SNP> all_snps = new LinkedList<SNP>();
+		
+		all_snps = buildAllSNPs(all_snps, ihs_snps);
+		all_snps = buildAllSNPs(all_snps, xpehh_snps);
+		all_snps = buildAllSNPs(all_snps, ihh_snps);
+		all_snps = buildAllSNPs(all_snps, daf_snps);
+		all_snps = buildAllSNPs(all_snps, fst_snps);
+		
+		Collections.sort(all_snps);
+			
+		return all_snps;
+	}
+	
 	public int getTotNumSNPs() {
 		
-		Set<Integer> all_pos = new HashSet<Integer>();
+		List<SNP> all_snps = getAllSNPs();
 		
-		for(SNP s : ihs_snps)
-			all_pos.add(s.getPosition());
-		for(SNP s : xpehh_snps)
-			all_pos.add(s.getPosition());
-		for(SNP s : ihh_snps)
-			all_pos.add(s.getPosition());
-		for(SNP s : daf_snps)
-			all_pos.add(s.getPosition());
-		for(SNP s : fst_snps)
-			all_pos.add(s.getPosition());
-		
-		return all_pos.size();
+		return all_snps.size();
 	}
 	
 	//TODO: test what happens when you try to access a value that is right at the boarder of the end_pos
@@ -151,6 +156,36 @@ public class WindowStats {
 		this.fst_snps = fst_snps;
 	}
 	
+	public Double getScore(List<SNP> snps, List<Double> stats, SNP snp) {
+		
+		for(int i = 0; i < snps.size(); i++) {
+			if(snps.get(i).sameAs(snp))
+				return stats.get(i);
+		}
+		
+		return Double.NaN;
+	}
+	
+	private List<SNP> buildAllSNPs(List<SNP> all_snps, List<SNP> snps) {
+		
+		for(int i = 0; i < snps.size(); i++) {
+			if(!containsSNP(all_snps, snps.get(i)))
+					all_snps.add(snps.get(i));
+		}
+		
+		return all_snps;
+	}
+	
+	private boolean containsSNP(List<SNP> all_snps, SNP snp) {
+		
+		for(SNP s : all_snps) {
+			if(s.sameAs(snp))
+				return true;
+		}
+		
+		return false;
+	}
+	
 	private int comparePositions(int nxt_pos, int prev_pos, List<SNP> snps) {
 		
 		for(int i = 0; i < snps.size(); i++) {
@@ -163,42 +198,54 @@ public class WindowStats {
 		return nxt_pos;
 	}
 	
-	private Double getScore(List<SNP> snps, List<Double> stats, int pos) {
+	/*
+	 * For testing the output of the different WindowStats objects
+	 * Not called at all hence the SuppressWarning
+	 */
+	@SuppressWarnings("unused")
+	private String printLists(List<SNP> snps, List<Double> stats) {
 		
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("SNPS:\t" + snps.size() + "\n");
 		for(int i = 0; i < snps.size(); i++) {
-			if(snps.get(i).getPosition() == pos)
-				return stats.get(i);
+			sb.append(snps.get(i) + "\n");
 		}
 		
-		return Double.NaN;
+		sb.append("Scores:\t" + stats.size() + "\n");
+		for(int i = 0; i < stats.size(); i++) {
+			sb.append(stats.get(i) + "\n");
+		}
+		
+		return sb.toString();
 	}
 	
 	@Override
 	public String toString() {
 		
 		StringBuilder sb = new StringBuilder();
-//		sb.append("position\tiHS\tXPEHH\tiHH\tDAF\tFst\n");
 		
-		int cur_pos = getNextPosition(st_pos);
-		while(cur_pos > 0 && cur_pos != end_pos) {
+		List<SNP> all_snps = getAllSNPs();
+		
+		for(int i = 0; i < all_snps.size(); i++) {
 			
-			Double iHS_score = getScore(ihs_snps, ihs_stats, cur_pos);
-			Double XPEHH_score = getScore(xpehh_snps, xpehh_stats, cur_pos);
-			Double iHH_score = getScore(ihh_snps, ihh_stats, cur_pos);
-			Double DAF_score = getScore(daf_snps, daf_stats, cur_pos);
-			Double Fst_score = getScore(fst_snps, fst_stats, cur_pos);
+			SNP cur_snp = all_snps.get(i);
+
+			Double iHS_score = getScore(ihs_snps, ihs_stats, cur_snp);
+			Double XPEHH_score = getScore(xpehh_snps, xpehh_stats, cur_snp);
+			Double iHH_score = getScore(ihh_snps, ihh_stats, cur_snp);
+			Double DAF_score = getScore(daf_snps, daf_stats, cur_snp);
+			Double Fst_score = getScore(fst_snps, fst_stats, cur_snp);
 			
-			sb.append(cur_pos + "\t");
+			sb.append(cur_snp.getSnpID() + "\t");
+			sb.append(cur_snp.getPosition() + "\t");
 			sb.append(iHS_score + "\t");
 			sb.append(XPEHH_score + "\t");
 			sb.append(iHH_score + "\t");
 			sb.append(DAF_score + "\t");
 			sb.append(Fst_score + "\n");
-			
-			cur_pos = getNextPosition(cur_pos);
 		}
 		
 		return sb.toString();
 	}
-
 }

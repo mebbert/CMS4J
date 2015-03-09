@@ -1,6 +1,6 @@
 package tools;
 
-public class SNP {
+public class SNP implements Comparable<SNP> {
 	
 	private int pos;
 	
@@ -59,8 +59,61 @@ public class SNP {
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((a0 == null) ? 0 : a0.hashCode());
+		result = prime * result + ((a1 == null) ? 0 : a1.hashCode());
+		result = prime * result + pos;
+		result = prime * result + ((snp_id == null) ? 0 : snp_id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SNP other = (SNP) obj;
+		if (a0 == null) {
+			if (other.a0 != null)
+				return false;
+		} else if (!a0.equals(other.a0))
+			return false;
+		if (a1 == null) {
+			if (other.a1 != null)
+				return false;
+		} else if (!a1.equals(other.a1))
+			return false;
+		if (pos != other.pos)
+			return false;
+		if (snp_id == null) {
+			if (other.snp_id != null)
+				return false;
+		} else if (!snp_id.equals(other.snp_id))
+			return false;
+		return true;
+	}
+
+	@Override
 	public String toString() {
 		return "SNP [pos=" + pos + ", snp_id=" + snp_id + ", a0=" + a0 
 				+ ", a1=" + a1 + "]";
+	}
+
+	@Override
+	public int compareTo(SNP s) {
+		
+		if(this.equals(s))
+			return 0;
+		if(this.pos < s.getPosition())
+			return -1;
+		if(this.pos > s.getPosition())
+			return 1;
+		
+		return this.snp_id.compareTo(s.getSnpID());
 	}
 }
