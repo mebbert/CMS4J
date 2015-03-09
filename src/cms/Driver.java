@@ -452,6 +452,7 @@ public class Driver {
 	 * 		-Map directory path passed as argument
 	 * 			-Chromosome ("chr" + [1-22]) must be in the file name
 	 */
+	@SuppressWarnings("unchecked")
 	private void parseFiles(int chr) throws Exception {
 		log.addLine("\nLoading referenced data into memory for chromosome " + chr);
 		System.out.println("Loading Data");
@@ -491,24 +492,38 @@ public class Driver {
 		anc_types = ap.parseAncestralTypes(out_file);
 	
 		//========Clean Phased Data=============
-		Pair<List<Window>, Individual[]> tp_clean = cleanPhasedData(tp_wins, tp_indv, lg_tp_path);
-		tp_wins = tp_clean.getFirst();
-		tp_indv = tp_clean.getSecond();
+//		Pair<List<Window>, Individual[]> tp_clean = cleanPhasedData(tp_wins, tp_indv, lg_tp_path);
+//		tp_wins = tp_clean.getFirst();
+//		tp_indv = tp_clean.getSecond();
+//		
+//		Pair<List<Window>, Individual[]> xp_clean = cleanPhasedData(xp_wins, xp_indv, lg_xp_path);
+//		xp_wins = xp_clean.getFirst();
+//		xp_indv = xp_clean.getSecond();
+//		
+//		Pair<List<Window>, Individual[]> op_clean = cleanPhasedData(op_wins, op_indv, lg_op_path);
+//		op_wins = op_clean.getFirst();
+//		op_indv = op_clean.getSecond();
 		
-		Pair<List<Window>, Individual[]> xp_clean = cleanPhasedData(xp_wins, xp_indv, lg_xp_path);
-		xp_wins = xp_clean.getFirst();
-		xp_indv = xp_clean.getSecond();
+		Object[] tp_clean = cleanPhasedData(tp_wins, tp_indv, lg_tp_path);
+		tp_wins = (List<Window>) tp_clean[0];
+		tp_indv = (Individual[]) tp_clean[1];
 		
-		Pair<List<Window>, Individual[]> op_clean = cleanPhasedData(op_wins, op_indv, lg_op_path);
-		op_wins = op_clean.getFirst();
-		op_indv = op_clean.getSecond();
+		Object[] xp_clean = cleanPhasedData(xp_wins, xp_indv, lg_xp_path);
+		xp_wins = (List<Window>) xp_clean[0];
+		xp_indv = (Individual[]) xp_clean[1];
+		
+		Object[] op_clean = cleanPhasedData(op_wins, op_indv, lg_op_path);
+		op_wins = (List<Window>) op_clean[0];
+		op_indv = (Individual[]) op_clean[1];
 	}
 	
-	private Pair<List<Window>, Individual[]> cleanPhasedData(List<Window> wins, 
-																Individual[] indv,
-																String lg_path) {
-		
-		Pair<List<Window>, Individual[]> cleaned_data = new Pair<List<Window>, Individual[]>(wins, indv);
+	private Object[] cleanPhasedData(List<Window> wins, 
+			Individual[] indv,
+			String lg_path) {
+
+		Object[] cleaned_data = new Object[2];
+		cleaned_data[0] = wins;
+		cleaned_data[1] = indv;
 		
 		List<Integer> rm_indx = getIndexToRemove(wins);
 		
@@ -517,22 +532,54 @@ public class Driver {
 			
 			log.addLine("\tWARNING! Duplicate data detected in file " + lg_path);
 			for(int i = 0; i < rm_indx.size(); i++)
-				log.addLine("\t\t* Removed duplicate data in line:\t" + (rm_indx.get(i) + 2));
+			log.addLine("\t\t* Removed duplicate data in line:\t" + (rm_indx.get(i) + 2));
 		}
 		
 		return cleaned_data;
 	}
-	
-	private Pair<List<Window>, Individual[]> removedDuplicateData(List<Window> wins,
-																	Individual[] indv,
-																	List<Integer> rm_indx) {
+
+	private Object[] removedDuplicateData(List<Window> wins,
+											Individual[] indv,
+											List<Integer> rm_indx) {
 		
-		wins = cleanWindows(wins, rm_indx);
-		indv = cleanIndividuals(indv, rm_indx);
+		Object[] cleaned_data = new Object[2];
+		
+		cleaned_data[0] = cleanWindows(wins, rm_indx);
+		cleaned_data[1] = cleanIndividuals(indv, rm_indx);
 		
 		
-		return new Pair<List<Window>, Individual[]>(wins, indv);
+		return cleaned_data;
 	}
+	
+//	private Pair<List<Window>, Individual[]> cleanPhasedData(List<Window> wins, 
+//																Individual[] indv,
+//																String lg_path) {
+//		
+//		Pair<List<Window>, Individual[]> cleaned_data = new Pair<List<Window>, Individual[]>(wins, indv);
+//		
+//		List<Integer> rm_indx = getIndexToRemove(wins);
+//		
+//		if(rm_indx.size() > 0) {
+//			cleaned_data = removedDuplicateData(wins, indv, rm_indx);
+//			
+//			log.addLine("\tWARNING! Duplicate data detected in file " + lg_path);
+//			for(int i = 0; i < rm_indx.size(); i++)
+//				log.addLine("\t\t* Removed duplicate data in line:\t" + (rm_indx.get(i) + 2));
+//		}
+//		
+//		return cleaned_data;
+//	}
+//	
+//	private Pair<List<Window>, Individual[]> removedDuplicateData(List<Window> wins,
+//																	Individual[] indv,
+//																	List<Integer> rm_indx) {
+//		
+//		wins = cleanWindows(wins, rm_indx);
+//		indv = cleanIndividuals(indv, rm_indx);
+//		
+//		
+//		return new Pair<List<Window>, Individual[]>(wins, indv);
+//	}
 	
 	private Individual[] cleanIndividuals(Individual[] indv, List<Integer> rm_indx) {
 		
