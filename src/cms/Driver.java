@@ -10,7 +10,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.math3.util.Pair;
+//import org.apache.commons.math3.util.Pair;
 
 import errors.*;
 import tools.GeneticMap;
