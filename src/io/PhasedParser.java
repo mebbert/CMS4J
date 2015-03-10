@@ -9,6 +9,7 @@ import java.util.Scanner;
 import errors.FileParsingException;
 import log.Log;
 import tools.Individual;
+import tools.SNP;
 import tools.Window;
 
 public class PhasedParser {
@@ -71,7 +72,7 @@ public class PhasedParser {
 			line = lg_scan.nextLine(); //skips the first line header
 		
 		int st_pos = 0;
-		int end_pos = win_size;
+		int end_pos = win_size - 1;
 		int pos = 0;
 		int index = 0;
 		Window cur_win = new Window();
@@ -100,8 +101,12 @@ public class PhasedParser {
 				cur_win = new Window(st_pos, end_pos, index);
 			}
 			
-			cur_win.addSNP(pos, line_arr[2], line_arr[3], line_arr[0]);
-			index++;
+			SNP new_snp = new SNP(pos, line_arr[2], line_arr[3], line_arr[0]);
+			
+			if(!containsNewSNP(cur_win, new_snp)) {
+				cur_win.addSNP(new_snp);
+				index++;
+			}
 				
 		} while(st_pos <= pos);
 		
@@ -111,6 +116,17 @@ public class PhasedParser {
 //		}
 		
 		return all_win;
+	}
+	
+	private boolean containsNewSNP(Window cur_win, SNP new_snp) {
+		
+		List<SNP> win_snps = cur_win.getSNPs();
+		for(int i = 0; i < win_snps.size(); i++) {
+			if(win_snps.get(i).sameAs(new_snp))
+				return true;
+		}
+		
+		return false;
 	}
 	
 	/**
