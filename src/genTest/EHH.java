@@ -80,10 +80,27 @@ public class EHH {
 		all_ehh_values.add(1.0);
 		all_ehh_positions.add(core_snp.getPosition());
 		
+		System.out.println("\n\nCORE_" + core_snp);
+		
 		//Boundary position check for EHH calculation
 		while(isValidPosition(end_pos, last_snp.getPosition())) {
 			
 			SNP nxt_snp = getClosestSNP();
+			
+			System.out.println("\t" + nxt_snp);
+			
+			//=========FOR TESTING==========
+			if(test_list.contains(nxt_snp)) {
+				test_list.add(nxt_snp);
+				if(test_list.size() > 250) {
+					System.out.println("!!EXPLOSION!!!");
+					System.exit(0);
+				}
+			}
+			else
+				test_list = new ArrayList<SNP>();
+			test_list.add(nxt_snp);
+			//=============================
 			
 			if(nxt_snp == null)
 				return false;
