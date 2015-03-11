@@ -28,6 +28,7 @@ public class Driver {
 	private static String MAP_TYPE = "map";
 	private static String PHASED_TYPE = "phased";
 	
+	private boolean run_intersect = true;
 	private int win_size;
 	private int chr_st;
 	private int chr_end;
@@ -227,11 +228,15 @@ public class Driver {
 	 */
 	private void intersectPopulations() {
 		
-		System.out.println("Running Intersections");
-		
-		intersectCrossWithTargetPopulations();
-		
-		intersectCrossWithOutgroupPopulations();
+		if(run_intersect) {
+			System.out.println("Running Intersections");
+			
+			intersectCrossWithTargetPopulations();
+			intersectCrossWithOutgroupPopulations();
+		}
+		else {
+			System.out.println("Skipping Intersection");
+		}
 	}
 	
 	private void intersectCrossWithOutgroupPopulations() {
@@ -469,6 +474,9 @@ public class Driver {
 		
 		String map_path = getMapPath(map_dir, chr);
 		String anc_path = getAncestralPath(anc_dir, chr);
+		
+		if(lg_tp_path.equals(lg_xp_path) && lg_tp_path.equals(lg_op_path))
+			run_intersect = false;
 		
 		//=======Instantiate Parsers==========
 		PhasedParser tp_pp = new PhasedParser(lg_tp_path, ph_tp_path, chr, log);

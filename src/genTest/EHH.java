@@ -22,7 +22,7 @@ import tools.ExtendedHaplotype;
 public class EHH {
 	
 	private static double SIGNIFICANT_EHH = 0.05;
-//	private static int MAX_DISTANCE = 5000000;
+	private static int MAX_DISTANCE = 3000000;
 	
 	private double cur_ehh_value;
 	private double last_ehh_value;
@@ -80,14 +80,14 @@ public class EHH {
 		all_ehh_values.add(1.0);
 		all_ehh_positions.add(core_snp.getPosition());
 		
-		System.out.println("\n\nCORE_" + core_snp);
+//		System.out.println("\n\nCORE_" + core_snp);
 		
 		//Boundary position check for EHH calculation
 		while(isValidPosition(end_pos, last_snp.getPosition())) {
 			
 			SNP nxt_snp = getClosestSNP();
 			
-			System.out.println("\t" + nxt_snp);
+//			System.out.println("\t" + nxt_snp);
 			
 			//=========FOR TESTING==========
 			if(test_list.contains(nxt_snp)) {
@@ -104,6 +104,8 @@ public class EHH {
 			
 			if(nxt_snp == null)
 				return false;
+			//if(Math.abs(nxt_snp.getPosition() - core_snp.getPosition() > MAX_DISTANCE)
+			//	return false;
 			
 			//incorporates the new SNP into all extended haplotypes (increase length by 1)
 			group = createNewExtHaploGroup(nxt_snp);
@@ -160,6 +162,8 @@ public class EHH {
 			
 			if(nxt_snp == null)
 				return false;
+			//if(Math.abs(nxt_snp.getPosition() - core_snp.getPosition() > MAX_DISTANCE)
+			//	return false;
 			
 			//incorporates the new SNP into all extended haplotypes (increase length by 1)
 			group = createNewExtHaploGroup(nxt_snp);
