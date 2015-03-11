@@ -91,15 +91,14 @@ public class EHH {
 			
 			//=========FOR TESTING==========
 			if(test_list.contains(nxt_snp)) {
-				test_list.add(nxt_snp);
-				if(test_list.size() > 250) {
-					System.out.println("!!EXPLOSION!!!");
-					System.exit(0);
-				}
+				System.out.println("Problem with Core " + core_snp);
+				System.out.println("Unexpected Duplicate with " + nxt_snp);
+				System.out.println("!!EXPLOSION!!!");
+				System.exit(0);
 			}
 			else
-				test_list = new ArrayList<SNP>();
-			test_list.add(nxt_snp);
+				test_list.add(nxt_snp);
+			
 			//=============================
 			
 			if(nxt_snp == null)
@@ -148,15 +147,13 @@ public class EHH {
 			
 			//=========FOR TESTING==========
 			if(test_list.contains(nxt_snp)) {
-				test_list.add(nxt_snp);
-				if(test_list.size() > 250) {
-					System.out.println("!!EXPLOSION!!!");
-					System.exit(0);
-				}
+				System.out.println("Problem with Core_" + core_snp);
+				System.out.println("Unexpected Duplicate with " + nxt_snp);
+				System.out.println("!!EXPLOSION!!!");
+				System.exit(0);
 			}
 			else
-				test_list = new ArrayList<SNP>();
-			test_list.add(nxt_snp);
+				test_list.add(nxt_snp);
 			//=============================
 			
 			

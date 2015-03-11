@@ -228,15 +228,23 @@ public class Driver {
 	 */
 	private void intersectPopulations() {
 		
-//		if(run_intersect) {
-//			System.out.println("Running Intersections");
+		if(run_intersect) {
+			System.out.println("Running Intersections");
 			
 			intersectCrossWithTargetPopulations();
 			intersectCrossWithOutgroupPopulations();
-//		}
-//		else {
-//			System.out.println("Skipping Intersection");
-//		}
+		}
+		else {
+			System.out.println("Skipping Intersection");
+			
+			txin_wins = tp_wins;
+			tp_inx_indv = tp_indv;
+			xp_int_indv = xp_indv;
+			
+			xoin_wins = xp_wins;
+			xp_ino_indv = xp_indv;
+			op_inx_indv = op_indv;
+		}
 	}
 	
 	private void intersectCrossWithOutgroupPopulations() {
@@ -457,7 +465,6 @@ public class Driver {
 	 * 		-Map directory path passed as argument
 	 * 			-Chromosome ("chr" + [1-22]) must be in the file name
 	 */
-	@SuppressWarnings("unchecked")
 	private void parseFiles(int chr) throws Exception {
 		log.addLine("\nLoading referenced data into memory for chromosome " + chr);
 		System.out.println("Loading Data");
