@@ -228,15 +228,15 @@ public class Driver {
 	 */
 	private void intersectPopulations() {
 		
-		if(run_intersect) {
-			System.out.println("Running Intersections");
+//		if(run_intersect) {
+//			System.out.println("Running Intersections");
 			
 			intersectCrossWithTargetPopulations();
 			intersectCrossWithOutgroupPopulations();
-		}
-		else {
-			System.out.println("Skipping Intersection");
-		}
+//		}
+//		else {
+//			System.out.println("Skipping Intersection");
+//		}
 	}
 	
 	private void intersectCrossWithOutgroupPopulations() {
