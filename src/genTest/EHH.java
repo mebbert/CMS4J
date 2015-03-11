@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import errors.EhhComputationException;
 import tools.Individual;
 import tools.SNP;
 import tools.Window;
@@ -128,6 +129,7 @@ public class EHH {
 	 * homozygosity levels (EHH <= 0.05)
 	 * 
 	 * @return return true if the analysis generated significant results
+	 * @throws EhhComputationException 
 	 */
 	public boolean calcSignificantEhhValues(double ehh_cutoff) {
 		
@@ -151,6 +153,8 @@ public class EHH {
 				System.out.println("Unexpected Duplicate with " + nxt_snp);
 				System.out.println("!!EXPLOSION!!!");
 				System.exit(0);
+				
+//				throw new EhhComputationException();
 			}
 			else
 				test_list.add(nxt_snp);
