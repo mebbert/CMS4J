@@ -121,7 +121,7 @@ public class Stats {
 //		} catch (InterruptedException e) { //TODO: throw new threading error
 //			e.printStackTrace();
 //		}
-		
+//		
 //===================universal block=======================
 		
 //		i.printStats();
@@ -183,7 +183,7 @@ class StatsThread extends Thread {
 		finished = false;
 		
 		thrd = new Thread(this);
-//		thrd.start();
+		thrd.start();
 	}
 	
 	public void start() {
@@ -193,8 +193,12 @@ class StatsThread extends Thread {
 	@Override
 	public void run() {
 		
+//		System.out.println("Starting");
+		
 		tst.runStat();	
 		finished = true;
+		
+//		System.out.println("Ending");
 		
 		thrd.interrupt();
 	}
