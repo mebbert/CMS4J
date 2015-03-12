@@ -75,6 +75,8 @@ public class EHH {
 	
 	public boolean calcEhhToPosition(int end_pos) {
 		
+		test_list = new ArrayList<SNP>();
+		
 		//This is the EHH denominator
 		int ct_comb_2 = combineSetBy2(all_haplo);
 		
@@ -132,6 +134,8 @@ public class EHH {
 	 * @throws EhhComputationException 
 	 */
 	public boolean calcSignificantEhhValues(double ehh_cutoff) {
+		
+		test_list = new ArrayList<SNP>();
 		
 		//This is the EHH denominator
 		int ct_comb_2 = combineSetBy2(all_haplo); 

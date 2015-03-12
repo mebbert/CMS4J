@@ -183,7 +183,7 @@ class StatsThread extends Thread {
 		finished = false;
 		
 		thrd = new Thread(this);
-		thrd.start();
+//		thrd.start();
 	}
 	
 	public void start() {
