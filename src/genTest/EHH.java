@@ -143,13 +143,13 @@ public class EHH {
 		all_ehh_values.add(1.0);
 		all_ehh_positions.add(core_snp.getPosition());
 		
-//		System.out.println("\n\nCORE_" + core_snp);
+		System.out.println("\n\nCORE_" + core_snp);
 		
 		//Significance check of EHH value
 		while(cur_ehh_value > ehh_cutoff) { 
 			
 			SNP nxt_snp = getClosestSNP();
-//			System.out.println("\t" + nxt_snp);
+			System.out.println("\t" + nxt_snp);
 			
 			//=========FOR TESTING==========
 			if(test_list.contains(nxt_snp)) {
