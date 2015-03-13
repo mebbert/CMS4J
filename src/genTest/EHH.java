@@ -115,6 +115,7 @@ public class EHH {
 			cur_ehh_value = calcEHH(ct_comb_2);
 			
 			//======TESTING======
+			//Need to understand this...
 //			if(cur_ehh_value == 1 && isValidPosition(nxt_snp.getPosition(), last_snp.getPosition())) //means that the groups are all size 1 and cannot get any smaller??
 //				return true;
 			//===================
