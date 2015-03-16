@@ -7,10 +7,13 @@ import java.util.TreeMap;
 
 //import org.apache.commons.math3.distribution.*;
 
+
 import tools.SNP;
 import tools.WindowStats;
 
 public class Analysis {
+	
+	private final int NUM_TESTS = 5;
 	
 //	private NormalDistribution nd;
 //	private GammaDistribution gd;
@@ -48,14 +51,46 @@ public class Analysis {
 		//			-NOTE: I don't need ALL 5 stats to do the CMS analysis
 		
 		
+		//SimDist[] neutral_sim = SimulationParser sp.getNeutralSimulations(NUM_TESTS);
+		//SimDist[] select_sim = SimulationParser sp.getSelectedSimulations(NUM_TESTS);
+		
 		for(int i = 0; i < all_ws.size(); i++) {
 			WindowStats cur_ws = all_ws.get(i);
-			Map<Integer, Double> cms_scores = getScores(cur_ws);
+			Map<Integer, Double> cms_scores = getScores(cur_ws);//pass simulations too
 		}
 		
 		
 	}
 	
+	/*
+	 * Simulations and scores need to be stored into arrays where:
+	 * 		[0] = iHS data
+	 * 		[1] = iHH data
+	 * 		[2] = XPEHH data
+	 * 		[3] = DAF data
+	 * 		[4] = Fst data
+	 */
+	private Map<Integer, Double> getScores(WindowStats ws) {//get SimDist too
+		
+		List<SNP> all_snps = ws.getAllSNPs();
+		Double[] scores = new Double[NUM_TESTS];
+		
+		for(int i = 0; i < all_snps.size(); i++) {
+			
+			SNP cur_snp = all_snps.get(i);
+			
+			scores[0] = ws.getIhsScore(cur_snp);
+			scores[1] = ws.getIhhScore(cur_snp);
+			scores[2] = ws.getXpehhScore(cur_snp);
+			scores[3] = ws.getDafScore(cur_snp);
+			scores[4] = ws.getFstScore(cur_snp);
+			
+		}
+		
+		return null;
+	}
+	
+/*=======================Work in progress: Theoretical Analysis=================
 	private Map<Integer, Double> getScores(WindowStats ws) {
 		
 		Map<Integer, Double> scores = new TreeMap<Integer, Double>();//key = position; value = cms score
@@ -120,7 +155,7 @@ public class Analysis {
 		
 		return -1;
 	}
-	
+*///============================================================================
 	
 	
 	

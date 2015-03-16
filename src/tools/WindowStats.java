@@ -166,6 +166,56 @@ public class WindowStats {
 		return Double.NaN;
 	}
 	
+	public Double getIhsScore(SNP snp) {
+		
+		for(int i = 0; i < ihs_snps.size(); i++) {
+			if(ihs_snps.get(i).sameAs(snp))
+				return ihs_stats.get(i);
+		}
+		
+		return Double.NaN;
+	}
+	
+	public Double getIhhScore(SNP snp) {
+		
+		for(int i = 0; i < ihh_snps.size(); i++) {
+			if(ihh_snps.get(i).sameAs(snp))
+				return ihh_stats.get(i);
+		}
+		
+		return Double.NaN;
+	}
+	
+	public Double getXpehhScore(SNP snp) {
+		
+		for(int i = 0; i < xpehh_snps.size(); i++) {
+			if(xpehh_snps.get(i).sameAs(snp))
+				return xpehh_stats.get(i);
+		}
+		
+		return Double.NaN;
+	}
+	
+	public Double getDafScore(SNP snp) {
+		
+		for(int i = 0; i < daf_snps.size(); i++) {
+			if(daf_snps.get(i).sameAs(snp))
+				return daf_stats.get(i);
+		}
+		
+		return Double.NaN;
+	}
+	
+	public Double getFstScore(SNP snp) {
+		
+		for(int i = 0; i < fst_snps.size(); i++) {
+			if(fst_snps.get(i).sameAs(snp))
+				return fst_stats.get(i);
+		}
+		
+		return Double.NaN;
+	}
+	
 	private List<SNP> buildAllSNPs(List<SNP> all_snps, List<SNP> snps) {
 		
 		for(int i = 0; i < snps.size(); i++) {
