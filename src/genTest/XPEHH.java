@@ -91,7 +91,7 @@ public class XPEHH extends HaplotypeTests {
 		for(int i = 0; i < win_snps.size(); i++) {
 			
 			SNP core_snp = win_snps.get(i);
-			log.addLine("\tCORE_" + core_snp);
+//			log.addLine("\tCORE_" + core_snp);
 			
 			//calculate EHH scores for the combined populations (tp with xp)
 			EHH comb_ehh = getCombinedEHH(all_indv, core_snp);
@@ -186,7 +186,7 @@ public class XPEHH extends HaplotypeTests {
 	private Double calcUnstandardEhhIntegral(SNP core_snp, SNP last_snp, Individual[] indv) {
 		
 		ExtendedHaplotype pop_eh = setHaplotypeGroup(indv);
-		EHH pop_ehh = new EHH(win, indv, core_snp, pop_eh, all_win);
+		EHH pop_ehh = new EHH(win, indv, core_snp, pop_eh, all_win, log);
 		boolean significant = pop_ehh.calcEhhToPosition(last_snp.getPosition());
 		if(!significant)
 			return null;
@@ -200,7 +200,7 @@ public class XPEHH extends HaplotypeTests {
 	private EHH getCombinedEHH(Individual[] all_indv, SNP core_snp) {
 		
 		ExtendedHaplotype all_eh = setHaplotypeGroup(all_indv);
-		EHH comb_ehh = new EHH(win, all_indv, core_snp, all_eh, all_win);
+		EHH comb_ehh = new EHH(win, all_indv, core_snp, all_eh, all_win, log);
 		
 		comb_ehh.calcSignificantEhhValues(SIGNIFICANT_EHH_VALUE);
 		

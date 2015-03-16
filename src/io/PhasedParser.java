@@ -25,6 +25,8 @@ public class PhasedParser {
 	private Scanner lg_scan;
 	private Scanner ph_scan;
 	
+	private List<Integer> dups = new ArrayList<Integer>();
+	
 	private Log log;
 	
 	public PhasedParser() {
@@ -107,12 +109,21 @@ public class PhasedParser {
 				cur_win.addSNP(new_snp);
 				index++;
 			}
-				
+			else {
+				dups.add(index + dups.size());
+			}
+			
 		} while(st_pos <= pos);
 		
 //		for(int i = 0; i < all_win.size(); i++) {
-//			System.out.println(all_win.get(i).toString());
-//			log.addLine(all_win.get(i).toString());
+//			if(ph_path.contains("CEU")) {
+////				System.out.println(all_win.get(i).toString());
+//				log.addLine(all_win.get(i).toString());
+//			}
+//			
+//			if(i > 5)
+//				break;
+////			log.addLine(all_win.get(i).toString());
 //		}
 		
 		return all_win;
@@ -129,6 +140,81 @@ public class PhasedParser {
 		return false;
 	}
 	
+//	/**
+//	 * For used on phased files where allele types are binary: a0 or a1
+//	 * 
+//	 * @param chr_in		Chromosme where phased data was taken from
+//	 * @return				Returns a set of Individual containing all individuals with phased data for each strand and unique id
+//	 */
+//	public Individual[] parsePhased(int chr_in) throws FileParsingException {
+//		log.addLine("Importing phased data from " + ph_path);
+//		
+//		checkPhasedFile();
+//		
+//		ArrayList<Individual> all_indv = new ArrayList<Individual>();
+//		
+//		byte chr = (byte) chr_in;
+//		int id_index = 0;
+//		while(ph_scan.hasNextLine()) {
+//			
+//			Individual indv = new Individual(id_index, chr);
+//			String strand1 = ph_scan.nextLine();
+//			String strand2 = ph_scan.nextLine();
+//			
+//			if(strand1.length() == strand2.length()) {
+//				Scanner str1 = new Scanner(strand1);
+//				Scanner str2 = new Scanner(strand2);
+//				
+//				boolean check = false;
+//				
+//				//double for loop {
+//				while(str1.hasNext()) {
+//					check = indv.addAlleleToStrand1(str1.next());
+//					if(!check) {
+//						String msg = "Error: Phased file " + ph_path
+//								+ " has an problem with an allele on line "
+//								+ (((1 + id_index)*2) - 1);
+//						throw new FileParsingException(log, msg);
+//					}
+//				}
+//				while(str2.hasNext()) {
+//					check = indv.addAlleleToStrand2(str2.next());
+//					if(!check) {
+//						String msg = "Error: Phased file " + ph_path
+//								+ " has an problem with an allele on line "
+//								+ (1 + id_index)*2;
+//						throw new FileParsingException(log, msg);
+//					}
+//				}
+//				//}
+//			} 
+//			else {
+//				String msg = "Error: Phased file " + ph_path 
+//						+ " has unequal Individual strand lengths at lines " 
+//						+ (((1 + id_index)*2) - 1) + " and " + (1 + id_index)*2
+//						+"\n\t*Make sure there isn't excess white space at the end of the line";
+//				throw new FileParsingException(log, msg);
+//			}
+//			
+//			id_index++;
+//			all_indv.add(indv);
+//		}
+//		
+//		Individual[] all_indv_arr = new Individual[all_indv.size()];
+//		for(int i = 0; i < all_indv.size(); i++) {
+//			all_indv_arr[i] = all_indv.get(i);
+//		}
+//		
+//		//FOR PRINTING ONLY
+////		for(int i = 0; i < all_indv_arr.length; i++) {
+////			System.out.println(i + "\n" + all_indv_arr[i]);
+////			log.addLine(i.toString());
+////		}
+//		
+//		return all_indv_arr;
+//	}
+	
+	
 	/**
 	 * For used on phased files where allele types are binary: a0 or a1
 	 * 
@@ -141,6 +227,7 @@ public class PhasedParser {
 		checkPhasedFile();
 		
 		ArrayList<Individual> all_indv = new ArrayList<Individual>();
+		
 		
 		byte chr = (byte) chr_in;
 		int id_index = 0;
@@ -155,23 +242,38 @@ public class PhasedParser {
 				Scanner str2 = new Scanner(strand2);
 				
 				boolean check = false;
+				
+				List<Integer> cur_dups = new ArrayList<Integer>(dups);
+				
+				int indv_indx = 0;
 				while(str1.hasNext()) {
-					check = indv.addAlleleToStrand1(str1.next());
-					if(!check) {
-						String msg = "Error: Phased file " + ph_path
-								+ " has an problem with an allele on line "
-								+ (((1 + id_index)*2) - 1);
-						throw new FileParsingException(log, msg);
+					
+					if(!cur_dups.contains(indv_indx)) {
+						
+						check = indv.addAlleleToStrand1(str1.next());
+						if(!check) {
+							String msg = "Error: Phased file " + ph_path
+									+ " has an problem with an allele on line "
+									+ (((1 + id_index)*2) - 1);
+							throw new FileParsingException(log, msg);
+						}
+						check = indv.addAlleleToStrand2(str2.next());
+						if(!check) {
+							String msg = "Error: Phased file " + ph_path
+									+ " has an problem with an allele on line "
+									+ (1 + id_index)*2;
+							throw new FileParsingException(log, msg);
+						}
+					} 
+					else {
+						int dups_indx = cur_dups.indexOf(new Integer(indv_indx));
+						cur_dups.set(dups_indx, -1);
+						
+						str1.next();
+						str2.next();
 					}
-				}
-				while(str2.hasNext()) {
-					check = indv.addAlleleToStrand2(str2.next());
-					if(!check) {
-						String msg = "Error: Phased file " + ph_path
-								+ " has an problem with an allele on line "
-								+ (1 + id_index)*2;
-						throw new FileParsingException(log, msg);
-					}
+					
+					indv_indx++;
 				}
 			} 
 			else {
@@ -193,12 +295,47 @@ public class PhasedParser {
 		
 		//FOR PRINTING ONLY
 //		for(int i = 0; i < all_indv_arr.length; i++) {
-//			System.out.println(i + "\n" + all_indv_arr[i]);
-//			log.addLine(i.toString());
+//			if(ph_path.contains("CEU")) {
+////				System.out.println(i + "\n" + all_indv_arr[i]);
+//				log.addLine(i + "\n" + all_indv_arr[i]);
+//			}
+////			log.addLine(i.toString());
 //		}
 		
 		return all_indv_arr;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	private void checkLegendFile() throws FileParsingException {
 		

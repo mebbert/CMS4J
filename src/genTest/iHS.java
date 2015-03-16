@@ -89,7 +89,7 @@ public class iHS extends HaplotypeTests {
 		int st_index = win.getStIndex();
 		for(int i = 0; i < win.getSNPs().size(); i++) {
 			
-			log.addLine("\tCORE_" + win.getSNPs().get(i));
+//			log.addLine("\tCORE_" + win.getSNPs().get(i));
 			Double unstd_iHS = getUnstandardizedIHS(win.getSNPs().get(i), (st_index + i));
 			
 			//saving the successful unstandardized iHS 
@@ -174,8 +174,8 @@ public class iHS extends HaplotypeTests {
 			}
 			
 			//Starting EHH Analysis
-			EHH anc_ehh = new EHH(win, individuals, core_snp, anc_eh, all_win);
-			EHH der_ehh = new EHH(win, individuals, core_snp, der_eh, all_win);
+			EHH anc_ehh = new EHH(win, individuals, core_snp, anc_eh, all_win, log);
+			EHH der_ehh = new EHH(win, individuals, core_snp, der_eh, all_win, log);
 			
 			boolean significant = false; 
 			

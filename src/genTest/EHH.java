@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import log.Log;
 import errors.EhhComputationException;
 import tools.Individual;
 import tools.SNP;
@@ -43,13 +44,14 @@ public class EHH {
 	private Individual[] individuals;
 	private ExtendedHaplotype all_haplo;
 	
+	private Log log;
 	
 	//=========TESTING==========
 	private List<SNP> test_list = new ArrayList<SNP>();
 	//==========================
 	
 	public EHH(Window core_win, Individual[] individuals, SNP core_snp, 
-			ExtendedHaplotype all_haplo, List<Window> all_win) {
+			ExtendedHaplotype all_haplo, List<Window> all_win, Log log) {
 		
 		this.core_win = core_win;
 		this.individuals = individuals;
@@ -66,6 +68,7 @@ public class EHH {
 		dwnstrm_win = this.core_win;
 		upstrm_win = this.core_win;
 		
+		this.log = log;
 		
 		all_ehh_values = new LinkedList<Double>();
 		all_ehh_positions = new LinkedList<Integer>();
@@ -94,31 +97,27 @@ public class EHH {
 			
 			//=========FOR TESTING==========
 			if(test_list.contains(nxt_snp)) {
-				System.out.println("Problem with Core " + core_snp);
-				System.out.println("Unexpected Duplicate with " + nxt_snp);
-				System.out.println("!!EXPLOSION!!!");
-				System.exit(0);
+				
+				log.addLine("\t*Warning: CORE_" + core_snp + " has duplicate data");
+				log.addLine("\t\t-Unexpected duplicate with " + nxt_snp);
+				return false;
 			}
 			else
 				test_list.add(nxt_snp);
-			
 			//=============================
 			
 			if(nxt_snp == null)
 				return false;
-			//if(Math.abs(nxt_snp.getPosition() - core_snp.getPosition() > MAX_DISTANCE)
-			//	return false;
+			
+			if(Math.abs(nxt_snp.getPosition() - core_snp.getPosition()) > MAX_DISTANCE) {
+				log.addLine("\tWarning: CORE_" + core_snp + " could not calculate ehh value");
+				return false;
+			}
 			
 			//incorporates the new SNP into all extended haplotypes (increase length by 1)
 			group = createNewExtHaploGroup(nxt_snp);
 			
 			cur_ehh_value = calcEHH(ct_comb_2);
-			
-			//======TESTING======
-			//Need to understand this...
-//			if(cur_ehh_value == 1 && isValidPosition(nxt_snp.getPosition(), last_snp.getPosition())) //means that the groups are all size 1 and cannot get any smaller??
-//				return true;
-			//===================
 			
 			saveEHH(cur_ehh_value, nxt_snp);
 		}
@@ -144,22 +143,20 @@ public class EHH {
 		all_ehh_values.add(1.0);
 		all_ehh_positions.add(core_snp.getPosition());
 		
-		System.out.println("\n\nCORE_" + core_snp);
+//		System.out.println("\n\nCORE_" + core_snp);
 		
 		//Significance check of EHH value
 		while(cur_ehh_value > ehh_cutoff) { 
 			
 			SNP nxt_snp = getClosestSNP();
-			System.out.println("\t" + nxt_snp);
+//			System.out.println("\t" + nxt_snp);
 			
 			//=========FOR TESTING==========
 			if(test_list.contains(nxt_snp)) {
-				System.out.println("Problem with Core_" + core_snp);
-				System.out.println("Unexpected Duplicate with " + nxt_snp);
-				System.out.println("!!EXPLOSION!!!");
-				System.exit(0);
 				
-//				throw new EhhComputationException();
+				log.addLine("\t*Warning: CORE_" + core_snp + " has duplicate data");
+				log.addLine("\t\t-Unexpected duplicate with " + nxt_snp);
+				return false;
 			}
 			else
 				test_list.add(nxt_snp);
@@ -168,18 +165,16 @@ public class EHH {
 			
 			if(nxt_snp == null)
 				return false;
-			//if(Math.abs(nxt_snp.getPosition() - core_snp.getPosition() > MAX_DISTANCE)
-			//	return false;
+			
+			if(Math.abs(nxt_snp.getPosition() - core_snp.getPosition()) > MAX_DISTANCE) {
+				log.addLine("\tWarning: CORE_" + core_snp + " could not calculate ehh value");
+				return false;
+			}
 			
 			//incorporates the new SNP into all extended haplotypes (increase length by 1)
 			group = createNewExtHaploGroup(nxt_snp);
 			
 			cur_ehh_value = calcEHH(ct_comb_2);
-			
-			//=====TESTING=====
-			if(cur_ehh_value == 1 && all_ehh_values.getLast() < ehh_cutoff) //means that the groups are all size 1 and cannot get any smaller??
-				return true;
-			//=================
 			
 			saveEHH(cur_ehh_value, nxt_snp);
 		}

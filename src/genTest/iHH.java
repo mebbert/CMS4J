@@ -173,8 +173,8 @@ public class iHH extends HaplotypeTests {
 			}
 			
 			//Starting EHH Analysis
-			EHH anc_ehh = new EHH(win, individuals, core_snp, anc_eh, all_win);
-			EHH der_ehh = new EHH(win, individuals, core_snp, der_eh, all_win);
+			EHH anc_ehh = new EHH(win, individuals, core_snp, anc_eh, all_win, log);
+			EHH der_ehh = new EHH(win, individuals, core_snp, der_eh, all_win, log);
 			
 			boolean significant = false;
 			
