@@ -73,19 +73,34 @@ public class Analysis {
 	private Map<Integer, Double> getScores(WindowStats ws) {//get SimDist too
 		
 		List<SNP> all_snps = ws.getAllSNPs();
-		Double[] scores = new Double[NUM_TESTS];
+		Double[] tst_scores = new Double[NUM_TESTS];
 		
 		for(int i = 0; i < all_snps.size(); i++) {
 			
 			SNP cur_snp = all_snps.get(i);
 			
-			scores[0] = ws.getIhsScore(cur_snp);
-			scores[1] = ws.getIhhScore(cur_snp);
-			scores[2] = ws.getXpehhScore(cur_snp);
-			scores[3] = ws.getDafScore(cur_snp);
-			scores[4] = ws.getFstScore(cur_snp);
+			tst_scores[0] = ws.getIhsScore(cur_snp);
+			tst_scores[1] = ws.getIhhScore(cur_snp);
+			tst_scores[2] = ws.getXpehhScore(cur_snp);
+			tst_scores[3] = ws.getDafScore(cur_snp);
+			tst_scores[4] = ws.getFstScore(cur_snp);
+			
+			Double[] score_probs = new Double[NUM_TESTS];
+			
+			for(int j = 0; j < NUM_TESTS; j++) {
+				
+//				double neutral_prob = neutral_sim[i].getProb(tst_scores[i]);
+//				double select_prob = select_sim[i].getProb(tst_scores[i]);
+				
+				 
+//				 score_probs[i] = cms eqn...
+			}
+			
+//			ws_cms_scores.add(run summation-thing)
 			
 		}
+		
+		
 		
 		return null;
 	}

@@ -91,7 +91,7 @@ public class XPEHH extends HaplotypeTests {
 		for(int i = 0; i < win_snps.size(); i++) {
 			
 			SNP core_snp = win_snps.get(i);
-//			log.addLine("\tCORE_" + core_snp);
+			log.addLine("\tCORE_" + core_snp);
 			
 			//calculate EHH scores for the combined populations (tp with xp)
 			EHH comb_ehh = getCombinedEHH(all_indv, core_snp);
