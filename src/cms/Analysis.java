@@ -1,5 +1,7 @@
 package cms;
 
+import io.SimulationParser;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -8,23 +10,31 @@ import java.util.TreeMap;
 //import org.apache.commons.math3.distribution.*;
 
 
+
+
+
+import log.Log;
 import tools.SNP;
+import tools.SimDist;
 import tools.WindowStats;
 
 public class Analysis {
 	
 	private final int NUM_TESTS = 5;
 	
+	private Log log;
+	
 //	private NormalDistribution nd;
 //	private GammaDistribution gd;
 //	private UniformRealDistribution urd;
 	
-	public Analysis() {
+	public Analysis(Log log) {
 		
 //		nd = new NormalDistribution(0, 1); 			//defined
 //		gd = new GammaDistribution(1, 1);			//made up; plot(density(qgamma(pnorm(var), shape=.5, rate=5)))
 //		urd = new UniformRealDistribution(-1, 1);	//defined
 		
+		this.log = log;
 	}
 	
 	/*
@@ -50,9 +60,9 @@ public class Analysis {
 		//				just multiply the 3 probabilities together
 		//			-NOTE: I don't need ALL 5 stats to do the CMS analysis
 		
-		
-		//SimDist[] neutral_sim = SimulationParser sp.getNeutralSimulations(NUM_TESTS);
-		//SimDist[] select_sim = SimulationParser sp.getSelectedSimulations(NUM_TESTS);
+		SimulationParser sp = new SimulationParser(log);
+		SimDist[] neutral_sim = sp.getNeutralSimulations(NUM_TESTS);
+		SimDist[] select_sim = sp.getSelectedSimulations(NUM_TESTS);
 		
 		for(int i = 0; i < all_ws.size(); i++) {
 			WindowStats cur_ws = all_ws.get(i);

@@ -169,7 +169,7 @@ public class Driver {
 		for(int i = 0; i < win_stats.size(); i++)
 			System.out.print(win_stats.get(i));
 		
-		Analysis an = new Analysis();
+		Analysis an = new Analysis(log);
 		an.runCmsAnalysis(win_stats);
 	}
 	
@@ -676,7 +676,7 @@ public class Driver {
 	private String getAncestralPath(File dir, int chr) 
 			throws UnknownFileException {
 		
-		String chr_check = "chr" + chr;
+		String chr_check = "chr" + chr + "_";
 		
 		String[] all_files = dir.list();
 		for(int i = 0; i < all_files.length; i++) {
