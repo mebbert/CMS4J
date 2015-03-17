@@ -90,6 +90,7 @@ public class iHS extends HaplotypeTests {
 		for(int i = 0; i < win.getSNPs().size(); i++) {
 			
 //			log.addLine("\tCORE_" + win.getSNPs().get(i));
+//			System.out.println("CORE_" + win.getSNPs().get(i));
 			Double unstd_iHS = getUnstandardizedIHS(win.getSNPs().get(i), (st_index + i));
 			
 			//saving the successful unstandardized iHS 
@@ -99,7 +100,9 @@ public class iHS extends HaplotypeTests {
 		}
 		
 		//calculating and saving all standardized iHS values
+		
 		all_std_iHS = standardizeData(all_unstd_iHS);
+		
 		
 //		printStats();
 //		logRunStats();	
@@ -160,7 +163,9 @@ public class iHS extends HaplotypeTests {
 		
 		double unstd_iHS = 0.0;
 		
+		
 		SNP anc_snp = getAncestralSNP(core_snp, anc_types);
+		
 		
 		if(checkValidSnpComparison(core_snp, anc_snp)) {
 				
@@ -179,13 +184,16 @@ public class iHS extends HaplotypeTests {
 			
 			boolean significant = false; 
 			
+			
 			//Running Ancestral Analysis
+//			long t1 = System.nanoTime();
 			significant = anc_ehh.calcSignificantEhhValues();
 			if(!significant)
 				return null;
 			
 			double[] ehh_values_anc = anc_ehh.getEhhValues();
 			int[] ehh_pos_anc = anc_ehh.getEhhPositions();
+			
 			
 			//Running Derived Analysis
 			significant = der_ehh.calcSignificantEhhValues();
@@ -194,10 +202,15 @@ public class iHS extends HaplotypeTests {
 			
 			double[] ehh_values_der = der_ehh.getEhhValues();
 			int[] ehh_pos_der = der_ehh.getEhhPositions();
+//			long t2 = System.nanoTime();System.out.println("\tEHH=\t\t" + (t2-t1)/1000000 + "ms");
 			
+			
+			//95% of time in this method; ~300ms
 			//find the area under the curve created by the EHH data
+//			long t3 = System.nanoTime();
 			double anc_ihh = integrateEhhValues(ehh_values_anc, ehh_pos_anc, core_snp, gm);
 			double der_ihh = integrateEhhValues(ehh_values_der, ehh_pos_der, core_snp, gm);
+//			long t4 = System.nanoTime();System.out.println("\tIntegrate=\t" + (t4-t3)/1000000 + "ms");
 			
 			//main iHS function; unstandardized
 			unstd_iHS = Math.log(anc_ihh / der_ihh);

@@ -1,5 +1,6 @@
 package tools;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SimDist {
@@ -8,6 +9,24 @@ public class SimDist {
 	
 	public SimDist() {
 		
+		sim_vals = new ArrayList<Double>();
 	}
 
+	public void addSimValue(double val) {
+		
+		sim_vals.add(val);
+	}
+	
+	public Double getProb(Double score) {
+		
+		//TODO: This.
+		
+		
+		return null;
+	}
+	
+	public List<Double> getSimVals() {
+		return sim_vals;
+	}
+	
 }

@@ -13,6 +13,7 @@ import java.util.List;
 //import org.apache.commons.math3.util.Pair;
 
 
+
 import errors.*;
 import tools.GeneticMap;
 import tools.Individual;
@@ -163,7 +164,7 @@ public class Driver {
 	 * Runs the CMS analysis of the 5 population statistics
 	 * Not quite sure what exactly this does yet. Still working on that part
 	 */
-	private void runAnalysis() {
+	private void runAnalysis() throws Exception {
 		
 		System.out.println("snp_id\tposition\tiHS\tXPEHH\tiHH\tDAF\tFst");
 		for(int i = 0; i < win_stats.size(); i++)

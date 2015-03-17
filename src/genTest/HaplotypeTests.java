@@ -85,10 +85,13 @@ public abstract class HaplotypeTests {
 				core_index = i;
 		}
 		
+		
+		
 		double ihh_lft = 0.0;
 		for(int i = core_index - 1; i >= 0; i--) {
 			
 			double rate = gm.getRecombRate(ehh_pos[i+1], ehh_pos[i]);
+//			double rate = 1;
 			
 			int dist = ehh_pos[i+1] - ehh_pos[i];
 			

@@ -13,6 +13,8 @@ import java.util.TreeMap;
 
 
 
+
+import errors.FileParsingException;
 import log.Log;
 import tools.SNP;
 import tools.SimDist;
@@ -45,7 +47,9 @@ public class Analysis {
 	 * Fst uses gamma (still figuring out the model parameters). Find gd.cumulativeProbability(fst)
 	 * DAF uses urd. urd.cumulativeProbability(daf)
 	 */
-	public void runCmsAnalysis(List<WindowStats> all_ws) {
+	public void runCmsAnalysis(List<WindowStats> all_ws) throws FileParsingException {
+		
+		System.out.println("Starting Analysis");
 		
 		//read in all the SNPs from input somehow
 		//		-each stat list needs its own snp list that corresponds with it (map???)
@@ -60,13 +64,15 @@ public class Analysis {
 		//				just multiply the 3 probabilities together
 		//			-NOTE: I don't need ALL 5 stats to do the CMS analysis
 		
+		System.out.println("Importing Sim Data");
+		
 		SimulationParser sp = new SimulationParser(log);
-		SimDist[] neutral_sim = sp.getNeutralSimulations(NUM_TESTS);
-		SimDist[] select_sim = sp.getSelectedSimulations(NUM_TESTS);
+		SimDist[] neutral_sim = sp.getNeutralSimulations();
+		SimDist[] select_sim = sp.getSelectedSimulations();
 		
 		for(int i = 0; i < all_ws.size(); i++) {
 			WindowStats cur_ws = all_ws.get(i);
-			Map<Integer, Double> cms_scores = getScores(cur_ws);//pass simulations too
+			Map<SNP, Double> cms_scores = getCmsScores(cur_ws, neutral_sim, select_sim);//pass simulations too
 		}
 		
 		
@@ -76,11 +82,11 @@ public class Analysis {
 	 * Simulations and scores need to be stored into arrays where:
 	 * 		[0] = iHS data
 	 * 		[1] = iHH data
-	 * 		[2] = XPEHH data
+	 * 		[2] = Fst data
 	 * 		[3] = DAF data
-	 * 		[4] = Fst data
+	 * 		[4] = XPEHH data
 	 */
-	private Map<Integer, Double> getScores(WindowStats ws) {//get SimDist too
+	private Map<SNP, Double> getCmsScores(WindowStats ws, SimDist[] neut_sim, SimDist[] sel_sim) {//get SimDist too
 		
 		List<SNP> all_snps = ws.getAllSNPs();
 		Double[] tst_scores = new Double[NUM_TESTS];
@@ -91,16 +97,16 @@ public class Analysis {
 			
 			tst_scores[0] = ws.getIhsScore(cur_snp);
 			tst_scores[1] = ws.getIhhScore(cur_snp);
-			tst_scores[2] = ws.getXpehhScore(cur_snp);
+			tst_scores[2] = ws.getFstScore(cur_snp);
 			tst_scores[3] = ws.getDafScore(cur_snp);
-			tst_scores[4] = ws.getFstScore(cur_snp);
+			tst_scores[4] = ws.getXpehhScore(cur_snp);
 			
 			Double[] score_probs = new Double[NUM_TESTS];
 			
 			for(int j = 0; j < NUM_TESTS; j++) {
 				
-//				double neutral_prob = neutral_sim[i].getProb(tst_scores[i]);
-//				double select_prob = select_sim[i].getProb(tst_scores[i]);
+//				Double neut_prob = neut_sim[i].getProb(tst_scores[i]);
+//				Double sel_prob = sel_sim[i].getProb(tst_scores[i]);
 				
 				 
 //				 score_probs[i] = cms eqn...

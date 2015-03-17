@@ -126,8 +126,6 @@ public class GeneticMap {
 	
 	private double getLocalizedRecombRate(Range rng, int up_pos, int dwn_pos) {
 		
-		
-		
 		int dist = up_pos - dwn_pos;
 		double dist_ratio = (double) dist / (double) rng.getPhysRange();
 		double local_recomb_rate = gen_map.get(rng) * dist_ratio;
