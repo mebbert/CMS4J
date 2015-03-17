@@ -1,6 +1,10 @@
 package genTest;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import log.Log;
@@ -91,7 +95,9 @@ public class XPEHH extends HaplotypeTests {
 		for(int i = 0; i < win_snps.size(); i++) {
 			
 			SNP core_snp = win_snps.get(i);
-			log.addLine("\tCORE_" + core_snp);
+			
+			java.util.Date date= new java.util.Date();
+			log.addLine("\tCORE_" + core_snp + "\t" + new Timestamp(date.getTime()));
 			
 			//calculate EHH scores for the combined populations (tp with xp)
 			EHH comb_ehh = getCombinedEHH(all_indv, core_snp);
