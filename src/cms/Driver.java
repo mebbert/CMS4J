@@ -172,6 +172,8 @@ public class Driver {
 		
 		Analysis an = new Analysis(log);
 		an.runCmsAnalysis(win_stats);
+		
+//		System.out.println(an);
 	}
 	
 	/*

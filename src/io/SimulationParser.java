@@ -43,9 +43,8 @@ public class SimulationParser {
 	 */
 	private SimDist[] parseSimulatedData(String file_path) throws FileParsingException {
 		
-		SimDist[] dists = new SimDist[NUM_TESTS];
-		for(int i = 0; i < NUM_TESTS; i++) 
-			dists[i] = new SimDist();
+		SimDist[] dists = createDistributions();
+		
 		
 		try {
 			Scanner scan = new Scanner(new File(file_path));
@@ -73,6 +72,27 @@ public class SimulationParser {
 			String msg = "Error: Invalid simulated data values";
 			throw new FileParsingException(log, msg);
 		}
+		
+		return dists;
+	}
+	
+	/*
+	 * Simulations have specified boundaries (according to simulation definition)
+	 * 		[0] = iHS bounds [-6,6]
+	 * 		[1] = iHH bounds [-3,5]
+	 * 		[2] = Fst bounds [-1,6] 
+	 * 		[3] = DAF bounds [-1,1]
+	 * 		[4] = XPEHH bounds [-3,8]
+	 */
+	private SimDist[] createDistributions() {
+		
+		SimDist[] dists = new SimDist[NUM_TESTS];
+		
+		dists[0] = new SimDist(-6,6);
+		dists[1] = new SimDist(-3,5);
+		dists[2] = new SimDist(-1,6);
+		dists[3] = new SimDist(-1,1);
+		dists[4] = new SimDist(-3,8);
 		
 		return dists;
 	}

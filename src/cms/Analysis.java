@@ -3,11 +3,18 @@ package cms;
 import io.SimulationParser;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 //import org.apache.commons.math3.distribution.*;
+
+
+
+
 
 
 
@@ -24,6 +31,8 @@ public class Analysis {
 	
 	private final int NUM_TESTS = 5;
 	
+	private Map<SNP, Double> cms_scores;
+	
 	private Log log;
 	
 //	private NormalDistribution nd;
@@ -35,6 +44,8 @@ public class Analysis {
 //		nd = new NormalDistribution(0, 1); 			//defined
 //		gd = new GammaDistribution(1, 1);			//made up; plot(density(qgamma(pnorm(var), shape=.5, rate=5)))
 //		urd = new UniformRealDistribution(-1, 1);	//defined
+		
+		cms_scores = new HashMap<SNP, Double>();
 		
 		this.log = log;
 	}
@@ -72,10 +83,8 @@ public class Analysis {
 		
 		for(int i = 0; i < all_ws.size(); i++) {
 			WindowStats cur_ws = all_ws.get(i);
-			Map<SNP, Double> cms_scores = getCmsScores(cur_ws, neutral_sim, select_sim);//pass simulations too
+			calcCmsScores(cur_ws, neutral_sim, select_sim);//pass simulations too
 		}
-		
-		
 	}
 	
 	/*
@@ -86,7 +95,9 @@ public class Analysis {
 	 * 		[3] = DAF data
 	 * 		[4] = XPEHH data
 	 */
-	private Map<SNP, Double> getCmsScores(WindowStats ws, SimDist[] neut_sim, SimDist[] sel_sim) {//get SimDist too
+	private void calcCmsScores(WindowStats ws, SimDist[] neut_sim, SimDist[] sel_sim) {//get SimDist too
+		
+		double prior_prob = 1 / (double) ws.getTotNumSNPs();
 		
 		List<SNP> all_snps = ws.getAllSNPs();
 		Double[] tst_scores = new Double[NUM_TESTS];
@@ -104,21 +115,55 @@ public class Analysis {
 			Double[] score_probs = new Double[NUM_TESTS];
 			
 			for(int j = 0; j < NUM_TESTS; j++) {
+				if(tst_scores[j] != Double.NaN) {
 				
-//				Double neut_prob = neut_sim[i].getProb(tst_scores[i]);
-//				Double sel_prob = sel_sim[i].getProb(tst_scores[i]);
-				
-				 
-//				 score_probs[i] = cms eqn...
+					Double neut_prob = neut_sim[j].getProb(tst_scores[j]);
+					Double sel_prob = sel_sim[j].getProb(tst_scores[j]);
+					
+	//				if(cur_snp.getPosition() == 14622336) {
+	//					System.out.println(cur_snp + "\tScore=\t" + tst_scores[j]);
+	//					System.out.println("\t" + j + "\tneutral=\t" + neut_prob + "\tselected=\t" + sel_prob);
+	//				}
+					
+					 double cms_nom = sel_prob * prior_prob;
+					 double cms_denom = ((sel_prob*prior_prob) + (neut_prob*(1-prior_prob)));
+					 score_probs[j] = cms_nom / cms_denom;
+				}
 			}
 			
-//			ws_cms_scores.add(run summation-thing)
+			Double final_score = productOfScores(score_probs);
 			
+			cms_scores.put(cur_snp, final_score);
+		}
+	}
+	
+	private Double productOfScores(Double[] score_probs) {
+		
+		Double score = 1.0;
+		
+		for(int i = 0; i < NUM_TESTS; i++) {
+			if(score_probs[i] != null) 
+				score = score*score_probs[i];
 		}
 		
+		return score;
+	}
+
+	@Override
+	public String toString() {
 		
+		List<SNP> all_keys = new LinkedList<SNP>();
+		for(SNP s : cms_scores.keySet()) 
+			all_keys.add(s);
+		Collections.sort(all_keys);
 		
-		return null;
+		StringBuilder sb = new StringBuilder();
+		for(int i = 0; i < all_keys.size(); i++)  {
+			SNP key = all_keys.get(i);
+			sb.append("\n" + key + "\tCMS Score=" + cms_scores.get(key));
+		}
+		
+		return sb.toString();
 	}
 	
 /*=======================Work in progress: Theoretical Analysis=================

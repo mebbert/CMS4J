@@ -5,9 +5,17 @@ import java.util.List;
 
 public class SimDist {
 	
+	private final int BIN_NUM = 60;
+	
+	private int up_bndry;
+	private int low_bndry;
+	
 	private List<Double> sim_vals;
 	
-	public SimDist() {
+	public SimDist(int low_bndry, int up_bndry) {
+		
+		this.up_bndry = up_bndry;
+		this.low_bndry = low_bndry;
 		
 		sim_vals = new ArrayList<Double>();
 	}
@@ -20,13 +28,57 @@ public class SimDist {
 	public Double getProb(Double score) {
 		
 		//TODO: This.
+		if(sim_vals.size() != BIN_NUM) {
+			//throw new FileParsingException("Bin numbers don't coincide, error in reading simulated data"
+			System.out.println("ERROR WITH BIN NUMBER");
+			System.exit(0);
+		}
 		
+		int s_indx = getScoreIndex(score, up_bndry, low_bndry);
+		double prob = calcProbAtBin(s_indx);//test
 		
-		return null;
+//		if(score == 0.513382123798503) {
+//			System.out.println("index=" + s_indx + "\tprob=" + prob);
+//		}
+		
+		return calcProbAtBin(s_indx);
 	}
 	
 	public List<Double> getSimVals() {
 		return sim_vals;
+	}
+	
+	private Double calcProbAtBin(int indx) {
+		
+		Double prob = 0.0;
+		
+		for(int i = 0; i <= indx; i++) {
+			prob += sim_vals.get(i);
+		}
+		
+		//For getting the total probability in the sim data
+//		for(int i = 0; i < sim_vals.size(); i++) {
+//			prob += sim_vals.get(i);
+//		}
+		
+		return prob;
+	}
+	
+	private int getScoreIndex(Double score, int up, int dwn) {
+		
+		double rng = (double) up - (double) dwn;
+		double bin_size = rng / (double) BIN_NUM;
+		
+//		if(score == 0.513382123798503) {
+//			System.out.println("range=" + rng + "\tbin size=" + bin_size);
+//		}
+		
+		for(int i = 0; i < BIN_NUM; i++) {
+			if((dwn + bin_size*i) >= score)
+				return i;
+		}
+		
+		return BIN_NUM-1;
 	}
 	
 }

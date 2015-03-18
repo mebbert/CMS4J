@@ -81,49 +81,51 @@ public class Stats {
 		
 //=====================unthreaded block==================
 		
-//		long t1 = System.nanoTime();
-		i.runStat();
-//		long t2 = System.nanoTime();System.out.print("\t" + (t2-t1)/1000000 + "ms for ");
-		h.runStat();
-		x.runStat();
-		d.runStat();
-		f.runStat();
+////		long t1 = System.nanoTime();
+//		i.runStat();
+////		long t2 = System.nanoTime();System.out.print("\t" + (t2-t1)/1000000 + "ms for ");
+//		h.runStat();
+//		x.runStat();
+//		d.runStat();
+//		f.runStat();
 		
 //========================threaded block=================
-//		try {
-//		
-//			StatsThread i_thrd = new StatsThread(i);
-//			Thread.sleep(WAIT_TIME);
-//			i_thrd.start();
-//			
-//			StatsThread h_thrd = new StatsThread(h);
-//			Thread.sleep(WAIT_TIME);
-//			h_thrd.start();
-//			
-//			StatsThread x_thrd = new StatsThread(x);
-//			Thread.sleep(WAIT_TIME);
-//			x_thrd.start();
-//			
-//			StatsThread d_thrd = new StatsThread(d);
-//			Thread.sleep(WAIT_TIME);
-//			d_thrd.start();
-//			
-//			StatsThread f_thrd = new StatsThread(f); 
-//			Thread.sleep(WAIT_TIME);
-//			f_thrd.start();
-//			
-//			synchronize(i_thrd, h_thrd, x_thrd, d_thrd, f_thrd);
-//			
-//			i = (iHS) i_thrd.getTest();
-//			h = (iHH) h_thrd.getTest();
-//			x = (XPEHH) x_thrd.getTest();
-//			d = (DAF) d_thrd.getTest();
-//			f = (Fst) f_thrd.getTest();
-//		
-//		} catch (InterruptedException e) { //TODO: throw new threading error
-//			e.printStackTrace();
-//		}
-//		
+		Object lock = new Object();
+		
+		try {
+		
+			StatsThread i_thrd = new StatsThread(i, lock);
+			Thread.sleep(WAIT_TIME);
+			i_thrd.start();
+			
+			StatsThread h_thrd = new StatsThread(h, lock);
+			Thread.sleep(WAIT_TIME);
+			h_thrd.start();
+			
+			StatsThread x_thrd = new StatsThread(x, lock);
+			Thread.sleep(WAIT_TIME);
+			x_thrd.start();
+			
+			StatsThread d_thrd = new StatsThread(d, lock);
+			Thread.sleep(WAIT_TIME);
+			d_thrd.start();
+			
+			StatsThread f_thrd = new StatsThread(f, lock); 
+			Thread.sleep(WAIT_TIME);
+			f_thrd.start();
+			
+			synchronize(i_thrd, h_thrd, x_thrd, d_thrd, f_thrd);
+			
+			i = (iHS) i_thrd.getTest();
+			h = (iHH) h_thrd.getTest();
+			x = (XPEHH) x_thrd.getTest();
+			d = (DAF) d_thrd.getTest();
+			f = (Fst) f_thrd.getTest();
+		
+		} catch (InterruptedException e) { //TODO: throw new threading error
+			e.printStackTrace();
+		}
+		
 //===================universal block=======================
 		
 //		i.printStats();
@@ -170,17 +172,21 @@ public class Stats {
 				continue;
 		}
 	}
+	
 }
 
 class StatsThread extends Thread {
 
+	private final Object lock;
+	
 	private Thread thrd;
 	private HaplotypeTests tst;
 	
-	private boolean finished;
+	volatile private boolean finished;//volatile says that some other thread could change this value
 	
-	StatsThread(HaplotypeTests tst) {
+	StatsThread(HaplotypeTests tst, Object lock) {
 		this.tst = tst;
+		this.lock = lock;
 		
 		finished = false;
 		
@@ -195,12 +201,11 @@ class StatsThread extends Thread {
 	@Override
 	public void run() {
 		
-//		System.out.println("Starting");
-		
 		tst.runStat();	
-		finished = true;
 		
-//		System.out.println("Ending");
+		synchronized(lock) {
+			finished = true;
+		}
 		
 		thrd.interrupt();
 	}
@@ -210,7 +215,10 @@ class StatsThread extends Thread {
 	}
 	
 	public boolean isFinished() {
-		return finished;
+		
+		synchronized(lock) {
+			return finished;
+		}
 	}
 	
 }
