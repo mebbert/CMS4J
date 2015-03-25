@@ -332,7 +332,7 @@ public class Analysis {
 		StringBuilder sb = new StringBuilder();
 		for(int i = 0; i < all_keys.size(); i++)  {
 			SNP key = all_keys.get(i);
-			sb.append("\n" + key + "\tCMS Score= " + cms_scores_broad.get(key) + "\tMean CMS Score= " + cms_scores_mean.get(key));
+			sb.append("\n" + key + "\tCMS Score=\t" + cms_scores_broad.get(key) + "\tMean CMS Score=\t" + cms_scores_mean.get(key));
 		}
 		
 		return sb.toString();

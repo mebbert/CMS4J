@@ -96,7 +96,7 @@ public class XPEHH extends HaplotypeTests {
 			
 			SNP core_snp = win_snps.get(i);
 			
-			java.util.Date date= new java.util.Date();
+			Date date = new Date();
 			log.addLine("\tCORE_" + core_snp + "\t" + new Timestamp(date.getTime()));
 			
 			//calculate EHH scores for the combined populations (tp with xp)
