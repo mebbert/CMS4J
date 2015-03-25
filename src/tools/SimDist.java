@@ -9,6 +9,7 @@ public class SimDist {
 	
 	private int up_bndry;
 	private int low_bndry;
+	private double total_prob;
 	
 	private List<Double> sim_vals;
 	
@@ -16,6 +17,7 @@ public class SimDist {
 		
 		this.up_bndry = up_bndry;
 		this.low_bndry = low_bndry;
+		this.total_prob = 0.0;
 		
 		sim_vals = new ArrayList<Double>();
 	}
@@ -23,11 +25,13 @@ public class SimDist {
 	public void addSimValue(double val) {
 		
 		sim_vals.add(val);
+		total_prob += val;
 	}
 	
 	public Double getProb(Double score) {
 		
-		//TODO: This.
+		//TODO: Handle the 2-sided case **************************
+		
 		if(sim_vals.size() != BIN_NUM) {
 			//throw new FileParsingException("Bin numbers don't coincide, error in reading simulated data"
 			System.out.println("ERROR WITH BIN NUMBER");
@@ -35,13 +39,27 @@ public class SimDist {
 		}
 		
 		int s_indx = getScoreIndex(score, up_bndry, low_bndry);
-		double prob = calcProbAtBin(s_indx);//test
-		
-//		if(score == 0.513382123798503) {
-//			System.out.println("index=" + s_indx + "\tprob=" + prob);
-//		}
 		
 		return calcProbAtBin(s_indx);
+	}
+	
+	public Double getProb(Double score, boolean two_sided) {
+		
+		if(!two_sided)
+			return getProb(score);
+		
+		if(sim_vals.size() != BIN_NUM) {
+			//throw new FileParsingException("Bin numbers don't coincide, error in reading simulated data"
+			System.out.println("ERROR WITH BIN NUMBER");
+			System.exit(0);
+		}
+		
+		score = Math.abs(score);
+		
+		int up_indx = getScoreIndex(score, up_bndry, low_bndry);
+		int low_indx = getScoreIndex((-1 * score), up_bndry, low_bndry);
+		
+		return calcTwoSidedProbAtBin(up_indx, low_indx);
 	}
 	
 	public List<Double> getSimVals() {
@@ -52,17 +70,31 @@ public class SimDist {
 		
 		Double prob = 0.0;
 		
-		for(int i = 0; i <= indx; i++) {
+		for(int i = 0; i <= indx; i++)
 			prob += sim_vals.get(i);
-		}
-		
-		//For getting the total probability in the sim data
-//		for(int i = 0; i < sim_vals.size(); i++) {
-//			prob += sim_vals.get(i);
-//		}
 		
 		return prob;
 	}
+	
+	private Double calcTwoSidedProbAtBin(int up_indx, int low_indx)  {
+		
+		Double prob = 0.0;
+		
+		for(int i = low_indx; i <= up_indx; i++)
+			prob += sim_vals.get(i);
+		
+		return prob;
+	}
+	
+//	private Double calcTotalProb() {
+//		
+//		Double prob = 0.0;
+//		
+//		for(int i = 0; i < sim_vals.size(); i++)
+//			prob += sim_vals.get(i);
+//		
+//		return prob;
+//	}
 	
 	private int getScoreIndex(Double score, int up, int dwn) {
 		

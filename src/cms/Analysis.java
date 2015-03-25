@@ -1,6 +1,7 @@
 package cms;
 
 import io.SimulationParser;
+import genTest.HaplotypeTests;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,7 +32,8 @@ public class Analysis {
 	
 	private final int NUM_TESTS = 5;
 	
-	private Map<SNP, Double> cms_scores;
+	private Map<SNP, Double> cms_scores_broad;
+	private Map<SNP, Double> cms_scores_mean;
 	
 	private Log log;
 	
@@ -45,7 +47,8 @@ public class Analysis {
 //		gd = new GammaDistribution(1, 1);			//made up; plot(density(qgamma(pnorm(var), shape=.5, rate=5)))
 //		urd = new UniformRealDistribution(-1, 1);	//defined
 		
-		cms_scores = new HashMap<SNP, Double>();
+		cms_scores_broad = new HashMap<SNP, Double>();
+		cms_scores_mean = new HashMap<SNP, Double>();
 		
 		this.log = log;
 	}
@@ -97,6 +100,9 @@ public class Analysis {
 	 */
 	private void calcCmsScores(WindowStats ws, SimDist[] neut_sim, SimDist[] sel_sim) {//get SimDist too
 		
+		Map<SNP, Double> win_scores_broad = new HashMap<SNP, Double>();
+		Map<SNP, Double> win_scores_mean = new HashMap<SNP, Double>();
+		
 		double prior_prob = 1 / (double) ws.getTotNumSNPs();
 		
 		List<SNP> all_snps = ws.getAllSNPs();
@@ -112,29 +118,133 @@ public class Analysis {
 			tst_scores[3] = ws.getDafScore(cur_snp);
 			tst_scores[4] = ws.getXpehhScore(cur_snp);
 			
-			Double[] score_probs = new Double[NUM_TESTS];
+			Double broad_cms = calcBroadCMS(cur_snp, tst_scores, neut_sim, sel_sim, prior_prob);
+			if(!broad_cms.equals(Double.NaN))
+				win_scores_broad.put(cur_snp, broad_cms);
 			
-			for(int j = 0; j < NUM_TESTS; j++) {
-				if(tst_scores[j] != Double.NaN) {
-				
-					Double neut_prob = neut_sim[j].getProb(tst_scores[j]);
-					Double sel_prob = sel_sim[j].getProb(tst_scores[j]);
-					
-	//				if(cur_snp.getPosition() == 14622336) {
-	//					System.out.println(cur_snp + "\tScore=\t" + tst_scores[j]);
-	//					System.out.println("\t" + j + "\tneutral=\t" + neut_prob + "\tselected=\t" + sel_prob);
-	//				}
-					
-					 double cms_nom = sel_prob * prior_prob;
-					 double cms_denom = ((sel_prob*prior_prob) + (neut_prob*(1-prior_prob)));
-					 score_probs[j] = cms_nom / cms_denom;
-				}
-			}
+			Double byu_cms = calcByuCMS(cur_snp, tst_scores, neut_sim, sel_sim, prior_prob);
+			if(!byu_cms.equals(Double.NaN))
+				win_scores_mean.put(cur_snp, byu_cms);
 			
-			Double final_score = productOfScores(score_probs);
 			
-			cms_scores.put(cur_snp, final_score);
 		}
+		
+		win_scores_broad = normalizeData(win_scores_broad);
+		for(SNP key : win_scores_broad.keySet())
+			cms_scores_broad.put(key, win_scores_broad.get(key));
+
+		win_scores_mean = normalizeData(win_scores_mean);
+		for(SNP key : win_scores_mean.keySet())
+			cms_scores_mean.put(key, win_scores_mean.get(key));
+	}
+	
+	private Double calcByuCMS(SNP cur_snp, 
+								Double[] tst_scores, 
+								SimDist[] neut_sim, 
+								SimDist[] sel_sim, 
+								double prior_prob) {
+		
+		Double[] score_probs = new Double[NUM_TESTS];
+		
+		for(int j = 0; j < NUM_TESTS; j++) {
+			
+			if(!tst_scores[j].equals(Double.NaN)) {
+			
+				boolean two_sided = false;
+				if(j == 0 || j== 1 || j == 3)
+					two_sided = true;
+				
+//				Double neut_prob = neut_sim[j].getProb(tst_scores[j], two_sided);
+//				Double sel_prob = sel_sim[j].getProb(tst_scores[j], two_sided);
+				
+				Double neut_prob = neut_sim[j].getProb(tst_scores[j], two_sided);
+				Double sel_prob = sel_sim[j].getProb(tst_scores[j], two_sided);
+				
+				/*
+				 * To do the CMSgw 
+				 * 		I create SimulationParsers from different files
+				 * 		Run a similar for loop structure
+				 * 		instead of the below steps I do: double cms_bf (bayes factor) = sel_prob / neut_prob
+				 * 		ask the question: Do I do this in parallel with the CMSlocal analysis
+				 */
+				
+				double cms_nom = sel_prob * prior_prob;
+				double cms_denom = ((sel_prob*prior_prob) + (neut_prob*(1-prior_prob)));
+				 
+				score_probs[j] = cms_nom / cms_denom;
+			}
+		}
+		
+		Double final_score_mean = meanOfScores(score_probs);
+		
+		return final_score_mean;
+	}
+	
+	private Double calcBroadCMS(SNP cur_snp, 
+									Double[] tst_scores, 
+									SimDist[] neut_sim, 
+									SimDist[] sel_sim, 
+									double prior_prob) {
+		
+		Double[] score_probs = new Double[NUM_TESTS];
+		
+		boolean complete_data = true;
+		for(int j = 0; j < NUM_TESTS; j++) {
+			
+			if(tst_scores[j].equals(Double.NaN)) {
+				complete_data = false;
+				break;
+			}
+			else {
+			
+				boolean two_sided = false;
+				if(j == 0 || j== 1 || j == 3)
+					two_sided = true;
+				
+				Double neut_prob = neut_sim[j].getProb(tst_scores[j], two_sided);
+				Double sel_prob = sel_sim[j].getProb(tst_scores[j], two_sided);
+				
+				/*
+				 * To do the CMSgw 
+				 * 		I create SimulationParsers from different files
+				 * 		Run a similar for loop structure
+				 * 		instead of the below steps I do: double cms_bf (bayes factor) = sel_prob / neut_prob
+				 * 		ask the question: Do I do this in parallel with the CMSlocal analysis
+				 */
+				
+				double cms_nom = sel_prob * prior_prob;
+				double cms_denom = ((sel_prob*prior_prob) + (neut_prob*(1-prior_prob)));
+				 
+				score_probs[j] = cms_nom / cms_denom;
+			}
+		}
+		
+		Double final_score = Double.NaN;
+		if(complete_data)
+			final_score = productOfScores(score_probs);
+		
+		return final_score;
+	}
+		
+	
+	private Map<SNP, Double> normalizeData(Map<SNP, Double> unstd_cms) {
+		
+		List<SNP> all_keys = new LinkedList<SNP>();
+		for(SNP s : unstd_cms.keySet()) 
+			all_keys.add(s);
+		Collections.sort(all_keys);
+		
+		List<Double> all_values = new LinkedList<Double>();
+		for(int i = 0; i < all_keys.size(); i++) 
+			all_values.add(unstd_cms.get(all_keys.get(i)));
+		
+		all_values = HaplotypeTests.normalizeData(all_values);
+		
+		Map<SNP, Double> std_cms = new HashMap<SNP, Double>();
+		for(int i = 0; i < all_keys.size(); i++)
+			std_cms.put(all_keys.get(i), all_values.get(i));
+		
+		return std_cms;
 	}
 	
 	private Double productOfScores(Double[] score_probs) {
@@ -148,19 +258,30 @@ public class Analysis {
 		
 		return score;
 	}
+	
+	private Double meanOfScores(Double[] score_probs) {
+		
+		Double score = 0.0;
+		for(int i = 0; i < NUM_TESTS; i++) {
+			if(score_probs[i] != null)
+				score += score_probs[i];
+		}
+		
+		return score / NUM_TESTS;
+	}
 
 	@Override
 	public String toString() {
 		
 		List<SNP> all_keys = new LinkedList<SNP>();
-		for(SNP s : cms_scores.keySet()) 
+		for(SNP s : cms_scores_mean.keySet()) 
 			all_keys.add(s);
 		Collections.sort(all_keys);
 		
 		StringBuilder sb = new StringBuilder();
 		for(int i = 0; i < all_keys.size(); i++)  {
 			SNP key = all_keys.get(i);
-			sb.append("\n" + key + "\tCMS Score=" + cms_scores.get(key));
+			sb.append("\n" + key + "\tCMS Score= " + cms_scores_broad.get(key) + "\tMean CMS Score= " + cms_scores_mean.get(key));
 		}
 		
 		return sb.toString();

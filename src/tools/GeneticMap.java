@@ -2,6 +2,7 @@ package tools;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -14,7 +15,8 @@ public class GeneticMap {
 	public GeneticMap() {
 		
 		gen_map = new HashMap<Range, Double>();
-		st_pos = new ArrayList<Range>();
+		st_pos = new LinkedList<Range>();
+		
 	}
 	
 	/**
@@ -103,6 +105,8 @@ public class GeneticMap {
 	}
 	
 	public Range getRange(int pos) {
+		
+		//TODO: See if I can improve this process
 		
 		for(Range r : gen_map.keySet()) {
 			if(r.getSt() <= pos && r.getEnd() >= pos)

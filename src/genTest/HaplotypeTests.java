@@ -11,6 +11,51 @@ import tools.Window;
 
 public abstract class HaplotypeTests {
 	
+	public static List<Double> normalizeData(List<Double> all_unstd_data) {
+		//Standardizes the data by calculating the z-score at every position
+		//	follows this equation: z = (x-mean[x])/std[x]; 
+		//		z = standardized data point
+		//		x = unstandardized data point
+		//		mean[x] = mean of all data in set
+		//		std[x] = standard deviation of all data in set
+		
+		List<Double> all_data = new ArrayList<Double>();
+		
+		//==========Find Mean==========
+		double sum = 0.0;
+		for(Double unstd_data : all_unstd_data)
+			sum += unstd_data;
+		
+		double win_expect = sum / all_unstd_data.size();
+		//=============================
+		
+		//===Find Standard Deviation===
+		double[] all_deviations = new double[all_unstd_data.size()];
+		
+		for(int i = 0; i < all_unstd_data.size(); i++) {
+			
+			double dev = all_unstd_data.get(i) - win_expect; 
+			dev = Math.pow(dev, 2);//or dev^2
+			all_deviations[i] = dev;
+		}
+		
+		double dev_sum = 0.0;
+		for(int i = 0; i < all_deviations.length; i++)
+			dev_sum += all_deviations[i];
+		
+		double dev_mean = dev_sum / all_deviations.length;
+		
+		double win_stddv = Math.sqrt(dev_mean);
+		//==============================
+		
+		//==========Calc Z-Score========
+		for(int i = 0; i < all_unstd_data.size(); i++)
+			all_data.add((all_unstd_data.get(i) - win_expect) / win_stddv);
+		//==============================
+		
+		return all_data;
+	}
+	
 	public abstract void runStat();
 //	abstract List<SNP> getUnusedSNPs();
 	public abstract List<SNP> getSNPs();

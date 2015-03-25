@@ -166,14 +166,16 @@ public class Driver {
 	 */
 	private void runAnalysis() throws Exception {
 		
-		System.out.println("snp_id\tposition\tiHS\tXPEHH\tiHH\tDAF\tFst");
+		PrintWriter pw = new PrintWriter(out_file);
+		pw.println("snp_id\tposition\tiHS\tXPEHH\tiHH\tDAF\tFst");
 		for(int i = 0; i < win_stats.size(); i++)
-			System.out.print(win_stats.get(i));
+			pw.print(win_stats.get(i));
+		pw.close();
 		
 		Analysis an = new Analysis(log);
 		an.runCmsAnalysis(win_stats);
 		
-//		System.out.println(an);
+		System.out.println(an);
 	}
 	
 	/*
