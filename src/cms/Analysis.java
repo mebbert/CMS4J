@@ -126,7 +126,11 @@ public class Analysis {
 			if(!byu_cms.equals(Double.NaN))
 				win_scores_mean.put(cur_snp, byu_cms);
 			
-			
+			//========Testing Mean vs Product (same filter)========
+//			Double broad_cms_mean = calcBroadCMSMean(cur_snp, tst_scores, neut_sim, sel_sim, prior_prob);
+//			if(!broad_cms_mean.equals(Double.NaN))
+//				win_scores_mean.put(cur_snp, broad_cms_mean);
+			//=====================================================
 		}
 		
 		win_scores_broad = normalizeData(win_scores_broad);
@@ -153,9 +157,6 @@ public class Analysis {
 				boolean two_sided = false;
 				if(j == 0 || j== 1 || j == 3)
 					two_sided = true;
-				
-//				Double neut_prob = neut_sim[j].getProb(tst_scores[j], two_sided);
-//				Double sel_prob = sel_sim[j].getProb(tst_scores[j], two_sided);
 				
 				Double neut_prob = neut_sim[j].getProb(tst_scores[j], two_sided);
 				Double sel_prob = sel_sim[j].getProb(tst_scores[j], two_sided);
@@ -225,7 +226,54 @@ public class Analysis {
 		
 		return final_score;
 	}
-		
+	
+	private Double calcBroadCMSMean(SNP cur_snp, 
+								Double[] tst_scores, 
+								SimDist[] neut_sim, 
+								SimDist[] sel_sim, 
+								double prior_prob) {
+
+		Double[] score_probs = new Double[NUM_TESTS];
+
+		boolean complete_data = true;
+		for(int j = 0; j < NUM_TESTS; j++) {
+
+			if(tst_scores[j].equals(Double.NaN)) {
+				complete_data = false;
+				break;
+			}
+			else {
+
+				boolean two_sided = false;
+				if(j == 0 || j== 1 || j == 3)
+					two_sided = true;
+
+				Double neut_prob = neut_sim[j].getProb(tst_scores[j], two_sided);
+				Double sel_prob = sel_sim[j].getProb(tst_scores[j], two_sided);
+
+				/*
+				 * To do the CMSgw 
+				 * 		I create SimulationParsers from different files
+				 * 		Run a similar for loop structure
+				 * 		instead of the below steps I do: double cms_bf (bayes factor) = sel_prob / neut_prob
+				 * 		ask the question: Do I do this in parallel with the CMSlocal analysis
+				 */
+
+				double cms_nom = sel_prob * prior_prob;
+				double cms_denom = ((sel_prob*prior_prob) + (neut_prob*(1-prior_prob)));
+
+				score_probs[j] = cms_nom / cms_denom;
+			}
+		}
+
+		Double final_score = Double.NaN;
+		if(complete_data)
+			final_score = meanOfScores(score_probs);
+
+		return final_score;
+	}
+	
+	
 	
 	private Map<SNP, Double> normalizeData(Map<SNP, Double> unstd_cms) {
 		
@@ -261,13 +309,16 @@ public class Analysis {
 	
 	private Double meanOfScores(Double[] score_probs) {
 		
+		int tot_tests = NUM_TESTS;
 		Double score = 0.0;
 		for(int i = 0; i < NUM_TESTS; i++) {
 			if(score_probs[i] != null)
 				score += score_probs[i];
+			else
+				tot_tests--;
 		}
 		
-		return score / NUM_TESTS;
+		return score / tot_tests;
 	}
 
 	@Override
