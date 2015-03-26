@@ -33,9 +33,9 @@ Sweep between positions 10500000 to 10999999
 Starting iHS Analysis on 2 SNPs
 Starting iHH Analysis on 2 SNPs
 Starting XPEHH Analysis on 2 SNPs
-	CORE_SNP [pos=10873592, snp_id=rs1395681, a0=G, a1=A]	2015-03-25 15:02:56.169
+	CORE_SNP [pos=10873592, snp_id=rs1395681, a0=G, a1=A]	2015-03-25 15:20:42.403
 	Warning: CORE_SNP [pos=10873592, snp_id=rs1395681, a0=G, a1=A] could not calculate ehh value
-	CORE_SNP [pos=10881456, snp_id=rs28578587, a0=T, a1=C]	2015-03-25 15:02:56.206
+	CORE_SNP [pos=10881456, snp_id=rs28578587, a0=T, a1=C]	2015-03-25 15:20:42.437
 	Warning: CORE_SNP [pos=10881456, snp_id=rs28578587, a0=T, a1=C] could not calculate ehh value
 Starting DAF Analysis on 2 SNPs
 Starting Fst Analysis on 2 SNPs
@@ -49,22 +49,22 @@ Sweep between positions 14500000 to 14999999
 Starting iHS Analysis on 14 SNPs
 Starting iHH Analysis on 14 SNPs
 Starting XPEHH Analysis on 14 SNPs
-	CORE_SNP [pos=14601415, snp_id=rs2775537, a0=G, a1=A]	2015-03-25 15:02:56.458
-	CORE_SNP [pos=14622336, snp_id=rs117793173, a0=G, a1=A]	2015-03-25 15:02:56.492
-	CORE_SNP [pos=14669931, snp_id=rs1148737, a0=G, a1=A]	2015-03-25 15:02:56.511
+	CORE_SNP [pos=14601415, snp_id=rs2775537, a0=G, a1=A]	2015-03-25 15:20:42.669
+	CORE_SNP [pos=14622336, snp_id=rs117793173, a0=G, a1=A]	2015-03-25 15:20:42.692
+	CORE_SNP [pos=14669931, snp_id=rs1148737, a0=G, a1=A]	2015-03-25 15:20:42.715
 Starting DAF Analysis on 14 SNPs
-	CORE_SNP [pos=14762190, snp_id=rs2775793, a0=C, a1=A]	2015-03-25 15:02:56.551
-	CORE_SNP [pos=14771793, snp_id=rs77585460, a0=A, a1=C]	2015-03-25 15:02:56.572
+	CORE_SNP [pos=14762190, snp_id=rs2775793, a0=C, a1=A]	2015-03-25 15:20:42.732
+	CORE_SNP [pos=14771793, snp_id=rs77585460, a0=A, a1=C]	2015-03-25 15:20:42.755
+	CORE_SNP [pos=14773871, snp_id=rs2747267, a0=T, a1=C]	2015-03-25 15:20:42.775
 Starting Fst Analysis on 14 SNPs
-	CORE_SNP [pos=14773871, snp_id=rs2747267, a0=T, a1=C]	2015-03-25 15:02:56.612
-	CORE_SNP [pos=14775085, snp_id=rs2747265, a0=C, a1=G]	2015-03-25 15:02:56.628
-	CORE_SNP [pos=14781959, snp_id=rs446549, a0=G, a1=A]	2015-03-25 15:02:56.646
-	CORE_SNP [pos=14785028, snp_id=rs431133, a0=G, a1=A]	2015-03-25 15:02:56.662
-	CORE_SNP [pos=14818410, snp_id=rs2821870, a0=T, a1=C]	2015-03-25 15:02:56.678
-	CORE_SNP [pos=14880003, snp_id=rs13047108, a0=A, a1=C]	2015-03-25 15:02:56.691
-	CORE_SNP [pos=14882965, snp_id=rs144165180, a0=G, a1=A]	2015-03-25 15:02:56.704
-	CORE_SNP [pos=14931069, snp_id=rs117062102, a0=C, a1=G]	2015-03-25 15:02:56.721
-	CORE_SNP [pos=14936462, snp_id=rs150120078, a0=T, a1=C]	2015-03-25 15:02:56.734
+	CORE_SNP [pos=14775085, snp_id=rs2747265, a0=C, a1=G]	2015-03-25 15:20:42.792
+	CORE_SNP [pos=14781959, snp_id=rs446549, a0=G, a1=A]	2015-03-25 15:20:42.811
+	CORE_SNP [pos=14785028, snp_id=rs431133, a0=G, a1=A]	2015-03-25 15:20:42.824
+	CORE_SNP [pos=14818410, snp_id=rs2821870, a0=T, a1=C]	2015-03-25 15:20:42.837
+	CORE_SNP [pos=14880003, snp_id=rs13047108, a0=A, a1=C]	2015-03-25 15:20:42.853
+	CORE_SNP [pos=14882965, snp_id=rs144165180, a0=G, a1=A]	2015-03-25 15:20:42.866
+	CORE_SNP [pos=14931069, snp_id=rs117062102, a0=C, a1=G]	2015-03-25 15:20:42.878
+	CORE_SNP [pos=14936462, snp_id=rs150120078, a0=T, a1=C]	2015-03-25 15:20:42.89
 Out of 14 SNPs, 11 were successful and 3 SNPs were unsuccessful
 Out of 14 SNPs, 11 were successful and 3 SNPs were unsuccessful
 Out of 14 SNPs, 14 were successful and 0 SNPs were unsuccessful
@@ -75,36 +75,36 @@ Sweep between positions 15000000 to 15499999
 Starting iHS Analysis on 63 SNPs
 Starting iHH Analysis on 63 SNPs
 Starting XPEHH Analysis on 28 SNPs
-	CORE_SNP [pos=15212272, snp_id=rs2207835, a0=C, a1=T]	2015-03-25 15:02:56.904
-	CORE_SNP [pos=15214708, snp_id=rs3115511, a0=G, a1=A]	2015-03-25 15:02:56.91
-	CORE_SNP [pos=15215814, snp_id=rs3115512, a0=C, a1=T]	2015-03-25 15:02:56.917
-	CORE_SNP [pos=15238121, snp_id=rs1888394, a0=T, a1=C]	2015-03-25 15:02:56.923
-	CORE_SNP [pos=15331478, snp_id=rs8134986, a0=C, a1=A]	2015-03-25 15:02:56.932
-	CORE_SNP [pos=15335070, snp_id=rs2822340, a0=C, a1=T]	2015-03-25 15:02:56.951
+	CORE_SNP [pos=15212272, snp_id=rs2207835, a0=C, a1=T]	2015-03-25 15:20:43.064
+	CORE_SNP [pos=15214708, snp_id=rs3115511, a0=G, a1=A]	2015-03-25 15:20:43.072
+	CORE_SNP [pos=15215814, snp_id=rs3115512, a0=C, a1=T]	2015-03-25 15:20:43.081
+	CORE_SNP [pos=15238121, snp_id=rs1888394, a0=T, a1=C]	2015-03-25 15:20:43.089
+	CORE_SNP [pos=15331478, snp_id=rs8134986, a0=C, a1=A]	2015-03-25 15:20:43.096
+	CORE_SNP [pos=15335070, snp_id=rs2822340, a0=C, a1=T]	2015-03-25 15:20:43.114
 Starting DAF Analysis on 63 SNPs
-	CORE_SNP [pos=15372509, snp_id=rs1297083, a0=C, a1=T]	2015-03-25 15:02:56.97
-	CORE_SNP [pos=15372877, snp_id=rs1297084, a0=A, a1=G]	2015-03-25 15:02:56.983
-	CORE_SNP [pos=15375507, snp_id=rs7278536, a0=A, a1=G]	2015-03-25 15:02:56.994
-	CORE_SNP [pos=15384535, snp_id=rs1297100, a0=G, a1=C]	2015-03-25 15:02:57.004
+	CORE_SNP [pos=15372509, snp_id=rs1297083, a0=C, a1=T]	2015-03-25 15:20:43.136
+	CORE_SNP [pos=15372877, snp_id=rs1297084, a0=A, a1=G]	2015-03-25 15:20:43.148
+	CORE_SNP [pos=15375507, snp_id=rs7278536, a0=A, a1=G]	2015-03-25 15:20:43.161
+	CORE_SNP [pos=15384535, snp_id=rs1297100, a0=G, a1=C]	2015-03-25 15:20:43.172
 Starting Fst Analysis on 28 SNPs
-	CORE_SNP [pos=15384814, snp_id=rs1297102, a0=A, a1=G]	2015-03-25 15:02:57.024
-	CORE_SNP [pos=15393081, snp_id=rs111559416, a0=C, a1=T]	2015-03-25 15:02:57.047
-	CORE_SNP [pos=15397562, snp_id=rs74563451, a0=C, a1=A]	2015-03-25 15:02:57.067
-	CORE_SNP [pos=15402833, snp_id=rs117048991, a0=C, a1=T]	2015-03-25 15:02:57.087
-	CORE_SNP [pos=15407163, snp_id=rs2822387, a0=A, a1=C]	2015-03-25 15:02:57.107
-	CORE_SNP [pos=15409400, snp_id=rs2155966, a0=T, a1=C]	2015-03-25 15:02:57.127
-	CORE_SNP [pos=15412399, snp_id=rs2822391, a0=G, a1=A]	2015-03-25 15:02:57.146
-	CORE_SNP [pos=15412546, snp_id=rs77288521, a0=A, a1=C]	2015-03-25 15:02:57.165
-	CORE_SNP [pos=15414004, snp_id=rs75601577, a0=T, a1=C]	2015-03-25 15:02:57.185
-	CORE_SNP [pos=15417667, snp_id=rs7276301, a0=C, a1=T]	2015-03-25 15:02:57.206
-	CORE_SNP [pos=15417795, snp_id=rs7275446, a0=G, a1=A]	2015-03-25 15:02:57.228
-	CORE_SNP [pos=15420732, snp_id=rs4816917, a0=A, a1=G]	2015-03-25 15:02:57.248
-	CORE_SNP [pos=15423382, snp_id=rs34848403, a0=A, a1=G]	2015-03-25 15:02:57.28
-	CORE_SNP [pos=15423628, snp_id=rs9983190, a0=G, a1=T]	2015-03-25 15:02:57.303
-	CORE_SNP [pos=15423737, snp_id=rs2000701, a0=T, a1=C]	2015-03-25 15:02:57.325
-	CORE_SNP [pos=15424368, snp_id=rs2155965, a0=A, a1=T]	2015-03-25 15:02:57.345
-	CORE_SNP [pos=15430004, snp_id=rs13046630, a0=G, a1=A]	2015-03-25 15:02:57.373
-	CORE_SNP [pos=15435740, snp_id=rs117422362, a0=C, a1=T]	2015-03-25 15:02:57.396
+	CORE_SNP [pos=15384814, snp_id=rs1297102, a0=A, a1=G]	2015-03-25 15:20:43.192
+	CORE_SNP [pos=15393081, snp_id=rs111559416, a0=C, a1=T]	2015-03-25 15:20:43.213
+	CORE_SNP [pos=15397562, snp_id=rs74563451, a0=C, a1=A]	2015-03-25 15:20:43.235
+	CORE_SNP [pos=15402833, snp_id=rs117048991, a0=C, a1=T]	2015-03-25 15:20:43.255
+	CORE_SNP [pos=15407163, snp_id=rs2822387, a0=A, a1=C]	2015-03-25 15:20:43.274
+	CORE_SNP [pos=15409400, snp_id=rs2155966, a0=T, a1=C]	2015-03-25 15:20:43.294
+	CORE_SNP [pos=15412399, snp_id=rs2822391, a0=G, a1=A]	2015-03-25 15:20:43.313
+	CORE_SNP [pos=15412546, snp_id=rs77288521, a0=A, a1=C]	2015-03-25 15:20:43.335
+	CORE_SNP [pos=15414004, snp_id=rs75601577, a0=T, a1=C]	2015-03-25 15:20:43.355
+	CORE_SNP [pos=15417667, snp_id=rs7276301, a0=C, a1=T]	2015-03-25 15:20:43.375
+	CORE_SNP [pos=15417795, snp_id=rs7275446, a0=G, a1=A]	2015-03-25 15:20:43.391
+	CORE_SNP [pos=15420732, snp_id=rs4816917, a0=A, a1=G]	2015-03-25 15:20:43.42
+	CORE_SNP [pos=15423382, snp_id=rs34848403, a0=A, a1=G]	2015-03-25 15:20:43.441
+	CORE_SNP [pos=15423628, snp_id=rs9983190, a0=G, a1=T]	2015-03-25 15:20:43.461
+	CORE_SNP [pos=15423737, snp_id=rs2000701, a0=T, a1=C]	2015-03-25 15:20:43.482
+	CORE_SNP [pos=15424368, snp_id=rs2155965, a0=A, a1=T]	2015-03-25 15:20:43.508
+	CORE_SNP [pos=15430004, snp_id=rs13046630, a0=G, a1=A]	2015-03-25 15:20:43.53
+	CORE_SNP [pos=15435740, snp_id=rs117422362, a0=C, a1=T]	2015-03-25 15:20:43.556
 Out of 63 SNPs, 34 were successful and 29 SNPs were unsuccessful
 Out of 63 SNPs, 34 were successful and 29 SNPs were unsuccessful
 Out of 28 SNPs, 28 were successful and 0 SNPs were unsuccessful
