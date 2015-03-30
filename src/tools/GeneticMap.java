@@ -62,19 +62,25 @@ public class GeneticMap {
 		if(up_pos == dwn_pos)
 			return 0.0;
 		
+		//Case 1.5: positions cannot be found in map (invalid or beyond range)
 		Range dwn_rng = getRange(dwn_pos);
 		Range up_rng = null;
+		Range last_rng = st_pos.get(st_pos.size() - 1);
+		
 		if(dwn_rng != null)
 			up_rng = getRangeFromDwnRng(up_pos, dwn_rng);
+		else if(dwn_rng == null && dwn_pos > 0 && up_pos > 0) {
+			
+			double avg_rate = (double) rate_sum / last_rng.getEnd();
+			return avg_rate * (double) (up_pos - dwn_pos);
+		}
 		else {
-			System.out.println("Fatal Error: down position " + dwn_pos + "is unacceptable. "
+			System.out.println("Fatal Error: down position " + dwn_pos + " is unacceptable. "
 					+ "Check genetic map for irregularities and api for more info");
 			System.exit(0);
 		}
 		
-		//Case 1.5: positions cannot be found in map (invalid or beyond range)
-		Range last_rng = st_pos.get(st_pos.size() - 1);
-		if(up_rng == null && up_pos > last_rng.getEnd()) {
+		if(up_rng == null && dwn_pos > 0 && up_pos > 0) {
 			
 			double avg_rate = (double) rate_sum / last_rng.getEnd();
 			return avg_rate * (double) (up_pos - dwn_pos);
