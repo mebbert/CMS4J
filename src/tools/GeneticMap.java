@@ -9,10 +9,14 @@ import java.util.Set;
 
 public class GeneticMap {
 	
+	private int rate_sum;
+	
 	private List<Range> st_pos;
 	private Map<Range, Double> gen_map;
 	
 	public GeneticMap() {
+		
+		this.rate_sum = 0;
 		
 		gen_map = new HashMap<Range, Double>();
 		st_pos = new LinkedList<Range>();
@@ -38,6 +42,7 @@ public class GeneticMap {
 		Range rng = new Range(st, end, st_pos.size());
 		st_pos.add(new Range(st, end, st_pos.size()));
 		gen_map.put(rng, new Double(rate));
+		rate_sum += rate;
 	}
 	
 	/**
@@ -58,7 +63,27 @@ public class GeneticMap {
 			return 0.0;
 		
 		Range dwn_rng = getRange(dwn_pos);
-		Range up_rng = getRangeFromDwnRng(up_pos, dwn_rng);
+		Range up_rng = null;
+		if(dwn_rng != null)
+			up_rng = getRangeFromDwnRng(up_pos, dwn_rng);
+		else {
+			System.out.println("Fatal Error: down position " + dwn_pos + "is unacceptable. "
+					+ "Check genetic map for irregularities and api for more info");
+			System.exit(0);
+		}
+		
+		//Case 1.5: positions cannot be found in map (invalid or beyond range)
+		Range last_rng = st_pos.get(st_pos.size() - 1);
+		if(up_rng == null && up_pos > last_rng.getEnd()) {
+			
+			double avg_rate = (double) rate_sum / last_rng.getEnd();
+			return avg_rate * (double) (up_pos - dwn_pos);
+		}
+		else if(up_rng == null) {
+			System.out.println("Fatal Error: up position " + up_pos + " is unacceptable. "
+					+ "Check genetic map for irregularities and api for more info");
+			System.exit(0);
+		}
 		
 		//Case 2: recombination rate can be estimated within single GenMap entry
 		if(up_rng.equals(dwn_rng))

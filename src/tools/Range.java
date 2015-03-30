@@ -6,6 +6,12 @@ public class Range {
 	private int end;
 	private int index;
 	
+	public Range() {
+		this.st = -1;
+		this.end = -1;
+		this.index = -1;
+	}
+	
 	public Range(int st, int end, int index) {
 		this.st = st;
 		this.end = end;
