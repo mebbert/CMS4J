@@ -578,6 +578,7 @@ public class Driver {
 					&& file_name.contains(chr_check)
 					&& file_name.contains(pop)
 					&& file_name.charAt(0) != '.') {
+				System.out.println(dir.getAbsolutePath() + File.separator + file_name);
 				return dir.getAbsolutePath() + File.separator + file_name;
 			}
 		}
