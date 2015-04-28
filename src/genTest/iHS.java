@@ -166,14 +166,13 @@ public class iHS extends HaplotypeTests {
 		
 		SNP anc_snp = getAncestralSNP(core_snp, anc_types);
 		
-		
 		if(checkValidSnpComparison(core_snp, anc_snp)) {
-				
+			
 			//Initial Grouping (according to ancestral or derived type)
 			setHaplotypeGroups(anc_eh, der_eh, individuals, snp_index, anc_snp, core_snp);
 			
+			//No variance and thus no EHH pattern can be found
 			if(anc_eh.size() <= 1 || der_eh.size() <= 1) {
-				//No variance and thus no EHH pattern can be found
 				unused_snps.add(core_snp);
 				return null;
 			}
@@ -221,7 +220,7 @@ public class iHS extends HaplotypeTests {
 			return null;
 		}
 		
-		if(Double.isNaN(unstd_iHS) || Double.isInfinite(unstd_iHS)) {
+		if(Double.isNaN(unstd_iHS) || Double.isInfinite(unstd_iHS)) {//TODO: Do I ever get to this point???
 			//Error in calculating iHS
 			unused_snps.add(core_snp);
 			return null;

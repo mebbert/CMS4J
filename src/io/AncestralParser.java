@@ -99,9 +99,9 @@ public class AncestralParser {
 		}
 		
 		//************for printing to a file****************
-		System.out.println("Starting Print\t" + anc_types.size());
+//		System.out.println("Starting Print\t" + anc_types.size());
 //		try {
-//			PrintWriter pw = new PrintWriter(out_file);
+//			PrintWriter pw = new PrintWriter(new File("ancestral_out.txt"));
 //		
 //			for(int i = 0; i < anc_types.size(); i++) {
 //				pw.write(anc_types.get(i) + "\n");
@@ -242,6 +242,21 @@ public class AncestralParser {
 		
 //		for(Window w : anc_types)
 //			System.out.println(w);
+		//************for printing to a file****************
+		System.out.println("Starting Print\t" + anc_types.size());
+		try {
+			PrintWriter pw = new PrintWriter(new File("ancestral_out.txt"));
+		
+			for(int i = 0; i < anc_types.size(); i++) {
+				pw.write(anc_types.get(i) + "\n");
+			}
+			
+			pw.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Ending Print");
+		//****************************************************
 		
 		return anc_types;
 		
